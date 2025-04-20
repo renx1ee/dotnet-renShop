@@ -1,5 +1,6 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using RenStore.Microservice.Notification.Dtos;
 using RenStore.Microservice.Notification.Enums;
 using RenStore.Microservice.Notification.Models;
 using RenStore.Microservice.Notification.Services;
@@ -17,13 +18,17 @@ public class NotificationController : ControllerBase
 
     [HttpPost]
     [MapToApiVersion(1)] 
-    [Route("/api/v{version:apiVersion}/notify")]
+    [Route("/api/v{version:apiVersion}/notification")]
     public async Task<IActionResult> SendNotification([FromBody] NotificationRequestDto requestDto)
     {
         switch (requestDto.Type)
         {
             case NotificationType.Email:
-                var result = await notificationService.SendEmailAsync(requestDto.UserId, requestDto.To, requestDto.Subject, requestDto.Body);
+                var result = await notificationService.SendEmailAsync(
+                    userId: requestDto.UserId, 
+                    email: requestDto.To, 
+                    subject: requestDto.Subject, 
+                    body: requestDto.Body); 
                 if(result.IsFailure)
                     return BadRequest(result.Error);
                 break;
@@ -41,15 +46,15 @@ public class NotificationController : ControllerBase
     
     [HttpPatch]
     [MapToApiVersion(1)]
-    [Route("/api/v{version:apiVersion}/notifications/{userId:guid}")]
-    public async Task<IActionResult> UpdateStatus([FromQuery] Guid userId, [FromBody] UpdateStatusRequestDto requestDto)
+    [Route("/api/v{version:apiVersion}/notifications/{notificationId:guid}")]
+    public async Task<IActionResult> UpdateStatus([FromQuery] Guid notificationId, [FromBody] UpdateStatusRequestDto requestDto)
     {
         return Ok();
     }
     
     [HttpGet]
     [MapToApiVersion(1)]
-    [Route("/api/v{version:apiVersion}/notifications/{userId:guid}/status")]
+    [Route("/api/v{version:apiVersion}/notifications/{userId:guid}")]
     public async Task<IActionResult> GetNotificationsByUserId([FromQuery] Guid userId)
     {
         return Ok();
