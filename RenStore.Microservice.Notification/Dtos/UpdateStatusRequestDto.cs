@@ -1,6 +1,6 @@
-namespace RenStore.Microservice.Notification.Models;
+namespace RenStore.Microservice.Notification.Dtos;
 
 public record UpdateStatusRequestDto
 {
-    public string Message { get; set; } 
+    public GCNotificationStatus Status { get; set; } 
 }

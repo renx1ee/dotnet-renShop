@@ -39,7 +39,7 @@ public class NotificationService : INotificationService
             CreatedAt = DateTime.UtcNow
         };
         
-        await notificationRepository.AddNotificationAsync(notification, CancellationToken.None);
+        await notificationRepository.AddAsync(notification, CancellationToken.None);
         
         logger.LogInformation($"Handled {nameof(NotificationService)}");
         
@@ -54,5 +54,25 @@ public class NotificationService : INotificationService
     public async Task SendPushAsync(string deviceToken, string message)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<Result> UpdateStatusAsync(Guid userId, NotificationStatus status)
+    {
+        var notification = await notificationRepository.GetByUserIdAsync(userId, CancellationToken.None);
+        
+        if(notification is null)
+            return Result.Failure(new Error("", "Notification not found."));
+
+        if (notification.Status == status)
+            return Result.Failure(new Error("", "Status matches."));
+        
+        if(status == NotificationStatus.Read)
+            notification.ReadAt = DateTime.UtcNow;
+        
+        notification.Status = status;
+        
+        await notificationRepository.UpdateAsync(notification, CancellationToken.None);
+        
+        return Result.Success;
     }
 }
