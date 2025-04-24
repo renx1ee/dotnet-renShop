@@ -24,10 +24,8 @@ public class NotificationRepository : INotificationRepository
     
     public async Task DeleteAsync(Guid userId, CancellationToken cancellationToken)
     {
-        var notification = await this.GetByIdAsync(userId, cancellationToken);
-        
-        if (notification is null)
-            return;
+        var notification = await this.GetByIdAsync(userId, cancellationToken)
+            ?? throw new Exception("Notification not found");
         
         context.Remove(notification);
         await context.SaveChangesAsync(cancellationToken);
@@ -36,17 +34,23 @@ public class NotificationRepository : INotificationRepository
     public async Task<Models.Notification?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return await context.Notifications
-            .FirstOrDefaultAsync(notification => 
-                notification.Id == id,
-                cancellationToken)
+           .FirstOrDefaultAsync(notification => 
+               notification.Id == id,
+               cancellationToken)
             ?? null;
     }
     
-    public async Task<Models.Notification?> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<IList<Models.Notification>> GetAllAsync(CancellationToken cancellationToken)
     {
         return await context.Notifications
-            .FirstOrDefaultAsync(notification => 
-                notification.UserId == userId,
-                cancellationToken);
+            .ToListAsync(cancellationToken);
+    }
+    
+    public async Task<IList<Models.Notification>> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        return await context.Notifications
+            .Where(notification => 
+                notification.UserId == userId)
+            .ToListAsync(cancellationToken);
     }
 }

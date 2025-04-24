@@ -1,6 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using RenStore.Microservice.Notification.Configs;
-using RenStore.Microservice.Notification.Models;
 
 namespace RenStore.Microservice.Notification.Data;
 
