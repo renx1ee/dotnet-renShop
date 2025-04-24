@@ -36,6 +36,7 @@ public class NotificationController : ControllerBase
     [Route("/api/v{version:apiVersion}/notification/sms")]
     public async Task<IActionResult> SendSms([FromBody] NotificationSmsRequestDto request)
     {
+        // TODO: сделать отправку sms 
         return NoContent();
     }
     
@@ -44,31 +45,29 @@ public class NotificationController : ControllerBase
     [Route("/api/v{version:apiVersion}/notification/push")]
     public async Task<IActionResult> SendPush([FromBody] NotificationPushRequestDto request)
     {
-        return NoContent();
-    }
-    
-    [HttpPost]
-    [MapToApiVersion(1)] 
-    [Route("/api/v{version:apiVersion}/notification/message")]
-    public async Task<IActionResult> SendMessage([FromBody] MessageRequestDto request)
-    {
+        // TODO: сделать отправку push уведомлений
         return NoContent();
     }
     
     [HttpPatch]
     [MapToApiVersion(1)]
     [Route("/api/v{version:apiVersion}/notifications/push/status/{id:guid}")]
-    public async Task<IActionResult> UpdatePushStatus([FromQuery] Guid id, [FromBody] UpdateStatusRequestDto requestDto)
+    public async Task<IActionResult> UpdatePushStatus([FromQuery] Guid id, [FromBody] UpdateNotificationStatusRequestDto requestDto)
     {
+        // TODO: сделать обновление статуса push 
         return Ok();
     }
     
     [HttpGet]
     [MapToApiVersion(1)]
     [Route("/api/v{version:apiVersion}/notifications/{userId:guid}")]
-    public async Task<IActionResult> GetNotificationsByUserId([FromQuery] Guid userId)
+    public async Task<IActionResult> GetNotificationsByUserId(Guid userId)
     {
-        return Ok();
+        var result = await notificationService.GetByUserIdAsync(userId);
+        if(result is null)
+            return NotFound();
+        
+        return Ok(result);
     }
     
     [HttpGet]

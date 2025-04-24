@@ -19,5 +19,6 @@ public interface INotificationService
     Task SendSmsAsync(string phoneNumber, string message);
     Task SendPushAsync(string deviceToken, string message);
     Task<Result> UpdateStatusAsync(Guid userId, NotificationStatus status);
+    Task<IList<Models.Notification>> GetByUserIdAsync(Guid userId);
     Task<IList<Models.Notification>> GetAllAsync();
 }

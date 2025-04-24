@@ -28,7 +28,6 @@ public static class AddApiAuthentication
                     OnMessageReceived = context =>
                     {
                         context.Token = context.Request.Cookies["tasty-cookies"];
-
                         return Task.CompletedTask;
                     }
                 };

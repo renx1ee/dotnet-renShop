@@ -95,6 +95,11 @@ public class NotificationService : INotificationService
         
         return Result.Success;
     }
+    
+    public async Task<IList<Models.Notification>> GetByUserIdAsync(Guid userId)
+    {
+        return await notificationRepository.GetByUserIdAsync(userId, CancellationToken.None);
+    }
 
     public async Task<IList<Models.Notification>> GetAllAsync()
     {

@@ -7,11 +7,6 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Data.Extensions;
 
 public static class ApiExtensions
 {
-    /*public static void AppMappedEndpoints(this IEndpointRouteBuilder app)
-    {
-        app.MapUsersEndpoints();
-    }*/
-
     public static void AddApiAuthentication(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -46,7 +41,7 @@ public static class ApiExtensions
             })
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
             {
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30000);
                 options.Cookie.Name = "tasty-cookies";
             });
     }

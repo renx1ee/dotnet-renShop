@@ -32,4 +32,14 @@
     <ProjectReference Include="..\RenStore.Persistence\RenStore.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\Footer\footer.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\Header\header.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\Login\login.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+  </ItemGroup>
+
 </Project>
