@@ -30,7 +30,7 @@ public class NotificationService : INotificationService
             return Result.Failure(new Error("", ""));
         
         var notification = new Models.Notification
-        {
+        { 
             UserId = userId,
             Type = NotificationType.Email,
             Subject = subject,
@@ -58,7 +58,7 @@ public class NotificationService : INotificationService
 
     public async Task<Result> UpdateStatusAsync(Guid userId, NotificationStatus status)
     {
-        var notification = await notificationRepository.GetByUserIdAsync(userId, CancellationToken.None);
+        /*var notification = await notificationRepository.GetByUserIdAsync(userId, CancellationToken.None);
         
         if(notification is null)
             return Result.Failure(new Error("", "Notification not found."));
@@ -71,8 +71,33 @@ public class NotificationService : INotificationService
         
         notification.Status = status;
         
-        await notificationRepository.UpdateAsync(notification, CancellationToken.None);
+        await notificationRepository.UpdateAsync(notification, CancellationToken.None);*/
         
         return Result.Success;
+    }
+    
+    public async Task<Result> UpdatePushStatusAsync(Guid userId, NotificationStatus status)
+    {
+        /*var notification = await notificationRepository.GetByUserIdAsync(userId, CancellationToken.None);
+        
+        if(notification is null)
+            return Result.Failure(new Error("", "Notification not found."));
+
+        if (notification.Status == status)
+            return Result.Failure(new Error("", "Status matches."));
+        
+        if(status == NotificationStatus.Read)
+            notification.ReadAt = DateTime.UtcNow;
+        
+        notification.Status = status;
+        
+        await notificationRepository.UpdateAsync(notification, CancellationToken.None);*/
+        
+        return Result.Success;
+    }
+
+    public async Task<IList<Models.Notification>> GetAllAsync()
+    {
+        return await notificationRepository.GetAllAsync(cancellationToken: CancellationToken.None);
     }
 }

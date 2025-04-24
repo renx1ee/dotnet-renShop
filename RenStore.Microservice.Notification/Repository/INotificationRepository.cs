@@ -15,5 +15,6 @@ public interface INotificationRepository
     Task UpdateAsync(Models.Notification notification, CancellationToken cancellationToken);
     Task DeleteAsync(Guid userId, CancellationToken cancellationToken);
     Task<Models.Notification> GetByIdAsync(Guid userId, CancellationToken cancellationToken);
-    Task<Models.Notification?> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken);
+    Task<IList<Models.Notification>> GetAllAsync(CancellationToken cancellationToken);
+    Task<IList<Models.Notification>> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken);
 }

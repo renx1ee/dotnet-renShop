@@ -1,8 +1,6 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using RenStore.Microservice.Notification.Dtos;
-using RenStore.Microservice.Notification.Enums;
-using RenStore.Microservice.Notification.Models;
+using RenStore.Microservice.Notification.DTOs;
 using RenStore.Microservice.Notification.Services;
 
 namespace RenStore.Microservice.Notification.Controllers;
@@ -18,36 +16,49 @@ public class NotificationController : ControllerBase
 
     [HttpPost]
     [MapToApiVersion(1)] 
-    [Route("/api/v{version:apiVersion}/notification")]
-    public async Task<IActionResult> SendNotification([FromBody] NotificationRequestDto requestDto)
+    [Route("/api/v{version:apiVersion}/notification/email")]
+    public async Task<IActionResult> SendEmail([FromBody] NotificationEmailRequestDto request)
     {
-        switch (requestDto.Type)
-        {
-            case NotificationType.Email:
-                var result = await notificationService.SendEmailAsync(
-                    userId: requestDto.UserId, 
-                    email: requestDto.To, 
-                    subject: requestDto.Subject, 
-                    body: requestDto.Body); 
-                if(result.IsFailure)
-                    return BadRequest(result.Error);
-                break;
-            case NotificationType.Sms:
-                await notificationService.SendSmsAsync(requestDto.To, requestDto.Body);
-                break;
-            case NotificationType.Push:
-                await notificationService.SendPushAsync("", requestDto.Body);
-                break;
-            default:
-                return BadRequest("");
-        }
+        var result = await notificationService.SendEmailAsync(
+            userId: request.UserId, 
+            email: request.To, 
+            subject: request.Subject, 
+            body: request.Body); 
+        
+        if(result.IsFailure) 
+            return BadRequest(result.Error);
+       
+        return NoContent();
+    }
+    
+    [HttpPost]
+    [MapToApiVersion(1)] 
+    [Route("/api/v{version:apiVersion}/notification/sms")]
+    public async Task<IActionResult> SendSms([FromBody] NotificationSmsRequestDto request)
+    {
+        return NoContent();
+    }
+    
+    [HttpPost]
+    [MapToApiVersion(1)] 
+    [Route("/api/v{version:apiVersion}/notification/push")]
+    public async Task<IActionResult> SendPush([FromBody] NotificationPushRequestDto request)
+    {
+        return NoContent();
+    }
+    
+    [HttpPost]
+    [MapToApiVersion(1)] 
+    [Route("/api/v{version:apiVersion}/notification/message")]
+    public async Task<IActionResult> SendMessage([FromBody] MessageRequestDto request)
+    {
         return NoContent();
     }
     
     [HttpPatch]
     [MapToApiVersion(1)]
-    [Route("/api/v{version:apiVersion}/notifications/{notificationId:guid}")]
-    public async Task<IActionResult> UpdateStatus([FromQuery] Guid notificationId, [FromBody] UpdateStatusRequestDto requestDto)
+    [Route("/api/v{version:apiVersion}/notifications/push/status/{id:guid}")]
+    public async Task<IActionResult> UpdatePushStatus([FromQuery] Guid id, [FromBody] UpdateStatusRequestDto requestDto)
     {
         return Ok();
     }
@@ -58,5 +69,17 @@ public class NotificationController : ControllerBase
     public async Task<IActionResult> GetNotificationsByUserId([FromQuery] Guid userId)
     {
         return Ok();
+    }
+    
+    [HttpGet]
+    [MapToApiVersion(1)]
+    [Route("/api/v{version:apiVersion}/notifications")]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await notificationService.GetAllAsync();
+        if(result is null)
+            return NotFound();
+        
+        return Ok(result);
     }
 }

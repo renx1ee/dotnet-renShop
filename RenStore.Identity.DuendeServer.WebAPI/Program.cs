@@ -135,9 +135,8 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception exception)
     {
-        var logger = serviceProvider
-            .GetRequiredService<ILogger<Program>>();
-        logger.LogError(exception, "An error occurred app initialization");
+        var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(exception, "An error occurred app initialization.");
     }
 }
 
