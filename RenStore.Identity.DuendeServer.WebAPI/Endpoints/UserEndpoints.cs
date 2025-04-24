@@ -1,7 +1,7 @@
 using RenStore.Identity.DuendeServer.WebAPI.Models;
 using RenStore.Identity.DuendeServer.WebAPI.Service;
 
-namespace RenStore.Identity.DuendeServer.WebAPI.Data.Endpoints;
+namespace RenStore.Identity.DuendeServer.WebAPI.Endpoints;
 
 public static class UserEndpoints 
 {
@@ -56,7 +56,7 @@ public static class UserEndpoints
         string email,
         UserService userService)
     {
-        /*await userService.ConfirmEmail();*/
+        await userService.ConfirmEmail(email);
         
         return Results.Ok();
     }

@@ -1,10 +1,14 @@
+using System.Net;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using RenStore.Application.Data.Common.Exceptions;
 using RenStore.Domain.Entities;
+using RenStore.Identity.DuendeServer.WebAPI.Data.Helpers;
 using RenStore.Identity.DuendeServer.WebAPI.Data.IdentityConfigurations;
+using RenStore.Identity.DuendeServer.WebAPI.Models;
 
 namespace RenStore.Identity.DuendeServer.WebAPI.Service;
 
@@ -14,7 +18,8 @@ public class UserService : ControllerBase
     private readonly JwtProvider jwtProvider;
     private readonly IHttpContextAccessor httpContextAccessor;
 
-    public UserService(JwtProvider jwtProvider,
+    public UserService(
+        JwtProvider jwtProvider,
         UserManager<ApplicationUser> userManager,
         IHttpContextAccessor httpContextAccessor)
     {
@@ -26,26 +31,24 @@ public class UserService : ControllerBase
     public async Task<bool> Register(string email, string password)
     {
         var userExist = await userManager.FindByEmailAsync(email);
-        if (userExist != null)
+        if (userExist is not null) 
             return false;
         
         var user = new ApplicationUser
         {    
             UserName = email,
-            Email = email
+            Email = email,
+            CreatedDate = DateTime.UtcNow
         };
-            
         var result = await userManager.CreateAsync(user, password);
 
         if (result.Succeeded)
         {
             bool emailStatus = await CheckEmailConfirmed(email);
-
-            if (emailStatus)
+            if (emailStatus) 
                 return false;
 
-            var loginResult = await this.Login(user.Email, user.PasswordHash);
-
+            var loginResult = await this.Login(user.Email, user.PasswordHash!);
             if (!loginResult)
                 return false;
         }
@@ -56,13 +59,11 @@ public class UserService : ControllerBase
     {
         var user = await userManager.FindByEmailAsync(email);
         
-        if(user == null)
+        if(user == null) 
             return false;
-        
         var result = await userManager.CheckPasswordAsync(user, password);
         
-        if(result)
-            return false;
+        if(result) return false;
         
         var claims = new List<Claim>
         {
@@ -70,17 +71,16 @@ public class UserService : ControllerBase
             new (ClaimTypes.Role, "AuthUser"),
             new ("UserId", user.Id)
         };
-
         var claimsIdentity = new ClaimsIdentity(claims, "pwd", ClaimTypes.Name, ClaimTypes.Role);
         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-        await httpContextAccessor.HttpContext.SignInAsync(
+        await httpContextAccessor.HttpContext!.SignInAsync(
             CookieAuthenticationDefaults.AuthenticationScheme,
             claimsPrincipal);
 
         var token = jwtProvider.GenerateToken(user);
 
-        httpContextAccessor.HttpContext.Response.Cookies.Append("tasty-cookies", token);
+        httpContextAccessor.HttpContext!.Response.Cookies.Append("tasty-cookies", token);
 
         await httpContextAccessor.HttpContext.SignInAsync(claimsPrincipal);
 
@@ -89,35 +89,50 @@ public class UserService : ControllerBase
     
     public async Task ConfirmEmail(string email)
     {
-        /*var user = await userManager.FindByEmailAsync(email);
+        var user = await userManager.FindByEmailAsync(email) 
+            ?? throw new Exception("");
+        
+        var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
 
-        if (user == null)
-            return;
+        var request = httpContextAccessor.HttpContext.Request;
         
-        var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+        var confirmationLink = GenerateConfirmationLink(request, user.Id, token);
+
+        var data = new ConfirmEmailRequest
+        {
+            UserId = user.Id,
+            To = email,
+            Subject = "Confirm Your Email",
+            Body = $"<a href='{confirmationLink}'>link</a>"
+        };
         
-        var confirmationLink = urlHelper.Action(
-            action: "ConfirmEmail",
-            controller: "Auth",
-            values: new { email = email, code = code },
-            protocol: httpContextAccessor.HttpContext.Request.Scheme);
+        var httpClient = new HttpClient();
+        httpClient.BaseAddress = new Uri(UrlConstants.NOTIFICATION_MICROSERVICE_URL);
         
-        await emailService.SendEmailAsync(
-            email: email, 
-            subject: "Confirm Email",
-            message: $"<a href=''>link</a>");*/
+        var response = await httpClient.PostAsJsonAsync(
+            "/api/v1/notification/email", 
+            data);
+        
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadAsStringAsync();
     }
 
     public async Task<bool> CheckEmailConfirmed(string email)
     {
         var user = await userManager.FindByEmailAsync(email);
-        if (user != null)
+        if (user is not null)
         {
             bool emailStatus = await userManager.IsEmailConfirmedAsync(user);
-            
-            if (emailStatus)
-                return true;
+            if (emailStatus) return true;
         }
         return false;
+    }
+    // TODO: доделать подтверждение.
+    public string GenerateConfirmationLink(HttpRequest request, string userId, string token)
+    {
+        var scheme = request.Scheme;
+        var host = request.Host.Value;
+        
+        return $"{scheme}://{host}/confirm-email?userId={userId}&token={WebUtility.UrlEncode(token)}";
     }
 }

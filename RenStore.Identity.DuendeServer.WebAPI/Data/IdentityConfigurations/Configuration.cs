@@ -40,10 +40,6 @@ public static class Configuration
                 ClientName = AuthConstants.AUTH_IDENTITY_CLIENT_NAME,
                 AllowedGrantTypes = GrantTypes.Code,
                 RequireClientSecret = false,
-                /*ClientSecrets =
-                {
-                    new Secret(AuthConstants.AUTH_IDENTITY_SECRET_KEY.Sha256())
-                },*/
                 RequirePkce = true,
                 RedirectUris =
                 {

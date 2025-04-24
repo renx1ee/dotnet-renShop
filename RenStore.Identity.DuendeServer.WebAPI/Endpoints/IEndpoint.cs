@@ -1,4 +1,4 @@
-namespace RenStore.Identity.DuendeServer.WebAPI.Data.Endpoints;
+namespace RenStore.Identity.DuendeServer.WebAPI.Endpoints;
 
 public interface IEndpoint
 {

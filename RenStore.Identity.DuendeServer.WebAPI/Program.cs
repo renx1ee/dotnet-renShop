@@ -1,5 +1,4 @@
 using RenStore.Identity.DuendeServer.WebAPI.Data.IdentityConfigurations;
-using RenStore.Identity.DuendeServer.WebAPI.Data.Endpoints;
 using RenStore.Identity.DuendeServer.WebAPI.Service;
 using RenStore.Identity.DuendeServer.WebAPI.Data;
 using RenStore.Domain.Entities;
@@ -11,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
+using RenStore.Identity.DuendeServer.WebAPI.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetValue<string>("DefaultConnection");
@@ -50,7 +50,7 @@ builder.Services.AddAuthentication(options =>
     })
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30000);
         options.Cookie.Name = "tasty-cookies";
     });
 
@@ -106,7 +106,6 @@ builder.Services.AddIdentityServer()
 
 builder.Services.AddScoped<JwtProvider>();
 builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<EmailService>();
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
