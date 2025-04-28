@@ -1,3 +1,4 @@
+using Duende.IdentityServer.Extensions;
 using RenStore.Identity.DuendeServer.WebAPI.Models;
 using RenStore.Identity.DuendeServer.WebAPI.Service;
 
@@ -24,9 +25,11 @@ public static class UserEndpoints
         RegisterUserRequest request,
         UserService userService)
     {
-        var user = await userService.Register(request.Email, request.Password);
-        if(user)
-            return Results.Ok();
+        var user = await userService.Register(
+            email: request.Email, 
+            password: request.Password);
+        
+        if(user) return Results.Ok();
         
         return Results.BadRequest();
     }
@@ -37,8 +40,8 @@ public static class UserEndpoints
     {
         var result = await userService.Login(request.Email!, request.Password!);
         
-        if(result)
-            return Results.Ok();
+        if(!result.IsNullOrEmpty())
+            return Results.Ok(result);
         
         return Results.BadRequest("Email or password is incorrect.");
     }

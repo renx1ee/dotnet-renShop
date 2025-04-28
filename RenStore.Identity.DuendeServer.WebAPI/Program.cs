@@ -145,6 +145,11 @@ app.UseAuthorization();
 app.UseIdentityServer();
 app.UseHttpsRedirection();
 
+app.UseCors(x => x
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+
 app.UseSwagger();
 app.UseSwaggerUI(config =>
 {
