@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using RenStore.Application.Data.Common.Exceptions;
 using RenStore.Domain.Entities;
@@ -49,21 +50,21 @@ public class UserService : ControllerBase
                 return false;
 
             var loginResult = await this.Login(user.Email, user.PasswordHash!);
-            if (!loginResult)
-                return false;
+            
+            if (loginResult.IsNullOrEmpty()) return false;
         }
         return true;
     }
 
-    public async Task<bool> Login(string email, string password)
+    public async Task<string> Login(string email, string password)
     {
         var user = await userManager.FindByEmailAsync(email);
         
-        if(user == null) 
-            return false;
+        if(user is null) return string.Empty;
+        
         var result = await userManager.CheckPasswordAsync(user, password);
         
-        if(result) return false;
+        if(!result) return string.Empty;
         
         var claims = new List<Claim>
         {
@@ -71,7 +72,13 @@ public class UserService : ControllerBase
             new (ClaimTypes.Role, "AuthUser"),
             new ("UserId", user.Id)
         };
-        var claimsIdentity = new ClaimsIdentity(claims, "pwd", ClaimTypes.Name, ClaimTypes.Role);
+        
+        var claimsIdentity = new ClaimsIdentity(
+            claims: claims, 
+            authenticationType: "pwd", 
+            nameType: ClaimTypes.Name, 
+            roleType: ClaimTypes.Role);
+        
         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
         await httpContextAccessor.HttpContext!.SignInAsync(
@@ -84,7 +91,7 @@ public class UserService : ControllerBase
 
         await httpContextAccessor.HttpContext.SignInAsync(claimsPrincipal);
 
-        return true;
+        return token;
     }
     
     public async Task ConfirmEmail(string email)

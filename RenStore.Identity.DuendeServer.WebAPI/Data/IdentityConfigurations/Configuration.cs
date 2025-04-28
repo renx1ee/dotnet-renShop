@@ -20,6 +20,7 @@ public static class Configuration
             new ApiScope(AuthConstants.AUTH_IDENTITY_CLIENT_ID,
                          AuthConstants.AUTH_IDENTITY_DISPLAY_NAME)
         };
+        
     public static IEnumerable<ApiResource> ApiResources =>
         new List<ApiResource>
         {
