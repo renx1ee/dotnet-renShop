@@ -1,4 +1,4 @@
-namespace RenStore.Identity.DuendeServer.WebAPI.Data.Helpers;
+namespace RenStore.Identity.DuendeServer.WebAPI.Data;
 
 public class UrlConstants
 {

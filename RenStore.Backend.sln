@@ -29,7 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenStore.Blazor.WebClient",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenStore.Microservice.Notification", "RenStore.Microservice.Notification\RenStore.Microservice.Notification.csproj", "{5DF69055-9B85-4126-8CA5-C2D714E038E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenStore.Microservice.Cache", "RenStore.Microservice.Cache\RenStore.Microservice.Cache.csproj", "{1B54F898-848F-49A7-8E08-FBFA3BB71F31}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenStore.Microservice.Cache", "RenStore.Microservice.Cache\RenStore.Microservice.Cache.csproj", "{78C113E2-26C8-4890-9073-F5CA122C003D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,10 +69,10 @@ Global
 		{5DF69055-9B85-4126-8CA5-C2D714E038E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DF69055-9B85-4126-8CA5-C2D714E038E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DF69055-9B85-4126-8CA5-C2D714E038E9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B54F898-848F-49A7-8E08-FBFA3BB71F31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B54F898-848F-49A7-8E08-FBFA3BB71F31}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B54F898-848F-49A7-8E08-FBFA3BB71F31}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B54F898-848F-49A7-8E08-FBFA3BB71F31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78C113E2-26C8-4890-9073-F5CA122C003D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78C113E2-26C8-4890-9073-F5CA122C003D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78C113E2-26C8-4890-9073-F5CA122C003D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78C113E2-26C8-4890-9073-F5CA122C003D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,7 +86,7 @@ Global
 		{381F95BA-A115-4ED7-966C-53BDADBB08E7} = {EDB5BD6F-EE1F-46E4-A33B-66D518639E2F}
 		{F5A8EACF-B9E3-42CB-9ABD-BA1AE927686F} = {E7F576C7-B064-48DE-BF25-A8F8FCEACD82}
 		{5DF69055-9B85-4126-8CA5-C2D714E038E9} = {265FD3CF-2AE1-4B79-9570-C7BD742ADDAB}
-		{1B54F898-848F-49A7-8E08-FBFA3BB71F31} = {265FD3CF-2AE1-4B79-9570-C7BD742ADDAB}
+		{78C113E2-26C8-4890-9073-F5CA122C003D} = {265FD3CF-2AE1-4B79-9570-C7BD742ADDAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {057C7BB5-998A-46BB-97AF-CF22F6A756CA}

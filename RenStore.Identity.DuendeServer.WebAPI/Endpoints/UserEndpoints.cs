@@ -13,23 +13,40 @@ public static class UserEndpoints
         group.MapPost("/register", Register);
 
         group.MapPost("/login", Login);
-        
-        group.MapPost("/confirm-email", ConfirmEmail);
 
-        group.MapGet("/check-confirm-email", CheckConfirmEmail);
+        group.MapPost("/logout", Logout).RequireAuthorization();
+        
+        group.MapPost("/send-code-email", ConfirmEmail);
+        
+        group.MapPost("/verify-code-email", VerifyEmail);
+
+        group.MapGet("/check-confirmed-email", CheckConfirmEmail);
+
+        group.MapPost("/forgot-password", ForgotPassword);
+
+        group.MapPost("/reset-password", ResetPassword).RequireAuthorization();
+        
+        group.MapPost("/refresh-token", RefreshToken).RequireAuthorization();
+
+        group.MapGet("/me", GetMyInfo);
+        
+        group.MapGet("/assign-role", AssignRole);
+        
+        group.MapGet("/remove-role", RemoveRole);
         
         return group;
     }
 
     private static async Task<IResult> Register(
         RegisterUserRequest request,
-        UserService userService)
+        UserService userService,
+        IEmailVerificationService emailVerificationService)
     {
         var user = await userService.Register(
             email: request.Email, 
             password: request.Password);
-        
-        if(user) return Results.Ok();
+
+        if (user) return Results.Ok();
         
         return Results.BadRequest();
     }
@@ -46,6 +63,11 @@ public static class UserEndpoints
         return Results.BadRequest("Email or password is incorrect.");
     }
     
+    private static async Task<IResult> Logout()
+    {
+        return Results.Ok();
+    }
+    
     private static async Task<IResult> CheckConfirmEmail(
         string email,
         UserService userService)
@@ -60,7 +82,44 @@ public static class UserEndpoints
         UserService userService)
     {
         await userService.ConfirmEmail(email);
-        
+        return Results.Ok();
+    }
+    private static async Task<IResult> VerifyEmail(
+        string email,
+        VerifyEmailRequest request,
+        UserService userService)
+    {
+        await userService.ConfirmEmail(email);
+        return Results.Ok();
+    }
+
+    private static async Task<IResult> ForgotPassword()
+    {
+        return Results.Ok();
+    }
+    
+    private static async Task<IResult> ResetPassword()
+    {
+        return Results.Ok();
+    }
+    
+    private static async Task<IResult> RefreshToken()
+    {
+        return Results.Ok();
+    }
+
+    private static async Task<IResult> GetMyInfo()
+    {
+        return Results.Ok();
+    }
+
+    private static async Task<IResult> AssignRole()
+    {
+        return Results.Ok();
+    }
+    
+    private static async Task<IResult> RemoveRole()
+    {
         return Results.Ok();
     }
 }
