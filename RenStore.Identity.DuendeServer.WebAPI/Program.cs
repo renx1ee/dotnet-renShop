@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Caching.Memory;
 using RenStore.Identity.DuendeServer.WebAPI.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -56,7 +57,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AuthUser", new AuthorizationPolicyBuilder()
+    /*options.AddPolicy("AuthUser", new AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
         .RequireClaim(ClaimTypes.Role, "AuthUser")
         .Build());
@@ -69,7 +70,7 @@ builder.Services.AddAuthorization(options =>
     {
         policy.RequireAuthenticatedUser();
         policy.RequireClaim(ClaimTypes.Role, "Moderator");
-    });
+    });*/
 });
 
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
@@ -106,6 +107,8 @@ builder.Services.AddIdentityServer()
 
 builder.Services.AddScoped<JwtProvider>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<IEmailVerificationService, EmailVerificationService>();
+builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
@@ -121,6 +124,25 @@ else
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+    var roles = new[] { "User", "Admin", "Manager" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            var data = 
+                await roleManager.CreateAsync(
+                    new ApplicationRole
+                    {
+                        Name = role
+                    });
+        }
+    }
 }
 
 using (var scope = app.Services.CreateScope())

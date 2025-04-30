@@ -1,7 +1,6 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using IdentityModel;
-using RenStore.Identity.DuendeServer.WebAPI.Data.Helpers;
 
 namespace RenStore.Identity.DuendeServer.WebAPI.Data.IdentityConfigurations;
 
@@ -39,7 +38,10 @@ public static class Configuration
             {
                 ClientId = AuthConstants.AUTH_IDENTITY_CLIENT_ID,
                 ClientName = AuthConstants.AUTH_IDENTITY_CLIENT_NAME,
+                
                 AllowedGrantTypes = GrantTypes.Code,
+                AccessTokenType = AccessTokenType.Jwt,
+                
                 RequireClientSecret = false,
                 RequirePkce = true,
                 RedirectUris =
@@ -48,20 +50,26 @@ public static class Configuration
                     "https://localhost:7226/Home/Index/",
 
                 },
+                 
+                
+                
                 AllowedCorsOrigins =
                 {
                     "http://..."
                 },
+                
                 PostLogoutRedirectUris =
                 {
                     "http://.../signout-oidc",
                 },
+                
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     AuthConstants.AUTH_IDENTITY_CLIENT_ID
                 },
+                
                 AllowAccessTokensViaBrowser = true
             }
         };

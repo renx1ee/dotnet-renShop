@@ -7,7 +7,7 @@ using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using RenStore.Application.Data.Common.Exceptions;
 using RenStore.Domain.Entities;
-using RenStore.Identity.DuendeServer.WebAPI.Data.Helpers;
+using RenStore.Identity.DuendeServer.WebAPI.Data;
 using RenStore.Identity.DuendeServer.WebAPI.Data.IdentityConfigurations;
 using RenStore.Identity.DuendeServer.WebAPI.Models;
 
@@ -18,40 +18,49 @@ public class UserService : ControllerBase
     private readonly UserManager<ApplicationUser> userManager;
     private readonly JwtProvider jwtProvider;
     private readonly IHttpContextAccessor httpContextAccessor;
+    private readonly IEmailVerificationService emailVerificationService;
 
     public UserService(
         JwtProvider jwtProvider,
         UserManager<ApplicationUser> userManager,
-        IHttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor,
+        IEmailVerificationService emailVerificationService)
     {
         this.userManager = userManager;
         this.jwtProvider = jwtProvider;
         this.httpContextAccessor = httpContextAccessor;
+        this.emailVerificationService = emailVerificationService;
     }
 
     public async Task<bool> Register(string email, string password)
     {
-        var userExist = await userManager.FindByEmailAsync(email);
-        if (userExist is not null) 
+        var user = await userManager.FindByEmailAsync(email);
+        
+        if (user is not null) 
             return false;
         
-        var user = new ApplicationUser
+        user = new ApplicationUser
         {    
             UserName = email,
             Email = email,
-            CreatedDate = DateTime.UtcNow
+            CreatedDate = DateTime.UtcNow,
+            Role = "User"
         };
+        
         var result = await userManager.CreateAsync(user, password);
 
         if (result.Succeeded)
         {
+            /*await this.ConfirmEmail(user.Email);
+            
             bool emailStatus = await CheckEmailConfirmed(email);
-            if (emailStatus) 
-                return false;
+            if (emailStatus)
+                return false;*/
 
             var loginResult = await this.Login(user.Email, user.PasswordHash!);
             
-            if (loginResult.IsNullOrEmpty()) return false;
+            if (!loginResult.IsNullOrEmpty()) 
+                return false;
         }
         return true;
     }
@@ -70,7 +79,8 @@ public class UserService : ControllerBase
         {
             new (ClaimTypes.Name, email),
             new (ClaimTypes.Role, "AuthUser"),
-            new ("UserId", user.Id)
+            new ("UserId", user.Id),
+            new ("Role", user.Role)
         };
         
         var claimsIdentity = new ClaimsIdentity(
@@ -99,7 +109,7 @@ public class UserService : ControllerBase
         var user = await userManager.FindByEmailAsync(email) 
             ?? throw new Exception("");
         
-        var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+        /*var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
 
         var request = httpContextAccessor.HttpContext.Request;
         
@@ -111,17 +121,33 @@ public class UserService : ControllerBase
             To = email,
             Subject = "Confirm Your Email",
             Body = $"<a href='{confirmationLink}'>link</a>"
-        };
+        };*/
+        
+        
+        var code = emailVerificationService.GenerateCode();
+        await emailVerificationService.StoreCodeAsync(user.Id, code);
         
         var httpClient = new HttpClient();
         httpClient.BaseAddress = new Uri(UrlConstants.NOTIFICATION_MICROSERVICE_URL);
         
         var response = await httpClient.PostAsJsonAsync(
             "/api/v1/notification/email", 
-            data);
+            $"{code} is your verification code.");
         
         response.EnsureSuccessStatusCode();
         var result = await response.Content.ReadAsStringAsync();
+    }
+
+    public async Task<bool> VerifyEmail(string email, string code)
+    {
+        var result = await emailVerificationService.VerifyCodeAsync(email, code);
+
+        if (result)
+        {
+            
+        }
+        
+        return true;
     }
 
     public async Task<bool> CheckEmailConfirmed(string email)
