@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Caching.Memory;
+using RenStore.Identity.DuendeServer.WebAPI.Data.Extensions;
 using RenStore.Identity.DuendeServer.WebAPI.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +22,9 @@ builder.Services.AddDbContext<AuthDbContext>(optoins =>
     optoins.UseNpgsql(connectionString);
 });
 
-builder.Services.AddAuthentication(options =>
+builder.Services.AddApiAuthentication();
+
+/*builder.Services.AddAuthentication(options =>
 {
     options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -70,8 +73,8 @@ builder.Services.AddAuthorization(options =>
     {
         policy.RequireAuthenticatedUser();
         policy.RequireClaim(ClaimTypes.Role, "Moderator");
-    });*/
-});
+    });#1#
+});*/
 
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddEntityFrameworkStores<AuthDbContext>()
