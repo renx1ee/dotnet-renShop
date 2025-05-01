@@ -5,11 +5,10 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace RenStore.Identity.DuendeServer.WebAPI.Data.Extensions;
 
-public static class ApiExtensions
+public static class AuthExtensions
 {
     public static void AddApiAuthentication(
-        this IServiceCollection services,
-        IConfiguration configuration)
+        this IServiceCollection services)
     {
         services.AddAuthentication(options =>
             {
@@ -44,5 +43,23 @@ public static class ApiExtensions
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(30000);
                 options.Cookie.Name = "tasty-cookies";
             });
+
+        services.AddAuthorization(options =>
+        {
+            /*options.AddPolicy("AuthUser", new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .RequireClaim(ClaimTypes.Role, "AuthUser")
+                .Build());
+            options.AddPolicy("Admin", policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.RequireClaim(ClaimTypes.Role, "Admin");
+            });
+            options.AddPolicy("Moderator", policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.RequireClaim(ClaimTypes.Role, "Moderator");
+            });*/
+        });
     }
 }

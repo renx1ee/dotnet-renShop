@@ -50,19 +50,9 @@ public class UserService : ControllerBase
         var result = await userManager.CreateAsync(user, password);
 
         if (result.Succeeded)
-        {
-            /*await this.ConfirmEmail(user.Email);
-            
-            bool emailStatus = await CheckEmailConfirmed(email);
-            if (emailStatus)
-                return false;*/
-
-            var loginResult = await this.Login(user.Email, user.PasswordHash!);
-            
-            if (!loginResult.IsNullOrEmpty()) 
-                return false;
-        }
-        return true;
+            return true;
+         
+        return false;
     }
 
     public async Task<string> Login(string email, string password)

@@ -42,11 +42,11 @@ public static class UserEndpoints
         UserService userService,
         IEmailVerificationService emailVerificationService)
     {
-        var user = await userService.Register(
+        var result = await userService.Register(
             email: request.Email, 
             password: request.Password);
 
-        if (user) return Results.Ok();
+        if (result) return Results.Ok();
         
         return Results.BadRequest();
     }
