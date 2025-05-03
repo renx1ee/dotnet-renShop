@@ -125,7 +125,6 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 builder.Services.AddScoped<AuthDbContext>();
 builder.Services.AddScoped<JwtProvider>();
 

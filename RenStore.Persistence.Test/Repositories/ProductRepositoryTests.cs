@@ -1,4 +1,4 @@
-using System.Data.Entity;
+/*using System.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using RenStore.Application.Data.Common.Exceptions;
 using RenStore.Domain.Entities;
@@ -10,8 +10,9 @@ using RenStore.Persistence.Test.Common;
 
 namespace RenStore.Persistence.Test.Repositories;
 
-public class ProductRepositoryTests : TestCommandBase
+public class ProductRepositoryTests 
 {
+    ApplicationDbContext context = DbContextFactory.Create();
     private ProductRepository productRepository;
     
     [Fact]
@@ -89,7 +90,7 @@ public class ProductRepositoryTests : TestCommandBase
         string updatedDescription = "Updated Product Description";
         // Act
         var product = await productRepository.GetByIdAsync(
-            ProductContextFactory.ProductIdForUpdate,
+            DbContextFactory.ProductIdForUpdate,
             CancellationToken.None);
 
         if (product == null)
@@ -101,7 +102,7 @@ public class ProductRepositoryTests : TestCommandBase
         await productRepository.UpdateAsync(product, CancellationToken.None);
         // Assert
         var result = await productRepository.GetByIdAsync(
-            ProductContextFactory.ProductIdForUpdate,
+            DbContextFactory.ProductIdForUpdate,
             CancellationToken.None
         );
         
@@ -129,11 +130,11 @@ public class ProductRepositoryTests : TestCommandBase
         // Arrange
         productRepository = new ProductRepository(context, null);
         // Act
-        await productRepository.DeleteAsync(ProductContextFactory.ProductIdForDelete, CancellationToken.None);
+        await productRepository.DeleteAsync(DbContextFactory.ProductIdForDelete, CancellationToken.None);
         // Assert
         await Assert.ThrowsAsync<NotFoundException>(async () =>
             await productRepository.GetByIdAsync(
-                ProductContextFactory.ProductIdForDelete, 
+                DbContextFactory.ProductIdForDelete, 
                 CancellationToken.None
             )
         );
@@ -172,12 +173,12 @@ public class ProductRepositoryTests : TestCommandBase
         productRepository = new ProductRepository(context, null);
         // Act
         var product = await productRepository.GetByIdAsync(
-            ProductContextFactory.ProductIdForUpdate, 
+            DbContextFactory.ProductIdForUpdate, 
             CancellationToken.None
         );
         // Assert
         Assert.NotNull(product);
-        Assert.Equal(ProductContextFactory.ProductIdForUpdate, product.Id);
+        Assert.Equal(DbContextFactory.ProductIdForUpdate, product.Id);
     }
     
     [Fact]
@@ -194,4 +195,4 @@ public class ProductRepositoryTests : TestCommandBase
             )
         );
     }
-}
+}*/

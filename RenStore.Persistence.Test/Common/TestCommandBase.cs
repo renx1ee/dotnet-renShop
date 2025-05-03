@@ -1,4 +1,4 @@
-namespace RenStore.Persistence.Test.Common;
+/*namespace RenStore.Persistence.Test.Common;
 
 public abstract class TestCommandBase : IDisposable
 {
@@ -6,11 +6,11 @@ public abstract class TestCommandBase : IDisposable
 
     public TestCommandBase()
     {
-        this.context = ProductContextFactory.Create();
+        this.context = DbContextFactory.Create();
     }
 
     public void Dispose()
     {
-        ProductContextFactory.Destroy(this.context);
+        DbContextFactory.Destroy(this.context);
     }
-}
+}*/

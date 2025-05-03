@@ -16,16 +16,17 @@ public static class Configuration
     public static IEnumerable<ApiScope> ApiScopes =>
         new List<ApiScope>
         {
-            new ApiScope(AuthConstants.AUTH_IDENTITY_CLIENT_ID,
-                         AuthConstants.AUTH_IDENTITY_DISPLAY_NAME)
+            new ApiScope(
+                name: AuthConstants.AUTH_IDENTITY_CLIENT_ID,
+                displayName: AuthConstants.AUTH_IDENTITY_DISPLAY_NAME)
         };
         
     public static IEnumerable<ApiResource> ApiResources =>
         new List<ApiResource>
         {
-            new ApiResource(AuthConstants.AUTH_IDENTITY_CLIENT_ID,
-                            AuthConstants.AUTH_IDENTITY_DISPLAY_NAME, 
-                            new [] { JwtClaimTypes.Name })
+            new ApiResource( name: AuthConstants.AUTH_IDENTITY_CLIENT_ID,
+                            displayName: AuthConstants.AUTH_IDENTITY_DISPLAY_NAME,
+                            userClaims: [JwtClaimTypes.Name])
             {
                 Scopes = { AuthConstants.AUTH_IDENTITY_CLIENT_ID }
             }
@@ -42,16 +43,32 @@ public static class Configuration
                 AllowedGrantTypes = GrantTypes.Code,
                 AccessTokenType = AccessTokenType.Jwt,
                 
-                RequireClientSecret = false,
                 RequirePkce = true,
+                RequireClientSecret = false,
+                RequireConsent = false,
+                
+                AllowOfflineAccess = true,
+                RefreshTokenUsage = TokenUsage.ReUse,
+                RefreshTokenExpiration = TokenExpiration.Sliding,
+                AccessTokenLifetime = 3600,
+                
+                AllowAccessTokensViaBrowser = true,
+                AlwaysIncludeUserClaimsInIdToken = false,
+                UpdateAccessTokenClaimsOnRefresh = true,
+                
+                AllowedScopes =
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    AuthConstants.AUTH_IDENTITY_CLIENT_ID
+                },
+                
                 RedirectUris =
                 {
                     "http://.../signin-oidc",
                     "https://localhost:7226/Home/Index/",
 
                 },
-                 
-                
                 
                 AllowedCorsOrigins =
                 {
@@ -61,16 +78,7 @@ public static class Configuration
                 PostLogoutRedirectUris =
                 {
                     "http://.../signout-oidc",
-                },
-                
-                AllowedScopes =
-                {
-                    IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Profile,
-                    AuthConstants.AUTH_IDENTITY_CLIENT_ID
-                },
-                
-                AllowAccessTokensViaBrowser = true
+                }
             }
         };
 }
