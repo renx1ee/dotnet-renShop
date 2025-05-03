@@ -120,7 +120,7 @@ public static class DependencyInjection
             options.UseNpgsql("Server=localhost;Port=5438;DataBase=ShopDevelop; User Id=postgres;Password=postgres ;Include Error Detail=True");
         });
         
-        services.AddScoped<IApplicationDbContext>(provider =>
+        services.AddScoped<ApplicationDbContext>(provider =>
             provider.GetService<ApplicationDbContext>());
         
         return services;

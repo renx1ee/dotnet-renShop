@@ -1,12 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using RenStore.Domain.Entities;
-using RenStore.Domain.Entities.Products;
-using RenStore.Domain.Enums;
-using RenStore.Domain.Enums.Clothes;
 
 namespace RenStore.Persistence.Test.Common;
 
-public class ProductContextFactory
+public class DbContextFactory
 {
     public static Guid ProductIdForDelete = Guid.NewGuid();
     public static Guid ProductIdForUpdate = Guid.NewGuid();
@@ -17,13 +13,15 @@ public class ProductContextFactory
     public static ApplicationDbContext Create()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString())
+            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
         
         var context = new ApplicationDbContext(options);
         context.Database.EnsureCreated();
         
-        context.Products.AddRange(
+        return context;
+    }
+        /*context.Products.AddRange(
             #region Products 
             new Product
                 {   
@@ -221,12 +219,6 @@ public class ProductContextFactory
             );
         
         context.SaveChanges();
-        return context;
-    }
-
-    public static void Destroy(ApplicationDbContext context)
-    {
-        context.Database.EnsureDeleted();
-        context.Dispose();
-    }
+        */
+    
 }

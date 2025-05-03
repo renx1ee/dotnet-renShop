@@ -6,9 +6,9 @@ using RenStore.Persistence.EntityTypeConfigurations;
 
 namespace RenStore.Persistence;
 
-public class ApplicationDbContext : DbContext, IApplicationDbContext
+public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext(DbContextOptions options) : base(options) { }
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
