@@ -2,14 +2,8 @@ using RenStore.Identity.DuendeServer.WebAPI.Data.IdentityConfigurations;
 using RenStore.Identity.DuendeServer.WebAPI.Service;
 using RenStore.Identity.DuendeServer.WebAPI.Data;
 using RenStore.Domain.Entities;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.Text;
 using Microsoft.Extensions.Caching.Memory;
 using RenStore.Identity.DuendeServer.WebAPI.Data.Extensions;
 using RenStore.Identity.DuendeServer.WebAPI.Endpoints;
@@ -24,58 +18,6 @@ builder.Services.AddDbContext<AuthDbContext>(optoins =>
 
 builder.Services.AddApiAuthentication();
 
-/*builder.Services.AddAuthentication(options =>
-{
-    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
-    {
-        options.TokenValidationParameters = new()
-        {
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("mysuperkeywoooooooooooooooochoeeeeeee"))
-        };
-
-        options.Events = new JwtBearerEvents
-        {
-            OnMessageReceived = context =>
-            {
-                context.Token = context.Request.Cookies["tasty-cookies"];
-                return Task.CompletedTask;
-            }
-        };
-    })
-    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-    {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(30000);
-        options.Cookie.Name = "tasty-cookies";
-    });
-
-builder.Services.AddAuthorization(options =>
-{
-    /*options.AddPolicy("AuthUser", new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()
-        .RequireClaim(ClaimTypes.Role, "AuthUser")
-        .Build());
-    options.AddPolicy("Admin", policy =>
-    {
-        policy.RequireAuthenticatedUser();
-        policy.RequireClaim(ClaimTypes.Role, "Admin");
-    });
-    options.AddPolicy("Moderator", policy =>
-    {
-        policy.RequireAuthenticatedUser();
-        policy.RequireClaim(ClaimTypes.Role, "Moderator");
-    });#1#
-});*/
-
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddSignInManager<SignInManager<ApplicationUser>>()
@@ -87,7 +29,9 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.,@-+";
     options.User.RequireUniqueEmail = true;
 
-    options.SignIn.RequireConfirmedEmail = true;
+    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedAccount = false;
+    options.SignIn.RequireConfirmedPhoneNumber = false;
 
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
@@ -132,7 +76,7 @@ else
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-    var roles = new[] { "User", "Admin", "Manager" };
+    var roles = new[] { "AuthUser", "Admin", "Manager" };
 
     foreach (var role in roles)
     {

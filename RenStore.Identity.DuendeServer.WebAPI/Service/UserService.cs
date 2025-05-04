@@ -9,7 +9,6 @@ using RenStore.Application.Data.Common.Exceptions;
 using RenStore.Domain.Entities;
 using RenStore.Identity.DuendeServer.WebAPI.Data;
 using RenStore.Identity.DuendeServer.WebAPI.Data.IdentityConfigurations;
-using RenStore.Identity.DuendeServer.WebAPI.Models;
 
 namespace RenStore.Identity.DuendeServer.WebAPI.Service;
 
@@ -65,33 +64,37 @@ public class UserService : ControllerBase
         
         if(!result) return string.Empty;
         
-        var claims = new List<Claim>
+        var token = jwtProvider.GenerateToken(user);
+        
+        httpContextAccessor.HttpContext.Response.Cookies.Append("tasty-cookies", token, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.Now.AddHours(12)
+        });
+        
+        return token;
+        
+        /*var claims = new List<Claim>
         {
             new (ClaimTypes.Name, email),
             new (ClaimTypes.Role, "AuthUser"),
             new ("UserId", user.Id),
             new ("Role", user.Role)
         };
-        
+
         var claimsIdentity = new ClaimsIdentity(
-            claims: claims, 
-            authenticationType: "pwd", 
-            nameType: ClaimTypes.Name, 
+            claims: claims,
+            authenticationType: "Bearer",
+            nameType: ClaimTypes.Name,
             roleType: ClaimTypes.Role);
-        
+
         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-        await httpContextAccessor.HttpContext!.SignInAsync(
+        await httpContextAccessor.HttpContext.SignInAsync(
             CookieAuthenticationDefaults.AuthenticationScheme,
-            claimsPrincipal);
-
-        var token = jwtProvider.GenerateToken(user);
-
-        httpContextAccessor.HttpContext!.Response.Cookies.Append("tasty-cookies", token);
-
-        await httpContextAccessor.HttpContext.SignInAsync(claimsPrincipal);
-
-        return token;
+            claimsPrincipal);*/
     }
     
     public async Task ConfirmEmail(string email)
@@ -150,12 +153,36 @@ public class UserService : ControllerBase
         }
         return false;
     }
-    // TODO: доделать подтверждение.
-    public string GenerateConfirmationLink(HttpRequest request, string userId, string token)
+
+    public async Task<string> ForgotPassword(string userId)
+    {
+        var user = await userManager.FindByIdAsync(userId);
+        if(user is null) 
+            return String.Empty;
+        
+        return user.PasswordHash;
+    }
+    
+    public async Task<bool> ChangePassword(ApplicationUser user, string newPassword)
+    {
+        var changePasswordResult = 
+            await userManager
+                .ChangePasswordAsync(
+                    user: user, 
+                    currentPassword: user.PasswordHash!, 
+                    newPassword: newPassword);
+
+        if (changePasswordResult.Succeeded)
+            return true;
+        
+        return false;
+    }
+    
+    /*public string GenerateConfirmationLink(HttpRequest request, string userId, string token)
     {
         var scheme = request.Scheme;
         var host = request.Host.Value;
         
         return $"{scheme}://{host}/confirm-email?userId={userId}&token={WebUtility.UrlEncode(token)}";
-    }
+    }*/
 }

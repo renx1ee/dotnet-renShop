@@ -24,9 +24,10 @@ public static class Configuration
     public static IEnumerable<ApiResource> ApiResources =>
         new List<ApiResource>
         {
-            new ApiResource( name: AuthConstants.AUTH_IDENTITY_CLIENT_ID,
-                            displayName: AuthConstants.AUTH_IDENTITY_DISPLAY_NAME,
-                            userClaims: [JwtClaimTypes.Name])
+            new ApiResource(
+                name: AuthConstants.AUTH_IDENTITY_CLIENT_ID,
+                displayName: AuthConstants.AUTH_IDENTITY_DISPLAY_NAME,
+                userClaims: [JwtClaimTypes.Name])
             {
                 Scopes = { AuthConstants.AUTH_IDENTITY_CLIENT_ID }
             }

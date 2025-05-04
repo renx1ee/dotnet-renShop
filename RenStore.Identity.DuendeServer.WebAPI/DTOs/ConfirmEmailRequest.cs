@@ -1,4 +1,4 @@
-namespace RenStore.Identity.DuendeServer.WebAPI.Models;
+namespace RenStore.Identity.DuendeServer.WebAPI.DTOs;
 
 public class ConfirmEmailRequest
 {
