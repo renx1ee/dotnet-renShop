@@ -1,5 +1,8 @@
+using System.Security.Claims;
 using Duende.IdentityServer.Extensions;
-using RenStore.Identity.DuendeServer.WebAPI.Models;
+using Microsoft.AspNetCore.Identity;
+using RenStore.Domain.Entities;
+using RenStore.Identity.DuendeServer.WebAPI.DTOs;
 using RenStore.Identity.DuendeServer.WebAPI.Service;
 
 namespace RenStore.Identity.DuendeServer.WebAPI.Endpoints;
@@ -24,15 +27,19 @@ public static class UserEndpoints
 
         group.MapPost("/forgot-password", ForgotPassword);
 
-        group.MapPost("/reset-password", ResetPassword).RequireAuthorization();
+        group.MapPost("/change-password", ChangePassword);
         
         group.MapPost("/refresh-token", RefreshToken).RequireAuthorization();
 
         group.MapGet("/me", GetMyInfo);
         
-        group.MapGet("/assign-role", AssignRole);
+        group.MapPost("/update-me", UpdateProfile);
         
-        group.MapGet("/remove-role", RemoveRole);
+        group.MapPost("/assign-role", AssignRole);
+        
+        group.MapPost("/remove-role", RemoveRole);
+        
+        group.MapGet("/user-email", GetUserByEmail);
         
         return group;
     }
@@ -98,8 +105,19 @@ public static class UserEndpoints
         return Results.Ok();
     }
     
-    private static async Task<IResult> ResetPassword()
+    private static async Task<IResult> ChangePassword(
+        ChangePasswordRequest request, 
+        UserService service,
+        HttpContext context,
+        UserManager<ApplicationUser> userManager)
     {
+        var user = await userManager.GetUserAsync(context.User);
+        if (user is null) 
+            return Results.Unauthorized();
+        
+        var result = await service 
+            .ChangePassword(user, request.NewPassword);
+        
         return Results.Ok();
     }
     
@@ -108,7 +126,20 @@ public static class UserEndpoints
         return Results.Ok();
     }
 
-    private static async Task<IResult> GetMyInfo()
+    private static async Task<IResult> GetMyInfo(
+        UserManager<ApplicationUser> manager,
+        HttpContext context)
+    {
+        var user = context.User;
+        var jwtToken = context.Request.Cookies["tasty-cookies"];
+        
+        if (!context.User.Identity.IsAuthenticated)
+            return Results.Unauthorized();
+        
+        return Results.Ok();
+    }
+    
+    private static async Task<IResult> UpdateProfile()
     {
         return Results.Ok();
     }
@@ -119,6 +150,11 @@ public static class UserEndpoints
     }
     
     private static async Task<IResult> RemoveRole()
+    {
+        return Results.Ok();
+    }
+
+    private static async Task<IResult> GetUserByEmail()
     {
         return Results.Ok();
     }

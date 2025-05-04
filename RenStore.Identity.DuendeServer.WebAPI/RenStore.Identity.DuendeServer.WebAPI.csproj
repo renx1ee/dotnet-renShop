@@ -38,8 +38,4 @@
     <_ContentIncludedByDefault Remove="wwwroot\css\Login\login.css" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\" />
-  </ItemGroup>
-
 </Project>
