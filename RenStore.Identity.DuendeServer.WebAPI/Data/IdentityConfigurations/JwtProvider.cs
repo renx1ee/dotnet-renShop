@@ -13,18 +13,16 @@ public class JwtProvider
         Claim[] claims = 
         [
             new(ClaimTypes.Name, user.Email!),
-            new(ClaimTypes.NameIdentifier, user.Id),
-            new("UserId", user.Id.ToString()),
+            new(ClaimTypes.NameIdentifier, user.Id), 
             new(ClaimTypes.Role, "AuthUser"),
         ];
 
         var signingCredentials = new SigningCredentials(
-            new SymmetricSecurityKey(
+            new SymmetricSecurityKey( 
                 key: Encoding.UTF8.GetBytes(AuthOptions.KEY)),
                 algorithm: SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: AuthOptions.KEY,
             claims: claims,
             signingCredentials: signingCredentials,
             expires: DateTime.UtcNow.AddHours(12));
