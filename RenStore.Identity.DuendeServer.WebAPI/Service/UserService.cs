@@ -66,13 +66,7 @@ public class UserService : ControllerBase
         
         var token = jwtProvider.GenerateToken(user);
         
-        httpContextAccessor.HttpContext.Response.Cookies.Append("tasty-cookies", token, new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.Strict,
-            Expires = DateTime.Now.AddHours(12)
-        });
+        httpContextAccessor.HttpContext.Response.Cookies.Append("tasty-cookies", token);
         
         return token;
         
@@ -95,6 +89,11 @@ public class UserService : ControllerBase
         await httpContextAccessor.HttpContext.SignInAsync(
             CookieAuthenticationDefaults.AuthenticationScheme,
             claimsPrincipal);*/
+    }
+
+    public async Task Logout()
+    {
+        httpContextAccessor.HttpContext.Response.Cookies.Delete("tasty-cookies");
     }
     
     public async Task ConfirmEmail(string email)

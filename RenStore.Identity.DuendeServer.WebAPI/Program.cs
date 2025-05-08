@@ -1,3 +1,5 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using RenStore.Identity.DuendeServer.WebAPI.Data.IdentityConfigurations;
 using RenStore.Identity.DuendeServer.WebAPI.Service;
 using RenStore.Identity.DuendeServer.WebAPI.Data;
@@ -5,7 +7,7 @@ using RenStore.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using RenStore.Identity.DuendeServer.WebAPI.Data.Extensions;
+using Microsoft.IdentityModel.Tokens;
 using RenStore.Identity.DuendeServer.WebAPI.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +18,62 @@ builder.Services.AddDbContext<AuthDbContext>(optoins =>
     optoins.UseNpgsql(connectionString);
 });
 
-builder.Services.AddApiAuthentication();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+    {
+        options.TokenValidationParameters = new()
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(AuthOptions.KEY))
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context => 
+            {
+                context.Token = context.Request.Cookies["tasty-cookies"];
+                return Task.CompletedTask;
+            },
+        };
+    });
+    /*.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+    {
+        options.Events = new CookieAuthenticationEvents
+        {
+            OnRedirectToLogin = context =>
+            {
+                context.Response.StatusCode = 401;
+                return Task.CompletedTask;
+            },
+            OnRedirectToAccessDenied = context =>
+            {
+                context.Response.StatusCode = 403;
+                return Task.CompletedTask;
+            }
+        };
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30000);
+        options.Cookie.Name = "tasty-cookies";
+    })*/
+builder.Services.AddAuthorization(options =>
+{
+    /*options.AddPolicy("AuthUser", new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .RequireClaim(ClaimTypes.Role, "AuthUser")
+        .Build());
+    options.AddPolicy("Admin", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim(ClaimTypes.Role, "Admin");
+    });
+    options.AddPolicy("Moderator", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim(ClaimTypes.Role, "Moderator");
+    });*/
+});
 
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddEntityFrameworkStores<AuthDbContext>()
@@ -66,14 +123,22 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-}
+} 
 else
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+app.UseHttpsRedirection();
 
-using (var scope = app.Services.CreateScope())
+app.UseRouting();
+
+/*app.UseIdentityServer();*/
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+/*using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
     var roles = new[] { "AuthUser", "Admin", "Manager" };
@@ -106,13 +171,7 @@ using (var scope = app.Services.CreateScope())
         var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
         logger.LogError(exception, "An error occurred app initialization.");
     }
-}
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.UseIdentityServer();
-app.UseHttpsRedirection();
+}*/
 
 app.UseCors(x => x
     .AllowAnyOrigin()
@@ -125,15 +184,6 @@ app.UseSwaggerUI(config =>
     config.RoutePrefix = string.Empty;
     config.SwaggerEndpoint("swagger/v1/swagger.json", "Shop API");
 });
-
-app.UseRouting();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.UseHttpsRedirection();
 
 app.MapUserEndpoints();
 

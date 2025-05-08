@@ -28,10 +28,10 @@ public static class UserEndpoints
         group.MapPost("/forgot-password", ForgotPassword);
 
         group.MapPost("/change-password", ChangePassword);
-        
-        group.MapPost("/refresh-token", RefreshToken).RequireAuthorization();
 
-        group.MapGet("/me", GetMyInfo);
+        group.MapPost("/refresh-token", RefreshToken);
+        
+        group.MapGet("/me", GetMyInfo).RequireAuthorization();
         
         group.MapPost("/update-me", UpdateProfile);
         
@@ -62,17 +62,19 @@ public static class UserEndpoints
         LoginUserRequest request,
         UserService userService)
     {
-        var result = await userService.Login(request.Email!, request.Password!);
+        var token = await userService.Login(request.Email!, request.Password!);
         
-        if(!result.IsNullOrEmpty())
-            return Results.Ok(result);
+        if(!token.IsNullOrEmpty())
+            return Results.Ok(new { Token = token});
         
         return Results.BadRequest("Email or password is incorrect.");
     }
     
-    private static async Task<IResult> Logout()
+    private static async Task<IResult> Logout(
+        UserService service)
     {
-        return Results.Ok();
+        await service.Logout();
+        return Results.NoContent();
     }
     
     private static async Task<IResult> CheckConfirmEmail(
