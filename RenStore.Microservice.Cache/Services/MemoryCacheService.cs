@@ -2,7 +2,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace RenStore.Microservice.Cache.Services;
 
-public class MemoryCacheService(IMemoryCache memoryCache) : ICacheServiceBase
+public class MemoryCacheService(IMemoryCache memoryCache)
 {
     public async Task SetCacheAsync(string key, string? data, uint seconds, CancellationToken cancellationToken)
     {
@@ -12,10 +12,14 @@ public class MemoryCacheService(IMemoryCache memoryCache) : ICacheServiceBase
 
     public async Task<string?> GetCacheAsync(string key, CancellationToken cancellationToken)
     {
-        var isExist = memoryCache.TryGetValue(key, out string? value);
+        var isExist = memoryCache.TryGetValue(
+            key: key, 
+            value: out string? value);
         
-        if (isExist) return value;
-        throw new Exception();
+        if (isExist) 
+            return value;
+        
+        return string.Empty;
     }
 
     public async Task DeleteCacheAsync(string key, CancellationToken cancellationToken)
