@@ -10,8 +10,9 @@ public class DistributedCacheService(IDistributedCache distributedCache) : ICach
         data ??= DateTime.UtcNow.ToString("F");
         await distributedCache.SetStringAsync(key, data, new DistributedCacheEntryOptions
         {
-            AbsoluteExpiration = DateTime.Now.AddSeconds(seconds)
-        }, cancellationToken);
+            AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(seconds)
+        }, 
+        cancellationToken);
     }
 
     public async Task<string?> GetCacheAsync(string key, CancellationToken cancellationToken)

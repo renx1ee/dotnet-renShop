@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using RenStore.Microservice.Cache.DTOs;
 using RenStore.Microservice.Cache.Services;
 
@@ -8,71 +9,87 @@ public static class CacheEndpoints
     public static IEndpointRouteBuilder MapCacheEndpoints(this IEndpointRouteBuilder app)
     {
         var api = app.MapGroup("api/cache/");
-
-        /*api.MapPost("/distributed", SetDistributedCache);
-        api.MapGet("/distributed", GetDistributedCache);
-        api.MapDelete("/distributed", DeleteDistributedCache);*/
         
         api.MapPost("/memory", SetMemoryCache);
-        api.MapGet("/memory", GetMemoryCache);
-        api.MapDelete("/memory", DeleteMemoryCache);
+        api.MapGet("/memory/{key}", GetMemoryCache);
+        api.MapDelete("/memory/{key}", DeleteMemoryCache);
+
+        api.MapPost("/distributed", SetDistributedCache);
+        api.MapGet("/distributed/{key}", GetDistributedCache);
+        api.MapDelete("/distributed/{key}", DeleteDistributedCache);
         
         return api;
     }
-
-    /*private static async Task<IResult> SetDistributedCache(
-        SetCacheRequest request,
-        DistributedCacheService serviceBase)
-    {
-        await serviceBase.SetCacheAsync(request.key, request.value, request.seconds, CancellationToken.None);
-        return Results.NoContent();
-    }
-    
-    private static async Task<IResult> GetDistributedCache(
-        GetCacheRequest request,
-        DistributedCacheService serviceBase)
-    {
-        var result = await serviceBase.GetCacheAsync(request.key, CancellationToken.None);
-        
-        if (result is null) 
-            return Results.NotFound();
-        
-        return Results.Ok(result);
-    }
-    
-    private static async Task<IResult> DeleteDistributedCache(
-        DeleteCacheRequest request,
-        DistributedCacheService serviceBase)
-    {
-        await serviceBase.DeleteCacheAsync(request.key, CancellationToken.None);
-        return Results.NoContent();
-    }*/
-    
+    #region Memory Cache Endpoints
     private static async Task<IResult> SetMemoryCache(
-        SetCacheRequest request,
+        [FromBody] SetCacheRequest request,
         MemoryCacheService serviceBase)
     {
-        await serviceBase.SetCacheAsync(request.key, request.value, request.seconds, CancellationToken.None);
+        await serviceBase.SetCacheAsync(
+            key: request.key, 
+            data: request.value, 
+            seconds: request.seconds, 
+            cancellationToken: CancellationToken.None);
+        
         return Results.NoContent();
     }
     
     private static async Task<IResult> GetMemoryCache(
-        GetCacheRequest request,
+        string key,
         MemoryCacheService serviceBase)
     {
-        var result = await serviceBase.GetCacheAsync(request.key, CancellationToken.None);
+        var result = await serviceBase.GetCacheAsync(
+            key: key, 
+            cancellationToken: CancellationToken.None);
         
-        if (result is null) 
+        if (string.IsNullOrEmpty(result))
             return Results.NotFound();
         
         return Results.Ok(result);
     }
     
     private static async Task<IResult> DeleteMemoryCache(
-        DeleteCacheRequest request,
+        string key,
         MemoryCacheService serviceBase)
     {
-        await serviceBase.DeleteCacheAsync(request.key, CancellationToken.None);
+        await serviceBase.DeleteCacheAsync(key, CancellationToken.None);
         return Results.NoContent();
     }
+    #endregion
+    #region Distibuted Cache Endpoints
+    private static async Task<IResult> SetDistributedCache(
+        [FromBody] SetCacheRequest request,
+        DistributedCacheService serviceBase)
+    {
+        await serviceBase.SetCacheAsync(
+            key: request.key, 
+            data: request.value,
+            seconds: request.seconds, 
+            cancellationToken: CancellationToken.None);
+        
+        return Results.NoContent();
+    }
+
+    private static async Task<IResult> GetDistributedCache(
+        string key,
+        DistributedCacheService serviceBase)
+    {
+        var result = await serviceBase.GetCacheAsync(
+            key: key, 
+            CancellationToken.None);
+
+        if (result is null)
+            return Results.NotFound();
+
+        return Results.Ok(result);
+    }
+
+    private static async Task<IResult> DeleteDistributedCache(
+        string key,
+        DistributedCacheService serviceBase)
+    {
+        await serviceBase.DeleteCacheAsync(key, CancellationToken.None);
+        return Results.NoContent();
+    }
+    #endregion
 }
