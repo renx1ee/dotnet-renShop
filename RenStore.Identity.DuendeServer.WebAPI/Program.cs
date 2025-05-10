@@ -6,12 +6,12 @@ using RenStore.Identity.DuendeServer.WebAPI.Data;
 using RenStore.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 using RenStore.Identity.DuendeServer.WebAPI.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetValue<string>("DefaultConnection");
+builder.Configuration.AddJsonFile("notification-message.json", optional: false, reloadOnChange: false);
 
 builder.Services.AddDbContext<AuthDbContext>(optoins =>
 {
@@ -39,7 +39,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             },
         };
     });
-    /*.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+     /*.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
     {
         options.Events = new CookieAuthenticationEvents
         {
@@ -112,7 +112,8 @@ builder.Services.AddIdentityServer()
 builder.Services.AddScoped<JwtProvider>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<IEmailVerificationService, EmailVerificationService>();
-builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
+builder.Services.AddScoped<ICacheSender, CacheSender>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
@@ -133,7 +134,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-/*app.UseIdentityServer();*/
+app.UseIdentityServer();
 
 app.UseAuthentication();
 app.UseAuthorization();
