@@ -18,7 +18,7 @@ public static class CacheEndpoints
         api.MapGet("/distributed/{key}", GetDistributedCache);
         api.MapDelete("/distributed/{key}", DeleteDistributedCache);
         
-        return api;
+        return app;
     }
     #region Memory Cache Endpoints
     private static async Task<IResult> SetMemoryCache(

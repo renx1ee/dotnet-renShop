@@ -1,17 +1,15 @@
-using Microsoft.Extensions.Caching.Memory;
-using RenStore.Identity.DuendeServer.WebAPI.Data;
+using RenStore.Identity.DuendeServer.WebAPI.Helpers;
 
 namespace RenStore.Identity.DuendeServer.WebAPI.Service;
 
 public class EmailVerificationService : IEmailVerificationService
 {
-    private readonly IMemoryCache cache;
-    private readonly TimeSpan expiration = TimeSpan.FromMinutes(5);
+    private readonly ICacheSender cacheSender;
+    private readonly uint secondsExpiration = 300;
+    /*private readonly TimeSpan expiration = TimeSpan.FromMinutes(5);*/
 
-    public EmailVerificationService(IMemoryCache cache)
-    {
-        this.cache = cache;
-    }
+    public EmailVerificationService(ICacheSender cacheSender) =>
+        this.cacheSender = cacheSender;
     
     public string GenerateCode()
     {
@@ -19,17 +17,24 @@ public class EmailVerificationService : IEmailVerificationService
         return random.Next(1000, 9999).ToString();
     }
 
-    public async Task StoreCodeAsync(string userId, string code)
+    public async Task StoreCodeAsync(string email, string code)
     {
-        cache.Set($"EmailVerification_{userId}", code, expiration);
+        await cacheSender.SetCacheAsync(
+            key: CacheKeyHelper
+                .CreateEmailVerificationKey(email), 
+            value: code, 
+            seconds: secondsExpiration);
     }
 
-    public async Task<bool> VerifyCodeAsync(string userId, string code)
+    public async Task<bool> VerifyCodeAsync(string email, string code)
     {
-        if (cache.TryGetValue($"EmailVerification_{userId}", out string storedCode))
-        {
+        var storedCode = 
+            await cacheSender.GetCacheAsync(
+                CacheKeyHelper.CreateEmailVerificationKey(email));
+        
+        if (!string.IsNullOrEmpty(storedCode))
             return storedCode == code;
-        }
+        
         return false;
     }
 }

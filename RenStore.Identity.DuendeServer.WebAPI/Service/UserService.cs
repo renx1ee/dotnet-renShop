@@ -9,6 +9,7 @@ using RenStore.Application.Data.Common.Exceptions;
 using RenStore.Domain.Entities;
 using RenStore.Identity.DuendeServer.WebAPI.Data;
 using RenStore.Identity.DuendeServer.WebAPI.Data.IdentityConfigurations;
+using RenStore.Identity.DuendeServer.WebAPI.DTOs;
 
 namespace RenStore.Identity.DuendeServer.WebAPI.Service;
 
@@ -18,13 +19,16 @@ public class UserService : ControllerBase
     private readonly JwtProvider jwtProvider;
     private readonly IHttpContextAccessor httpContextAccessor;
     private readonly IEmailVerificationService emailVerificationService;
+    private readonly IEmailSender emailSender;
 
     public UserService(
         JwtProvider jwtProvider,
         UserManager<ApplicationUser> userManager,
         IHttpContextAccessor httpContextAccessor,
-        IEmailVerificationService emailVerificationService)
+        IEmailVerificationService emailVerificationService,
+        IEmailSender emailSender)
     {
+        this.emailSender = emailSender;
         this.userManager = userManager;
         this.jwtProvider = jwtProvider;
         this.httpContextAccessor = httpContextAccessor;
@@ -101,45 +105,25 @@ public class UserService : ControllerBase
         var user = await userManager.FindByEmailAsync(email) 
             ?? throw new Exception("");
         
-        /*var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-
-        var request = httpContextAccessor.HttpContext.Request;
-        
-        var confirmationLink = GenerateConfirmationLink(request, user.Id, token);
-
-        var data = new ConfirmEmailRequest
-        {
-            UserId = user.Id,
-            To = email,
-            Subject = "Confirm Your Email",
-            Body = $"<a href='{confirmationLink}'>link</a>"
-        };*/
-        
-        
         var code = emailVerificationService.GenerateCode();
-        await emailVerificationService.StoreCodeAsync(user.Id, code);
-        
-        var httpClient = new HttpClient();
-        httpClient.BaseAddress = new Uri(UrlConstants.NOTIFICATION_MICROSERVICE_URL);
-        
-        var response = await httpClient.PostAsJsonAsync(
-            "/api/v1/notification/email", 
-            $"{code} is your verification code.");
-        
-        response.EnsureSuccessStatusCode();
-        var result = await response.Content.ReadAsStringAsync();
+        await emailVerificationService.StoreCodeAsync(email, code);
+
+        await emailSender.SendEmail(user.Id, email, code); 
     }
 
     public async Task<bool> VerifyEmail(string email, string code)
     {
+        var user = await userManager.FindByEmailAsync(email)
+            ?? throw new Exception();
+        
         var result = await emailVerificationService.VerifyCodeAsync(email, code);
 
         if (result)
         {
-            
+            user.EmailConfirmed = true;
+            await userManager.UpdateAsync(user);
         }
-        
-        return true;
+        return result;
     }
 
     public async Task<bool> CheckEmailConfirmed(string email)
@@ -148,7 +132,8 @@ public class UserService : ControllerBase
         if (user is not null)
         {
             bool emailStatus = await userManager.IsEmailConfirmedAsync(user);
-            if (emailStatus) return true;
+            if (emailStatus)
+                return true;
         }
         return false;
     }
@@ -159,7 +144,7 @@ public class UserService : ControllerBase
         if(user is null) 
             return String.Empty;
         
-        return user.PasswordHash;
+        return user.PasswordHash!;
     }
     
     public async Task<bool> ChangePassword(ApplicationUser user, string newPassword)

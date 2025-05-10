@@ -77,15 +77,6 @@ public static class UserEndpoints
         return Results.NoContent();
     }
     
-    private static async Task<IResult> CheckConfirmEmail(
-        string email,
-        UserService userService)
-    {
-        var result = await userService.CheckEmailConfirmed(email);
-        
-        return Results.Ok($"{result}");
-    }
-    
     private static async Task<IResult> ConfirmEmail(
         string email,
         UserService userService)
@@ -93,13 +84,21 @@ public static class UserEndpoints
         await userService.ConfirmEmail(email);
         return Results.Ok();
     }
+    
     private static async Task<IResult> VerifyEmail(
-        string email,
         VerifyEmailRequest request,
         UserService userService)
     {
-        await userService.ConfirmEmail(email);
+        await userService.VerifyEmail(request.Email, request.Code);
         return Results.Ok();
+    }
+    
+    private static async Task<IResult> CheckConfirmEmail(
+        string email,
+        UserService userService)
+    {
+        var result = await userService.CheckEmailConfirmed(email);
+        return Results.Ok($"{result}");
     }
 
     private static async Task<IResult> ForgotPassword()

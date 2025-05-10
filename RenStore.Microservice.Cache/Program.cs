@@ -14,7 +14,7 @@ builder.Services.AddMemoryCache();
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
-    options.InstanceName = "CacheService";
+    options.InstanceName = "RedisCache_";
 });
 
 var app = builder.Build();
