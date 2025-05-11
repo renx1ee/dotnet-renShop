@@ -5,10 +5,13 @@ namespace RenStore.Microservice.Cache.Services;
 
 public class DistributedCacheService(IDistributedCache distributedCache) : ICacheServiceBase
 {
-    public async Task SetCacheAsync(string key, string? data, uint seconds, CancellationToken cancellationToken)
+    public async Task SetCacheAsync(string key, string data, uint seconds, CancellationToken cancellationToken)
     {
-        data ??= DateTime.UtcNow.ToString("F");
-        await distributedCache.SetStringAsync(key, data, new DistributedCacheEntryOptions
+        /*data ??= DateTime.UtcNow.ToString("F");*/
+        await distributedCache.SetStringAsync(
+            key: key,
+            value: data, 
+            options: new DistributedCacheEntryOptions
         {
             AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(seconds)
         }, 

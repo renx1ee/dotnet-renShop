@@ -6,7 +6,6 @@ public class EmailVerificationService : IEmailVerificationService
 {
     private readonly ICacheSender cacheSender;
     private readonly uint secondsExpiration = 300;
-    /*private readonly TimeSpan expiration = TimeSpan.FromMinutes(5);*/
 
     public EmailVerificationService(ICacheSender cacheSender) =>
         this.cacheSender = cacheSender;

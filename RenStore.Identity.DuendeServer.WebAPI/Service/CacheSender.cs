@@ -5,15 +5,18 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Service;
 
 public class CacheSender : ICacheSender
 {
+    private readonly HttpClient httpClient;
+    public CacheSender(HttpClient httpClient)
+    {
+        this.httpClient = httpClient;
+        httpClient.BaseAddress = new Uri(UrlConstants.CacheMicroserviceUrl);
+    }
     public async Task SetCacheAsync(string key, string value, uint seconds)
     {
-        var httpClient = new HttpClient();
-        httpClient.BaseAddress = new Uri(UrlConstants.CacheMicroserviceUrl);
-
         var request = new SetCacheRequest(key, value, seconds);
         
         var response = await httpClient.PostAsJsonAsync(
-            "/api/cache/distributed", request);
+            UrlConstants.DistrebutedUrl, request);
         
         response.EnsureSuccessStatusCode();
         var result = await response.Content.ReadAsStringAsync();
@@ -21,6 +24,18 @@ public class CacheSender : ICacheSender
 
     public async Task<string?> GetCacheAsync(string key)
     {
-        return "";
+        try
+        {
+            var url = new Uri(new Uri(UrlConstants.DistrebutedUrl), key);
+            using var response = await httpClient.GetAsync(url);
+
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsStringAsync();
+        }
+        catch (Exception ex)
+        {
+        }
+        return string.Empty;
     }
 }
