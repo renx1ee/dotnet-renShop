@@ -1,3 +1,4 @@
+using System.Text.Json;
 using RenStore.Identity.DuendeServer.WebAPI.Data;
 using RenStore.Identity.DuendeServer.WebAPI.DTOs;
 
@@ -16,7 +17,7 @@ public class CacheSender : ICacheSender
         var request = new SetCacheRequest(key, value, seconds);
         
         var response = await httpClient.PostAsJsonAsync(
-            UrlConstants.DistrebutedUrl, request);
+            UrlConstants.DistributedUrl, request);
         
         response.EnsureSuccessStatusCode();
         var result = await response.Content.ReadAsStringAsync();
@@ -26,12 +27,14 @@ public class CacheSender : ICacheSender
     {
         try
         {
-            var url = new Uri(new Uri(UrlConstants.DistrebutedUrl), key);
-            using var response = await httpClient.GetAsync(url);
+            using var response = 
+                await httpClient.GetAsync(
+                    $"{UrlConstants.DistributedUrl}/{key}");
 
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadAsStringAsync();
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<string>(result);
         }
         catch (Exception ex)
         {

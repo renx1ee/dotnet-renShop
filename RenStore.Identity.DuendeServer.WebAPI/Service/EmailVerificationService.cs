@@ -30,7 +30,7 @@ public class EmailVerificationService : IEmailVerificationService
         var storedCode = 
             await cacheSender.GetCacheAsync(
                 CacheKeyHelper.CreateEmailVerificationKey(email));
-        
+
         if (!string.IsNullOrEmpty(storedCode))
             return storedCode == code;
         

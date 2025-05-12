@@ -23,7 +23,7 @@ public class EmailSender(HttpClient httpClient, IConfiguration configuration) : 
                 data);
             
             response.EnsureSuccessStatusCode();
-            var result = await response.Content.ReadAsStringAsync();
+            await response.Content.ReadAsStringAsync();
         }
         catch (Exception ex)
         {
