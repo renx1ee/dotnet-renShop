@@ -8,12 +8,8 @@ namespace RenStore.Microservice.Notification.Controllers;
 [ApiController]
 [ApiVersion(1, Deprecated = false)]
 [Route("api/v{version:apiVersion}/[controller]")]
-public class NotificationController : ControllerBase
+public class NotificationController(INotificationService notificationService) : ControllerBase
 {
-    private readonly INotificationService notificationService;
-    public NotificationController(INotificationService notificationService) => 
-        this.notificationService = notificationService;
-
     [HttpPost]
     [MapToApiVersion(1)] 
     [Route("/api/v{version:apiVersion}/notification/email")]

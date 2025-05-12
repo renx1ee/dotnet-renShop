@@ -1,15 +1,7 @@
-using System.Net;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
-using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using RenStore.Application.Data.Common.Exceptions;
 using RenStore.Domain.Entities;
-using RenStore.Identity.DuendeServer.WebAPI.Data;
 using RenStore.Identity.DuendeServer.WebAPI.Data.IdentityConfigurations;
-using RenStore.Identity.DuendeServer.WebAPI.DTOs;
 
 namespace RenStore.Identity.DuendeServer.WebAPI.Service;
 
@@ -97,7 +89,7 @@ public class UserService : ControllerBase
 
     public async Task Logout()
     {
-        httpContextAccessor.HttpContext.Response.Cookies.Delete("tasty-cookies");
+        httpContextAccessor.HttpContext!.Response.Cookies.Delete("tasty-cookies");
     }
     
     public async Task ConfirmEmail(string email)
@@ -161,12 +153,4 @@ public class UserService : ControllerBase
         
         return false;
     }
-    
-    /*public string GenerateConfirmationLink(HttpRequest request, string userId, string token)
-    {
-        var scheme = request.Scheme;
-        var host = request.Host.Value;
-        
-        return $"{scheme}://{host}/confirm-email?userId={userId}&token={WebUtility.UrlEncode(token)}";
-    }*/
 }

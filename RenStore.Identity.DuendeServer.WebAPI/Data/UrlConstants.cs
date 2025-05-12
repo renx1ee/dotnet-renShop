@@ -9,5 +9,5 @@ public class UrlConstants
     public const string SendSmsUrl = "/api/v1/notification/sms";
     public const string SendPushUrl = "/api/v1/notification/push";
     
-    public const string DistrebutedUrl = "/api/cache/distributed/";
+    public const string DistributedUrl = "/api/cache/distributed";
 }

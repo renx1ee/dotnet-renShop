@@ -1,4 +1,4 @@
-using System.Reflection;
+/*using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace RenStore.Identity.DuendeServer.WebAPI.Endpoints;
@@ -20,4 +20,4 @@ public static class EndpointHelper
         
         return services;
     }
-}
+}*/

@@ -8,7 +8,7 @@ namespace RenStore.Microservice.Notification.Services;
 public interface INotificationService
 {
     /// <summary>
-    /// Send by User Email.
+    /// Send it by User Email.
     /// </summary>
     /// <param name="userId">User Id.</param>
     /// <param name="email">User email.</param>

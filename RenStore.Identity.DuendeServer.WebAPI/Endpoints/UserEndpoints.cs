@@ -89,8 +89,11 @@ public static class UserEndpoints
         VerifyEmailRequest request,
         UserService userService)
     {
-        await userService.VerifyEmail(request.Email, request.Code);
-        return Results.Ok();
+        var result = await userService.VerifyEmail(request.Email, request.Code);
+        if(result)
+            return Results.Ok();
+        
+        return Results.BadRequest();
     }
     
     private static async Task<IResult> CheckConfirmEmail(
@@ -98,7 +101,10 @@ public static class UserEndpoints
         UserService userService)
     {
         var result = await userService.CheckEmailConfirmed(email);
-        return Results.Ok($"{result}");
+        if(result)
+            return Results.Ok();
+        
+        return Results.NoContent();
     }
 
     private static async Task<IResult> ForgotPassword()
