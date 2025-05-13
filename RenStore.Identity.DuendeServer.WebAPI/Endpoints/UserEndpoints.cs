@@ -1,9 +1,9 @@
-using System.Security.Claims;
 using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Identity;
 using RenStore.Domain.Entities;
 using RenStore.Identity.DuendeServer.WebAPI.DTOs;
 using RenStore.Identity.DuendeServer.WebAPI.Service;
+using RenStore.Identity.DuendeServer.WebAPI.Services;
 
 namespace RenStore.Identity.DuendeServer.WebAPI.Endpoints;
 
@@ -107,11 +107,17 @@ public static class UserEndpoints
         return Results.NoContent();
     }
 
+    // TODO: доделать
     private static async Task<IResult> ForgotPassword()
     {
+        
+        // 1. send code
+        // 2. check code
+        // 3. create a new password
         return Results.Ok();
     }
     
+    // TODO: доделать
     private static async Task<IResult> ChangePassword(
         ChangePasswordRequest request, 
         UserService service,
@@ -128,11 +134,13 @@ public static class UserEndpoints
         return Results.Ok();
     }
     
+    // TODO: доделать
     private static async Task<IResult> RefreshToken()
     {
         return Results.Ok();
     }
 
+    // TODO: доделать
     private static async Task<IResult> GetMyInfo(
         UserManager<ApplicationUser> manager,
         HttpContext context)
@@ -146,21 +154,25 @@ public static class UserEndpoints
         return Results.Ok();
     }
     
+    // TODO: доделать
     private static async Task<IResult> UpdateProfile()
     {
         return Results.Ok();
     }
 
+    // TODO: доделать
     private static async Task<IResult> AssignRole()
     {
         return Results.Ok();
     }
     
+    // TODO: доделать
     private static async Task<IResult> RemoveRole()
     {
         return Results.Ok();
     }
 
+    // TODO: доделать
     private static async Task<IResult> GetUserByEmail()
     {
         return Results.Ok();

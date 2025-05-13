@@ -1,6 +1,6 @@
 namespace RenStore.Identity.DuendeServer.WebAPI.Data;
 
-public class UrlConstants
+public static class UrlConstants
 {
     public const string NotificationMicroserviceUrl = "http://localhost:5062/";
     public const string CacheMicroserviceUrl = "http://localhost:5197/";

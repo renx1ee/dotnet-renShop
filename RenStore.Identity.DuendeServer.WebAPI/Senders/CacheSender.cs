@@ -1,8 +1,9 @@
 using System.Text.Json;
 using RenStore.Identity.DuendeServer.WebAPI.Data;
 using RenStore.Identity.DuendeServer.WebAPI.DTOs;
+using RenStore.Identity.DuendeServer.WebAPI.Service;
 
-namespace RenStore.Identity.DuendeServer.WebAPI.Service;
+namespace RenStore.Identity.DuendeServer.WebAPI.Senders;
 
 public class CacheSender : ICacheSender
 {
