@@ -4,25 +4,19 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using RenStore.Identity.DuendeServer.WebAPI.Data.IdentityConfigurations;
 
-namespace RenStore.Identity.DuendeServer.WebAPI.Data.Extensions;
+namespace RenStore.Identity.DuendeServer.WebAPI.Extensions;
 
 public static class AuthExtensions
 {
     public static void AddApiAuthentication(
         this IServiceCollection services)
     {
-        services.AddAuthentication(options =>
-            {
-                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.TokenValidationParameters = new()
                 {
-                    ValidateIssuer = true,
-                    ValidIssuer = AuthOptions.KEY,
+                    ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
@@ -31,24 +25,31 @@ public static class AuthExtensions
                 };
                 options.Events = new JwtBearerEvents
                 {
-                    OnMessageReceived = context =>
+                    OnMessageReceived = context => 
                     {
                         context.Token = context.Request.Cookies["tasty-cookies"];
                         return Task.CompletedTask;
                     },
-                    OnAuthenticationFailed = context =>
-                    {
-                        Console.WriteLine($"Error {context.Exception.Message}");
-                        return Task.CompletedTask;
-                    }
                 };
-            })
-            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-            {
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(30000);
-                options.Cookie.Name = "tasty-cookies";
             });
-
+        /*.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+       {
+           options.Events = new CookieAuthenticationEvents
+           {
+               OnRedirectToLogin = context =>
+               {
+                   context.Response.StatusCode = 401;
+                   return Task.CompletedTask;
+               },
+               OnRedirectToAccessDenied = context =>
+               {
+                   context.Response.StatusCode = 403;
+                   return Task.CompletedTask;
+               }
+           };
+           options.ExpireTimeSpan = TimeSpan.FromMinutes(30000);
+           options.Cookie.Name = "tasty-cookies";
+       })*/
         services.AddAuthorization(options =>
         {
             /*options.AddPolicy("AuthUser", new AuthorizationPolicyBuilder()

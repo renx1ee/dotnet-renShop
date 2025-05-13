@@ -11,6 +11,7 @@ using System.Text;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using RenStore.Application.BackgroundServices;
 using RenStore.Application.Interfaces;
 using RenStore.Application.Services.Cart;
 using RenStore.Domain.Entities;
@@ -144,7 +145,12 @@ builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<ShoppingCartService>();
 
+builder.Services.AddHostedService<ExampleHostedService>();
+
 var app = builder.Build();
+
+/*var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
+lifetime.ApplicationStarted.Register(() => Console.WriteLine("Started!!!"));*/
 
 app.UseRouting();
 app.UseHttpsRedirection();

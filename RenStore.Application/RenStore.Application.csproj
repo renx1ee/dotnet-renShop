@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\..\..\..\..\.nuget\packages\castle.core\5.1.1\lib\net6.0\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.ObjectModel">
       <HintPath>..\..\..\..\..\..\.nuget\packages\microsoft.testplatform.testhost\17.11.1\lib\netcoreapp3.1\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll</HintPath>
     </Reference>

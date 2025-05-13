@@ -1,4 +1,6 @@
 using RenStore.Identity.DuendeServer.WebAPI.Helpers;
+using RenStore.Identity.DuendeServer.WebAPI.Senders;
+using RenStore.Identity.DuendeServer.WebAPI.Services;
 
 namespace RenStore.Identity.DuendeServer.WebAPI.Service;
 

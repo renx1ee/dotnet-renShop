@@ -1,4 +1,6 @@
-using RenStore.Application.Data.Common.Exceptions;
+using Microsoft.Extensions.Configuration;
+using Moq;
+using Npgsql;
 using RenStore.Domain.Entities;
 using RenStore.Persistence.Repository;
 using RenStore.Persistence.Test.Common;
@@ -8,11 +10,21 @@ namespace RenStore.Persistence.Test.Repositories;
 public class CategoryRepositoryTests 
 {
     private readonly CategoryRepository categoryRepository;
+    private readonly IConfiguration configuration;
+    private readonly ApplicationDbContext context;
 
     public CategoryRepositoryTests()
     {
-        using var context = DbContextFactory.Create();
-        categoryRepository = new CategoryRepository(context, null);
+        var connection = new NpgsqlConnection("DataSource=:memory:");
+        context = DbContextFactory.Create();
+        configuration = DbContextFactory.GetMockConfiguration();
+
+        /*var configMock = new Mock<IConfiguration>();
+        configMock.Setup(c => c.GetConnectionString("DefaultConnection"))
+            .Returns(connection.ConnectionString);
+        configuration = configMock.Object;*/
+        
+        categoryRepository = new CategoryRepository(context, configuration);
     }
 
     [Fact]

@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Moq;
 
 namespace RenStore.Persistence.Test.Common;
 
@@ -9,6 +11,15 @@ public class DbContextFactory
     
     public static int CategoryIdForUpdate = 42222;
     public static int CategoryIdForDelete = 42324;
+    
+    public static IConfiguration GetMockConfiguration()
+    {
+        var configMock = new Mock<IConfiguration>();
+        configMock.Setup(c => c.GetConnectionString("DefaultConnection"))
+            .Returns("DataSource=:memory:");
+
+        return configMock.Object;
+    }  
 
     public static ApplicationDbContext Create()
     {

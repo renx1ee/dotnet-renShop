@@ -1,4 +1,4 @@
-namespace RenStore.Identity.DuendeServer.WebAPI.Service;
+namespace RenStore.Identity.DuendeServer.WebAPI.Services;
 
 public interface IEmailVerificationService
 {

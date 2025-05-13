@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RenStore.Domain.Entities;
 using RenStore.Identity.DuendeServer.WebAPI.Data.IdentityConfigurations;
+using RenStore.Identity.DuendeServer.WebAPI.Senders;
+using RenStore.Identity.DuendeServer.WebAPI.Service;
 
-namespace RenStore.Identity.DuendeServer.WebAPI.Service;
+namespace RenStore.Identity.DuendeServer.WebAPI.Services;
 
 public class UserService : ControllerBase
 {

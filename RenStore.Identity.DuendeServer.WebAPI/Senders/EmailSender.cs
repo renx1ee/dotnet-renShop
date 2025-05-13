@@ -1,7 +1,8 @@
 using RenStore.Identity.DuendeServer.WebAPI.Data;
 using RenStore.Identity.DuendeServer.WebAPI.DTOs;
+using RenStore.Identity.DuendeServer.WebAPI.Service;
 
-namespace RenStore.Identity.DuendeServer.WebAPI.Service;
+namespace RenStore.Identity.DuendeServer.WebAPI.Senders;
 
 public class EmailSender(HttpClient httpClient, IConfiguration configuration) : IEmailSender
 {
