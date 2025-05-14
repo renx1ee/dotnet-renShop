@@ -8,6 +8,11 @@ docker run --name my_postgres -p 5438:5432 -e POSTGRES_PASSWORD=postgres -d post
 ```
 [Oficial Documentation Docker](https://hub.docker.com/_/postgres)
 
+## Redis Configuration
+```
+docker run --name my-redis -p 6379:6379 -d redis
+```
+
 ## Dotnet Configuration
 
 ### Installing the tools
