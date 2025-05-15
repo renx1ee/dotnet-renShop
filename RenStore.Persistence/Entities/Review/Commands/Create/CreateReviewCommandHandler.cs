@@ -33,8 +33,14 @@ public class CreateReviewCommandHandler
         CancellationToken cancellationToken)
     {
         logger.LogInformation($"Handling {nameof(CreateReviewCommandHandler)}");
-        
-        // TODO: сделать проверку, оставлял ли пользователь отзыв к текущему продукту.
+
+        var userReviewExist = 
+            await reviewRepository.FindByUserIdAsync(
+                userId: request.ApplicationUserId, 
+                cancellationToken: cancellationToken);
+
+        if (userReviewExist is not null)
+            return Guid.Empty;
         
         var product = await productRepository.GetByIdAsync(request.ProductId, cancellationToken);
         if (product == null)
@@ -45,6 +51,7 @@ public class CreateReviewCommandHandler
         review.CreatedDate = DateTime.UtcNow;
         review.LastUpdatedDate = null;
         review.IsUpdated = false;
+        review.IsApproved = false;
         
         var result = await reviewRepository.CreateAsync(review, cancellationToken);
         

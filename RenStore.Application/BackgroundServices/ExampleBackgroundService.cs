@@ -15,6 +15,9 @@ public class ExampleBackgroundService : BackgroundService
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
         // TODO: доделать
+        
+        
+        
         throw new NotImplementedException();
     }
 }
