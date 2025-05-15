@@ -19,7 +19,8 @@ public class CreateReviewCommandValidation : AbstractValidator<CreateReviewComma
         
         RuleFor(review => review.ApplicationUserId)
             .NotNull()
-            .NotEqual(Guid.Empty)
+            .NotEqual(String.Empty)
+            .NotEqual(Guid.Empty.ToString())
             .WithMessage("");
         
         RuleFor(review => review.ProductId)

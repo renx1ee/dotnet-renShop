@@ -13,6 +13,6 @@ public class CreateReviewCommand : IRequest<Guid>
     public IEnumerable<string> ImagesUrls { get; set; }
     public uint LikesCount { get; set; }
     public List<string> UsersLikedIds { get; set; }
-    public Guid ApplicationUserId { get; set; }
+    public string ApplicationUserId { get; set; }
     public Guid ProductId { get; set; }
 }

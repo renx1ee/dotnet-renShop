@@ -48,7 +48,7 @@ public class CreateShoesProductCommandHandler :
         var discount = await productService.CalculateDiscountByPriceAsync(
                 request.Price, request.OldPrice);
         
-        var article = await productService.CreateArticulAsync();
+        var article = await productService.CreateArticleAsync();
         
         var product = mapper.Map<Domain.Entities.Product>(request);
         

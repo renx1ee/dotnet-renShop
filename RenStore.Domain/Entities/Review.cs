@@ -8,8 +8,6 @@ namespace RenStore.Domain.Entities
         public DateTime CreatedDate { get; set; }
         public DateTime? LastUpdatedDate { get; set; }
         public bool IsUpdated  { get; set; }
-        /*public DateTime? ModeratedAt { get; set; }
-        public bool IsApproved { get; set; }*/
         public string Message { get; set;  }
         [Range(5, Int32.MaxValue)] public decimal Rating { get; set; }
         public IEnumerable<string> ImagesUrls { get; set; }
@@ -18,5 +16,7 @@ namespace RenStore.Domain.Entities
         public string ApplicationUserId { get; set; }
         public Product Product { get; set; }
         public Guid ProductId { get; set; }
+        public DateTime? ModeratedAt { get; set; }
+        public bool IsApproved { get; set; }
     }
 }
