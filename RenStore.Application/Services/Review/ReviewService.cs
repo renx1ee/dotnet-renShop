@@ -26,15 +26,9 @@ public class ReviewService
         return false;
     }
     
-    public async Task<bool> ModerationReview(Domain.Entities.Review review, CancellationToken cancellationToken)
+    public async Task<bool> ModerationReviewAsync(Domain.Entities.Review review, CancellationToken cancellationToken)
     {
-        // Moderation realization
-
-        review.IsApproved = true;
-        review.ModeratedAt = DateTime.UtcNow;
-
-        await reviewRepository.UpdateAsync(review, cancellationToken);
-        
+        // TODO: Create Moderation realization
         return true;
     }
 }
