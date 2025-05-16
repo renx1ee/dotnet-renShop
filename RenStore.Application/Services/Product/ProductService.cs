@@ -29,11 +29,11 @@ public class ProductService
     public async Task<decimal> CalculateProductRatingAsync(Guid productId, CancellationToken cancellationToken)
     {
         var reviews = await reviewRepository.GetByProductIdAsync(productId, cancellationToken);
-
-        var averageRating = reviews.Average(r => r.Rating);
-
+        
         var product = await productRepository.GetByIdAsync(productId, cancellationToken);
 
+        var averageRating = reviews.Average(r => r.Rating);
+        
         product.Rating = (double)averageRating;
 
         await productRepository.UpdateAsync(product, cancellationToken);
