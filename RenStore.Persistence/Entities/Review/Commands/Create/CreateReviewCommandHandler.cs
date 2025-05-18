@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using RenStore.Application.BackgroundServices;
 using RenStore.Application.Entities.Review.Commands.Create;
 using RenStore.Application.Repository;
+using RenStore.Application.Services.Product;
 using RenStore.Application.Services.Review;
 
 namespace RenStore.Persistence.Entities.Review.Commands.Create;
@@ -14,39 +15,35 @@ public class CreateReviewCommandHandler
     private readonly IMapper mapper;
     private ILogger<CreateReviewCommandHandler> logger;
     private IReviewRepository reviewRepository;
-    private IProductRepository productRepository;
     private ReviewService reviewService;
-    private CalculateProductRatingBg calculateService; 
+    private ProductService productService; 
 
     public CreateReviewCommandHandler(IMapper mapper, 
         ILogger<CreateReviewCommandHandler> logger,
         IReviewRepository reviewRepository,
         ReviewService reviewService,
-        IProductRepository productRepository,
-        CalculateProductRatingBg calculateService)
+        ProductService productService)
     {
         this.logger = logger;
         this.mapper = mapper;
         this.reviewRepository = reviewRepository;
-        this.productRepository = productRepository;
         this.reviewService = reviewService;
-        this.calculateService = calculateService;
+        this.productService = productService;
     }
     
     public async Task<Guid> Handle(CreateReviewCommand request,
         CancellationToken cancellationToken)
     {
         logger.LogInformation($"Handling {nameof(CreateReviewCommandHandler)}");
-
+        
         var userReviewExist = 
-            await reviewRepository.FindByUserIdAsync(
+            await reviewRepository.CheckExistByUserIdAsync(
                 userId: request.ApplicationUserId, 
+                productId: request.ProductId,
                 cancellationToken: cancellationToken);
 
-        if (userReviewExist is not null)
+        if (userReviewExist) 
             return Guid.Empty;
-        
-        var product = await productRepository.GetByIdAsync(request.ProductId, cancellationToken);
         
         var review = mapper.Map<Domain.Entities.Review>(request);
         review.CreatedDate = DateTime.UtcNow;
@@ -69,7 +66,9 @@ public class CreateReviewCommandHandler
             return Guid.Empty;
         }
         
-        // TODO: Send push a message that a review has been added 
+        // TODO: Send push a message that a review has been added.
+
+        await productService.CalculateProductRatingAsync(request.ProductId, cancellationToken);
         
         logger.LogInformation($"Handled {nameof(CreateReviewCommandHandler)}");
         

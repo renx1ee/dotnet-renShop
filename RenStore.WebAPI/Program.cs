@@ -145,7 +145,7 @@ builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<ShoppingCartService>();
 
-builder.Services.AddHostedService<ExampleHostedService>();
+/*builder.Services.AddHostedService<ExampleHostedService>();*/
 
 var app = builder.Build();
 
