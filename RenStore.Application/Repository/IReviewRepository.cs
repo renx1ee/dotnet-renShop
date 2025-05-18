@@ -74,7 +74,7 @@ public interface IReviewRepository
     /// <summary>
     /// Finds a Reviews by Product ID.
     /// </summary>
-    /// <param name="productId">User ID.</param>
+    /// <param name="productId">Product ID.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns>Return IEnumerable collection of Reviews if Reviews is found else returns an empty collection.</returns>
     Task<IEnumerable<Review>?> FindByProductIdAsync(Guid productId, CancellationToken cancellationToken);
@@ -86,6 +86,15 @@ public interface IReviewRepository
     /// <returns>Return IEnumerable collection of Reviews if Reviews is found.</returns>
     /// <exception cref="NotFoundException">Thrown if the Review is not found.</exception>
     Task<IEnumerable<Review>> GetByProductIdAsync(Guid productId, CancellationToken cancellationToken);
+    /// <summary>
+    /// Gets a Reviews by User ID and Product ID.
+    /// </summary>
+    /// <param name="productId">Product ID.</param>
+    /// <param name="userId">User ID.</param>
+    /// <param name="cancellationToken">Cancellation Token.</param>
+    /// <returns>Return IEnumerable collection of Reviews if Reviews is found.</returns>
+    /// <exception cref="NotFoundException">Thrown if the Review is not found.</exception>
+    Task<IEnumerable<Review>?> FindByUserIdAndProductIdAsync(string userId, Guid productId, CancellationToken cancellationToken);
     /// <summary>
     /// Gets a first Reviews by Date.
     /// </summary>

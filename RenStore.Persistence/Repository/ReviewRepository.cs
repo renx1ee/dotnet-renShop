@@ -116,7 +116,7 @@ public class ReviewRepository : IReviewRepository
                 sql, new { UserId = userId })
                     ?? null;
     }
-
+    
     public async Task<IEnumerable<Review>> GetByProductIdAsync(Guid productId,
         CancellationToken cancellationToken)
     {
@@ -147,6 +147,35 @@ public class ReviewRepository : IReviewRepository
                    ?? null;
     }
 
+    public async Task<IEnumerable<Review>?> FindByUserIdAndProductIdAsync(
+        string userId,
+        Guid productId,
+        CancellationToken cancellationToken)
+    {
+        await using var connection = new NpgsqlConnection(connectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        const string sql = @"
+        SELECT
+            *
+            FROM
+                ""Reviews""
+        WHERE
+            ""ApplicationUserId""=@UserId
+        AND 
+            ""ProductId""=@ProductId";
+        
+        return await connection
+           .QueryAsync<Review>(
+               sql, new
+               {
+                   UserId = userId,
+                   ProductId = productId
+               })
+               ?? null;
+    }
+    
+    
     /*public async Task<IEnumerable<Review>> GetFirstByDateLineAsync(
         int count, 
         Guid productId, 
@@ -162,47 +191,47 @@ public class ReviewRepository : IReviewRepository
             .ToListAsync(cancellationToken)
             ?? throw new NotFoundException(typeof(Review), productId);
     }*/
-    
+    // TODO: Make with dapper
     public async Task<IEnumerable<Review>> GetFirstByDateAsync(
         int count, 
         Guid productId, 
         CancellationToken cancellationToken)
     {
         return await context.Reviews
-            .Where(review => review.ProductId == productId)
+            .Where(review => review.ProductId == productId
+                && review.IsApproved == true)
             .OrderBy(review => review.CreatedDate.Date)
             .Take(count)
             .ToListAsync(cancellationToken)
             ?? throw new NotFoundException(typeof(Review), productId);
     }
-    
+    // TODO: Make with dapper
     public async Task<IEnumerable<Review>> GetFirstByRatingAsync(int count, Guid productId, 
         CancellationToken cancellationToken)
     {
         return await context.Reviews
-            .Where(review => review.ProductId == productId)
+            .Where(review => review.ProductId == productId
+                && review.IsApproved == true)
             .OrderBy(review => review.Rating)
             .Take(count)
             .ToListAsync(cancellationToken)
             ?? throw new NotFoundException(typeof(Review), productId);
     }
-
+    // TODO: Make with dapper
     public async Task<bool> CheckExistByUserIdAsync(Guid productId, string userId, 
         CancellationToken cancellationToken)
     {
-        Review result = await context.Reviews
-             .FirstOrDefaultAsync(review => 
-                 review.ProductId == productId && 
-                 review.ApplicationUserId == userId, 
-                cancellationToken) 
-            ?? throw new NotFoundException(typeof(Review), productId);
+        var result = await context.Reviews
+            .FirstOrDefaultAsync(review =>
+                review.ProductId == productId &&
+                review.ApplicationUserId == userId,
+                cancellationToken);
             
         return true;
     }
-    
     public async Task LikeAsync(Guid reviewId, CancellationToken cancellationToken)
     {
-        Review review = await GetByIdAsync(reviewId, cancellationToken);
+        var review = await GetByIdAsync(reviewId, cancellationToken);
         review.LikesCount += 1;
         
         await UpdateAsync(review, cancellationToken);
