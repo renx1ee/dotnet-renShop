@@ -30,16 +30,16 @@ dotnet tool update --global dotnet-ef
 
 #### Adding the first migration
 ```
-dotnet ef migrations add initial -c ApplicationDbContext --project ./ShopDevelop.Persistence -s "E:\Projects\C#\ASP.NET Core\ShopDeveloped\ShopDevelop.WebApi"
+dotnet ef migrations add initial -c ApplicationDbContext --project ./RenStore.Persistence -s "E:\Projects\C#\ASP.NET Core\ShopDeveloped\RenStore.WebApi"
 ```
 ```
-dotnet ef migrations add initial -c ApplicationDbContext --project ./ShopDevelop.Persistence -s "/home/renx1ee/Documents/Projects/C#/ASP.Net Core/ShopDeveloped/ShopDevelop.WebApi"
+dotnet ef migrations add initial -c ApplicationDbContext --project ./RenStore.Persistence -s "/home/renx1ee/Documents/Projects/C#/ASP.Net Core/ShopDeveloped/RenStore.WebApi"
 ```
 
 #### Migration update
 ```
-dotnet ef database update -c ApplicationDbContext --project ./ShopDevelop.Persistence -s "E:\Projects\C#\ASP.NET Core\ShopDeveloped\ShopDevelop.WebApi" --verbose
+dotnet ef database update -c ApplicationDbContext --project ./RenStore.Persistence -s "E:\Projects\C#\ASP.NET Core\ShopDeveloped\RenStore.WebApi" --verbose
 ```
 ```
-dotnet ef database update -c ApplicationDbContext --project ./ShopDevelop.Persistence -s "/home/renx1ee/Documents/Projects/C#/ASP.Net Core/ShopDeveloped/ShopDevelop.WebApi"
+dotnet ef database update -c ApplicationDbContext --project ./RenStore.Persistence -s "/home/renx1ee/Documents/Projects/C#/ASP.Net Core/ShopDeveloped/RenStore.WebApi"
 ```
