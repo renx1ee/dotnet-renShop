@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using RenStore.Application.Interfaces;
 using RenStore.Domain.Entities;
 using RenStore.Domain.Entities.Products;
 using RenStore.Persistence.EntityTypeConfigurations;
 
 namespace RenStore.Identity.DuendeServer.WebAPI.Data;
 
-public class AuthDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>, IApplicationDbContext
+public class AuthDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
 { 
     public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options) { }
 

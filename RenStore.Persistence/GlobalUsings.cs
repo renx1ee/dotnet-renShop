@@ -1,4 +1,3 @@
-global using RenStore.Application.Interfaces;
 global using RenStore.Persistence.Entities.Category.Command.Create;
 global using RenStore.Persistence.Entities.Category.Command.Delete;
 global using RenStore.Persistence.Entities.Category.Command.Update;

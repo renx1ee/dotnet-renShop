@@ -5,13 +5,20 @@ namespace RenStore.Application.BackgroundServices;
 
 public class ExampleHostedService(ILogger<ExampleHostedService> logger) : IHostedService
 {
-    public Task StartAsync(CancellationToken cancellationToken)
+    public Task StartAsync(CancellationToken stoppingToken)
     {
         logger.LogInformation("Started ...");
-        
-        // Если здесь будет бесконечный цикл, то приложение не запустится
+
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            OnUpdate(stoppingToken);
+        }
 
         return Task.CompletedTask;
+    }
+
+    public async Task OnUpdate(CancellationToken stoppingToken)
+    {
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

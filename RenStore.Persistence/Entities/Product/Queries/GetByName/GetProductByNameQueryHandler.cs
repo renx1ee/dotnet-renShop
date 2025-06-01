@@ -35,8 +35,7 @@ public class GetProductByNameQueryHandler
                     product.Price,
                     product.Rating,
                     product.ImageMiniPath,
-                    product.SellerName)
-            )
+                    product.SellerName))
             .ToList();
         
         logger.LogInformation($"Handled {nameof(GetProductByNameQueryHandler)}");

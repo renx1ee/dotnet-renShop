@@ -1,9 +1,6 @@
-using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RenStore.Application.Entities.Orders.Queries.GetAll;
-using RenStore.Application.Interfaces;
 using RenStore.Application.Repository;
 
 namespace RenStore.Persistence.Entities.Orders.Queries.GetAll;

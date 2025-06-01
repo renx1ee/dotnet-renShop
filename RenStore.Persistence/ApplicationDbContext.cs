@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RenStore.Application.Interfaces;
 using RenStore.Domain.Entities;
 using RenStore.Domain.Entities.Products;
 using RenStore.Persistence.EntityTypeConfigurations;
@@ -9,7 +8,7 @@ namespace RenStore.Persistence;
 public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new ProductConfiguration());
@@ -22,13 +21,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ReviewConfiguration());
         modelBuilder.ApplyConfiguration(new ShoppingCartItemConfiguration());
 
-        base.SaveChangesAsync();
         base.OnModelCreating(modelBuilder);
-    }
-
-    public async Task<int> SaveChangesAsync() 
-    {
-        return await base.SaveChangesAsync();
     }
     
     public DbSet<ApplicationUser> AspNetUsers { get; set; }

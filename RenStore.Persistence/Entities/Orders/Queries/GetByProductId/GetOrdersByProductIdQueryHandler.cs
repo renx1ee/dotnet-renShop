@@ -1,11 +1,7 @@
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using RenStore.Application.Entities.Orders.Queries.GetById;
 using RenStore.Application.Entities.Orders.Queries.GetByProductId;
-using RenStore.Application.Interfaces;
 using RenStore.Application.Repository;
-using RenStore.Persistence.Entities.Orders.Queries.GetAll;
 
 namespace RenStore.Persistence.Entities.Orders.Queries.GetByProductId;
 

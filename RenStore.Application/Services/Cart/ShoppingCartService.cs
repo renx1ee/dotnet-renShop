@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.EntityFrameworkCore;
-using RenStore.Application.Repository;
-using RenStore.Application.Interfaces;
+﻿using RenStore.Application.Repository;
 using RenStore.Domain.Entities;
 
 namespace RenStore.Application.Services.Cart;
