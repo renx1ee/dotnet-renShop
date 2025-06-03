@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using RenStore.Application.Entities.ShoppingCart.Query.GetTotalPrice;
 using RenStore.Application.Repository;
-using RenStore.Application.Services.Cart;
+using RenStore.Application.Services;
 
 namespace RenStore.Persistence.Entities.ShoppingCart.Query.GetTotalPrice;
 

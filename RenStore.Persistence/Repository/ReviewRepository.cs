@@ -2,9 +2,10 @@ using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
-using RenStore.Application.Data.Common.Exceptions;
+using RenStore.Application.Common.Exceptions;
 using RenStore.Application.Repository;
 using RenStore.Domain.Entities;
+using RenStore.Domain.Enums;
 
 namespace RenStore.Persistence.Repository;
 
@@ -199,7 +200,7 @@ public class ReviewRepository : IReviewRepository
     {
         return await context.Reviews
             .Where(review => review.ProductId == productId
-                && review.IsApproved == true)
+                && review.Status == ReviewStatus.Published)
             .OrderBy(review => review.CreatedDate.Date)
             .Take(count)
             .ToListAsync(cancellationToken)
@@ -211,7 +212,7 @@ public class ReviewRepository : IReviewRepository
     {
         return await context.Reviews
             .Where(review => review.ProductId == productId
-                && review.IsApproved == true)
+                && review.Status == ReviewStatus.Published)
             .OrderBy(review => review.Rating)
             .Take(count)
             .ToListAsync(cancellationToken)

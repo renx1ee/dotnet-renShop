@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Events\Review\" />
     <Folder Include="Interfaces\Service\" />
   </ItemGroup>
 

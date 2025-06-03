@@ -1,7 +1,6 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RenStore.Application.Data.Common.Exceptions;
 using RenStore.Application.Entities.Product.Queries.GetById;
 using RenStore.Application.Entities.Product.Queries.GetProductDetails;
 using RenStore.Application.Repository;

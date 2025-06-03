@@ -1,6 +1,4 @@
-﻿using RenStore.Domain.Enums;
-
-namespace RenStore.Domain.Entities;
+﻿namespace RenStore.Domain.Entities;
 
 public class ProductDetail
 {

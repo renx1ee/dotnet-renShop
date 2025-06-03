@@ -1,7 +1,7 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RenStore.Application.Data.Common.Exceptions;
+using RenStore.Application.Common.Exceptions;
 using RenStore.Application.Entities.Review.Commands.Update;
 using RenStore.Application.Repository;
 

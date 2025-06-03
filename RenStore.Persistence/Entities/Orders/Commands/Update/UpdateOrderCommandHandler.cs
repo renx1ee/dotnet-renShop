@@ -1,10 +1,9 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RenStore.Application.Data.Common.Exceptions;
+using RenStore.Application.Common.Exceptions;
 using RenStore.Application.Entities.Orders.Commands.Update;
 using RenStore.Application.Repository;
-using RenStore.Application.Services.Category;
 using RenStore.Domain.Entities;
 
 namespace RenStore.Persistence.Entities.Orders.Commands.Update;

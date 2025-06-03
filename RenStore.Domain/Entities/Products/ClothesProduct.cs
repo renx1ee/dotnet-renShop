@@ -1,6 +1,3 @@
-using RenStore.Domain.Enums;
-using RenStore.Domain.Enums.Clothes;
-
 namespace RenStore.Domain.Entities.Products;
 
 public class ClothesProduct

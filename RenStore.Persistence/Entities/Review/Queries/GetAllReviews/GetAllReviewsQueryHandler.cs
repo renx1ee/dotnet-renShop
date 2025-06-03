@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RenStore.Application.Entities.Review.Queries.GetAllReviews;
 using RenStore.Application.Repository;
-using RenStore.Application.Services.Review;
 
 namespace RenStore.Persistence.Entities.Review.Queries.GetAllReviews;
 

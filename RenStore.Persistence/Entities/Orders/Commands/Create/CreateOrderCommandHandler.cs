@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using RenStore.Application.Entities.Orders.Commands.Create;
 using RenStore.Application.Repository;
-using RenStore.Application.Services.Category;
+using RenStore.Application.Services;
 using RenStore.Domain.Entities;
 using RenStore.Domain.Enums;
 

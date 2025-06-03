@@ -1,6 +1,4 @@
-﻿using RenStore.Domain.Entities.Products;
-
-namespace RenStore.Domain.Entities;
+﻿namespace RenStore.Domain.Entities;
 
 public class Product
 {

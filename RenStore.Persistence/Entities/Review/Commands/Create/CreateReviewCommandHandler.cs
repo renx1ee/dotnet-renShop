@@ -4,8 +4,8 @@ using Microsoft.Extensions.Logging;
 using RenStore.Application.BackgroundServices;
 using RenStore.Application.Entities.Review.Commands.Create;
 using RenStore.Application.Repository;
-using RenStore.Application.Services.Product;
-using RenStore.Application.Services.Review;
+using RenStore.Application.Services;
+using RenStore.Domain.Enums;
 
 namespace RenStore.Persistence.Entities.Review.Commands.Create;
 
@@ -18,7 +18,8 @@ public class CreateReviewCommandHandler
     private ReviewService reviewService;
     private ProductService productService; 
 
-    public CreateReviewCommandHandler(IMapper mapper, 
+    public CreateReviewCommandHandler(
+        IMapper mapper, 
         ILogger<CreateReviewCommandHandler> logger,
         IReviewRepository reviewRepository,
         ReviewService reviewService,
@@ -42,32 +43,20 @@ public class CreateReviewCommandHandler
                 productId: request.ProductId,
                 cancellationToken: cancellationToken);
 
-        if (userReviewExist) 
-            return Guid.Empty;
+        if (userReviewExist) return Guid.Empty;
         
         var review = mapper.Map<Domain.Entities.Review>(request);
         review.CreatedDate = DateTime.UtcNow;
         review.LastUpdatedDate = null;
-        review.IsUpdated = false;
-        review.IsApproved = false;
+        review.IsUpdated = false; 
+        review.Status = ReviewStatus.SentForModeration;
         
         var result = await reviewRepository.CreateAsync(review, cancellationToken);
         
-        var moderationResult = await reviewService.ModerationReviewAsync(review, cancellationToken);
-
-        if (moderationResult)
-        {
-            review.IsApproved = true;
-            review.ModeratedAt = DateTime.UtcNow;
-            await reviewRepository.UpdateAsync(review, cancellationToken);
-        }
-        else
-        {
-            return Guid.Empty;
-        }
+        // TODO: отправить на модерацию чере notification, после прохождения модерации сделать вычисление нового рейтинга.
         
-        // TODO: Send push a message that a review has been added.
-
+        var moderationResult = await reviewService.ModerationReviewAsync(review, cancellationToken);
+        
         await productService.CalculateProductRatingAsync(request.ProductId, cancellationToken);
         
         logger.LogInformation($"Handled {nameof(CreateReviewCommandHandler)}");

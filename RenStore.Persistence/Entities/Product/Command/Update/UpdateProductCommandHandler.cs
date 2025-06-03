@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using RenStore.Application.Data.Common.Exceptions;
+using RenStore.Application.Common.Exceptions;
 using RenStore.Application.Entities.Product.Commands.Update;
 using RenStore.Application.Repository;
 

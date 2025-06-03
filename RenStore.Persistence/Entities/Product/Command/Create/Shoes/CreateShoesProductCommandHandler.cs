@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using RenStore.Application.Entities.Product.Commands.Create.Shoes;
 using RenStore.Application.Repository;
-using RenStore.Application.Services.Product;
+using RenStore.Application.Services;
 
 namespace RenStore.Persistence.Entities.Product.Command.Create.Shoes;
 

@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
-using RenStore.Application.Data.Common.Exceptions;
+using RenStore.Application.Common.Exceptions;
 using RenStore.Application.Repository;
 using RenStore.Domain.Entities;
 

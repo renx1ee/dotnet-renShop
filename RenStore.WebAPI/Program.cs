@@ -1,18 +1,16 @@
+using RenStore.Domain.Entities;
 using RenStore.Application;
 using RenStore.Application.Repository;
-using RenStore.Application.Services.Product;
 using RenStore.Persistence;
-using RenStore.Application.Services.Category;
-using RenStore.Application.Services.Review;
 using RenStore.Persistence.Repository;
-using Asp.Versioning;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using RenStore.Application.Services.Cart;
-using RenStore.Domain.Entities;
 using RenStore.Identity.DuendeServer.WebAPI.Data;
 using RenStore.Identity.DuendeServer.WebAPI.Data.IdentityConfigurations;
 using RenStore.Identity.DuendeServer.WebAPI.Extensions;
+using Asp.Versioning;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using RenStore.Application.BackgroundServices;
+using RenStore.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -91,12 +89,15 @@ builder.Services.AddScoped<ProductService>();
 
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<ReviewService>();
+builder.Services.AddScoped<NotificationService>();
 
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<OrderService>();
 
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<ShoppingCartService>();
+
+builder.Services.AddHostedService<PriceCounterBackgroundService>();
 
 var app = builder.Build();
 

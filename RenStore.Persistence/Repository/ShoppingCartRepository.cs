@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using RenStore.Application.Data.Common.Exceptions;
+using RenStore.Application.Common.Exceptions;
 using RenStore.Application.Repository;
 using RenStore.Domain.Entities;
 

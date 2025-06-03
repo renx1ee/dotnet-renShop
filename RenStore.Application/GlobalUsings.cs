@@ -1,9 +1,4 @@
-global using RenStore.Application.Data.Common.Mappings;
-global using RenStore.Application.Data.Common.Mappings.Order;
-global using RenStore.Application.Data.Common.Mappings.Product;
-global using RenStore.Application.Data.Common.Mappings.Review;
-global using RenStore.Application.Data.Common.Mappings.Seller;
-global using RenStore.Application.Data.Common.Mappings.ShoppingCart;
+global using RenStore.Application.Common.Mappings;
 global using RenStore.Application.Entities.Category.Commands.Create;
 global using RenStore.Application.Entities.Category.Commands.Delete;
 global using RenStore.Application.Entities.Category.Commands.Update;
@@ -43,7 +38,6 @@ global using RenStore.Application.Entities.ShoppingCart.Command.Remove;
 global using RenStore.Application.Entities.ShoppingCart.Query.GetAll;
 global using RenStore.Application.Entities.ShoppingCart.Query.GetByUserId;
 global using RenStore.Application.Entities.ShoppingCart.Query.GetTotalPrice;
-global using RenStore.Application.Data.Common.Mappings.Category;
 global using RenStore.Application.Entities.Product.Queries.GetByArticle;
 global using RenStore.Application.Entities.Product.Queries.GetByNovelty;
 global using RenStore.Application.Entities.Product.Queries.GetBySellerId;
