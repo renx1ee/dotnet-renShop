@@ -1,6 +1,7 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using NLog.LayoutRenderers;
 using RenStore.Application.BackgroundServices;
 using RenStore.Application.Entities.Review.Commands.Create;
 using RenStore.Application.Repository;
@@ -43,7 +44,7 @@ public class CreateReviewCommandHandler
                 productId: request.ProductId,
                 cancellationToken: cancellationToken);
 
-        if (userReviewExist) return Guid.Empty;
+        if (userReviewExist) return Guid.Empty; 
         
         var review = mapper.Map<Domain.Entities.Review>(request);
         review.CreatedDate = DateTime.UtcNow;
@@ -52,8 +53,14 @@ public class CreateReviewCommandHandler
         review.Status = ReviewStatus.SentForModeration;
         
         var result = await reviewRepository.CreateAsync(review, cancellationToken);
+
+        if (result.Equals(Guid.Empty))
+            throw new Exception("Error with create a review.");
+
+        await reviewService.SubmitForModerationAsync(review.Id);
         
-        // TODO: отправить на модерацию чере notification, после прохождения модерации сделать вычисление нового рейтинга.
+        
+        
         
         var moderationResult = await reviewService.ModerationReviewAsync(review, cancellationToken);
         

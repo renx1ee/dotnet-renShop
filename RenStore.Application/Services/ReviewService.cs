@@ -26,6 +26,11 @@ public class ReviewService
     {
         return false;
     }
+
+    public async Task SubmitForModerationAsync(Guid reviewId)
+    {
+        
+    }
     
     // TODO: Create Moderation realization
     public async Task<bool> ModerationReviewAsync(Domain.Entities.Review review, CancellationToken cancellationToken)
