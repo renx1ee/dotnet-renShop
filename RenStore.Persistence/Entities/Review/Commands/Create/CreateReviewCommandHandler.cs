@@ -57,14 +57,11 @@ public class CreateReviewCommandHandler
         if (result.Equals(Guid.Empty))
             throw new Exception("Error with create a review.");
 
-        await reviewService.SubmitForModerationAsync(review.Id);
-        
-        
-        
+        /*await reviewService.SubmitForModerationAsync(review.Id);
         
         var moderationResult = await reviewService.ModerationReviewAsync(review, cancellationToken);
         
-        await productService.CalculateProductRatingAsync(request.ProductId, cancellationToken);
+        await productService.CalculateProductRatingAsync(request.ProductId, cancellationToken);*/
         
         logger.LogInformation($"Handled {nameof(CreateReviewCommandHandler)}");
         

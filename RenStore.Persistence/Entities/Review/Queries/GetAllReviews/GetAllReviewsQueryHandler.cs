@@ -37,6 +37,7 @@ public class GetAllReviewsQueryHandler
                     review.IsUpdated,
                     review.Message,
                     review.Rating,
+                    review.Status,
                     review.ImagesUrls,
                     review.LikesCount,
                     review.ApplicationUserId,

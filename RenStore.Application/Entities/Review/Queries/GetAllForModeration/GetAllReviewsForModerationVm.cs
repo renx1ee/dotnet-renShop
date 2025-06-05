@@ -1,8 +1,8 @@
-using RenStore.Domain.Enums;
+﻿using RenStore.Domain.Enums;
 
-namespace RenStore.Application.Entities.Review.Queries.GetAllReviews;
+namespace RenStore.Application.Entities.Review.Queries.GetAllForModeration;
 
-public class GetAllReviewsVm
+public class GetAllReviewsForModerationVm
 {
     public Guid Id { get; set; }
     public DateTime CreatedDate { get; set; }
@@ -16,7 +16,7 @@ public class GetAllReviewsVm
     public string ApplicationUserId { get; set; }
     public Guid ProductId { get; set; }
 
-    public GetAllReviewsVm(Guid id, 
+    public GetAllReviewsForModerationVm(Guid id, 
         DateTime createdDate, 
         DateTime? lastUpdatedDate, 
         bool isUpdated, 

@@ -34,8 +34,10 @@ using RenStore.Application.Entities.Product.Queries.GetSortedByPrice;
 using RenStore.Application.Entities.Product.Queries.GetSortedByRating;
 using RenStore.Application.Entities.Review.Commands.Create;
 using RenStore.Application.Entities.Review.Commands.Delete;
+using RenStore.Application.Entities.Review.Commands.Moderate;
 using RenStore.Application.Entities.Review.Commands.Update;
 using RenStore.Application.Entities.Review.Queries.GetAllByProductId;
+using RenStore.Application.Entities.Review.Queries.GetAllForModeration;
 using RenStore.Application.Entities.Review.Queries.GetAllReviews;
 using RenStore.Application.Entities.Review.Queries.GetAllReviewsByUserId;
 using RenStore.Application.Entities.Review.Queries.GetFirstByCreatedDate;
@@ -131,11 +133,13 @@ public static class DependencyInjection
                 typeof(CreateReviewCommand).Assembly,
                 typeof(UpdateReviewCommand).Assembly,
                 typeof(DeleteReviewCommand).Assembly,
+                typeof(ModerateReviewCommand).Assembly,
                 typeof(GetAllReviewsQuery).Assembly,
                 typeof(GetAllReviewsByProductIdQuery).Assembly,
                 typeof(GetAllReviewsByUserIdQuery).Assembly,
                 typeof(GetFirstReviewsByDateQuery).Assembly,
-                typeof(GetFirstReviewsByRatingQuery).Assembly
+                typeof(GetFirstReviewsByRatingQuery).Assembly,
+                typeof(GetAllForModerationRequest).Assembly
                 ));
         // Order
         services.AddMediatR(x =>

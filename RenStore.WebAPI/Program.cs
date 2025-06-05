@@ -99,12 +99,12 @@ builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<ShoppingCartService>();
 
-builder.Services.AddHostedService<PriceCounterBackgroundService>();
+/*builder.Services.AddHostedService<PriceCounterBackgroundService>();*/
 
-builder.Services.AddSingleton<IBackgroundTaskQueue>(_ =>
+/*builder.Services.AddSingleton<IBackgroundTaskQueue>(_ =>
     new BackgroundTaskQueue(
         capacity: 1000,
-        logger: _.GetRequiredService<ILogger<BackgroundTaskQueue>>()));
+        logger: _.GetRequiredService<ILogger<BackgroundTaskQueue>>()));*/
 
 var app = builder.Build();
 

@@ -27,7 +27,7 @@ public class ReviewController(IMapper mapper) : BaseController
         var result = await Mediator.Send(review);
         
         if(result != Guid.Empty)
-            return Created();
+            return Accepted(); 
         
         return BadRequest();
     }

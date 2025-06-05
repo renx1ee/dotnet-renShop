@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using RenStore.Application.Services;
+using RenStore.Application.Entities.Review.Commands.Moderate;
+using RenStore.Application.Entities.Review.Queries.GetAllForModeration;
 using RenStore.Domain.Dto.Review;
 
 namespace RenStore.WebApi.Controllers;
@@ -10,25 +11,31 @@ namespace RenStore.WebApi.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 public class ModerationController : BaseController
 {
-    private readonly ReviewService reviewService;
-    public ModerationController(ReviewService reviewService)
-    {
-        this.reviewService = reviewService;
-    }
-    
     [HttpPost]
     [MapToApiVersion(1)]
-    [Route("api/v{version:apiVersion}/moderate")]
-    public async Task<IActionResult> ModerateReview(Guid id, [FromBody] ModerateReviewDto dto)
+    [Route("/api/v{version:apiVersion}/moderate")]
+    public async Task<IActionResult> ModerateReview([FromBody] ModerateReviewDto dto)
     {
-        return Ok();
+        await Mediator.Send(new ModerateReviewCommand()
+        {
+            Approve = dto.Approve,
+            ReviewId = dto.ReviewId
+        });
+        
+        return Accepted();
     }
     
     [HttpGet]
     [MapToApiVersion(1)]
-    [Route("api/v{version:apiVersion}/moderate")]
+    [Route("/api/v{version:apiVersion}/moderate")]
     public async Task<IActionResult> GetReviews()
     {
-        return Ok();
+        var reviews = 
+            await Mediator.Send(new GetAllForModerationRequest());
+
+        if (reviews is null)
+            return NotFound();
+        
+        return Ok(reviews);
     }
 }

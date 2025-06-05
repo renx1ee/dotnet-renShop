@@ -2,5 +2,6 @@
 
 public class ModerateReviewDto
 {
-    // TODO: доделать
+    public Guid ReviewId { get; set; }
+    public bool Approve { get; set; }
 }

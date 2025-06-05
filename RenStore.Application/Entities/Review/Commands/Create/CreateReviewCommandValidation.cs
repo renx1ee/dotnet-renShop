@@ -6,7 +6,7 @@ public class CreateReviewCommandValidation : AbstractValidator<CreateReviewComma
 {
     public CreateReviewCommandValidation()
     {
-        RuleFor(review => review.Message)
+        /*RuleFor(review => review.Message)
             .MinimumLength(5)
             .MaximumLength(150)
             .NotEmpty()
@@ -26,6 +26,6 @@ public class CreateReviewCommandValidation : AbstractValidator<CreateReviewComma
         RuleFor(review => review.ProductId)
             .NotNull()
             .NotEqual(Guid.Empty)
-            .WithMessage("");
+            .WithMessage("");*/
     }
 }

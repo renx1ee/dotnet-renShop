@@ -1,6 +1,7 @@
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using NLog.LayoutRenderers.Wrappers;
 using Npgsql;
 using RenStore.Application.Common.Exceptions;
 using RenStore.Application.Repository;
@@ -63,8 +64,27 @@ public class ReviewRepository : IReviewRepository
                 sql, cancellationToken)
                     ?? null;
     }
+    
+    public async Task<IEnumerable<Review>?> GetAllForModerationAsync(CancellationToken cancellationToken)
+    {
+        await using var connection = new NpgsqlConnection(connectionString);
+        await connection.OpenAsync(cancellationToken);
 
-    public async Task<Review?> GetByIdAsync(Guid id,
+        const string sql = @"
+            SELECT
+                *
+            FROM
+                ""Reviews""
+            WHERE 
+                ""Status""=2";
+
+        return await connection
+           .QueryAsync<Review>(
+               sql, cancellationToken)
+                   ?? null;
+    }
+
+    public async Task<Review> GetByIdAsync(Guid id,
         CancellationToken cancellationToken)
     {
         return await this.FindByIdAsync(id, cancellationToken)
@@ -227,6 +247,9 @@ public class ReviewRepository : IReviewRepository
                 review.ProductId == productId &&
                 review.ApplicationUserId == userId,
                 cancellationToken);
+
+        if (result is null)
+            return false;
             
         return true;
     }

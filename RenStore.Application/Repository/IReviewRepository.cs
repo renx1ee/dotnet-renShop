@@ -42,6 +42,12 @@ public interface IReviewRepository
     /// <returns>Return a IEnumerable collection of Reviews.</returns>
     Task<IEnumerable<Review?>> GetAllAsync(CancellationToken cancellationToken);
     /// <summary>
+    /// Get all Reviews for moderation.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation Token.</param>
+    /// <returns>Return a IEnumerable collection of Reviews.</returns>
+    Task<IEnumerable<Review>?> GetAllForModerationAsync(CancellationToken cancellationToken);
+    /// <summary>
     /// Finds a Review by Review ID.
     /// </summary>
     /// <param name="id">Review ID.</param>

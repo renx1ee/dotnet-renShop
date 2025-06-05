@@ -29,16 +29,15 @@ public class ReviewService
 
     public async Task SubmitForModerationAsync(Guid reviewId)
     {
-        
     }
     
-    // TODO: Create Moderation realization
-    public async Task<bool> ModerationReviewAsync(Domain.Entities.Review review, CancellationToken cancellationToken)
+    public async Task ModerationReviewAsync(
+        Domain.Entities.Review review, 
+        ReviewStatus status, 
+        CancellationToken cancellationToken)
     {
-        review.Status = ReviewStatus.Published;
+        review.Status = status;
         review.ModeratedAt = DateTime.UtcNow;
         await reviewRepository.UpdateAsync(review, cancellationToken);
-        
-        return true;
     }
 }
