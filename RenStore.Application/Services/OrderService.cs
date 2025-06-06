@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using RenStore.Application.Repository;
 using RenStore.Domain.Enums;
 
@@ -5,9 +6,15 @@ namespace RenStore.Application.Services;
 
 public class OrderService 
 {
+    private readonly ILogger<OrderService> logger;
     private readonly IOrderRepository orderRepository;
-    public OrderService(IOrderRepository orderRepository) =>
-            (this.orderRepository) = (orderRepository);
+
+    public OrderService(ILogger<OrderService> logger,
+        IOrderRepository orderRepository)
+    {
+        this.logger = logger;
+        this.orderRepository = orderRepository;
+    }
 
     public async Task<int> CreateZipCodeAsync()
     {
@@ -15,6 +22,7 @@ public class OrderService
         return random.Next(1000, 9999);
     }
 
+    // TODO: доделать
     public async Task<DeliveryStatus> ChangeOrderDeliveryStatus()
     {
         return DeliveryStatus.AwaitingConfirmation;

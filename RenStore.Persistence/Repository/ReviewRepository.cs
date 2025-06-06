@@ -1,7 +1,7 @@
+using System.Text;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using NLog.LayoutRenderers.Wrappers;
 using Npgsql;
 using RenStore.Application.Common.Exceptions;
 using RenStore.Application.Repository;
@@ -48,20 +48,24 @@ public class ReviewRepository : IReviewRepository
         await context.SaveChangesAsync();
     }
     
-    public async Task<IEnumerable<Review>?> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Review>?> GetAllAsync(bool isApproved, CancellationToken cancellationToken)
     {
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync(cancellationToken);
 
-        const string sql = @"
+        var sql = new StringBuilder(@"
             SELECT
                 *
             FROM
-                ""Reviews""";
+                ""Reviews""");
 
+        if (isApproved)
+            sql.Append(@"WHERE ""Status""=0");
+        
         return await connection
             .QueryAsync<Review>(
-                sql, cancellationToken)
+                sql.ToString(), 
+                cancellationToken)
                     ?? null;
     }
     
@@ -111,30 +115,39 @@ public class ReviewRepository : IReviewRepository
                     ?? null;
     }
 
-    public async Task<IEnumerable<Review>> GetByUserIdAsync(string userId,
+    public async Task<IEnumerable<Review>> GetByUserIdAsync(
+        bool isApproved,
+        string userId,
         CancellationToken cancellationToken)
     {
-        return await this.FindByUserIdAsync(userId, cancellationToken)
+        return await this.FindByUserIdAsync(isApproved, userId, cancellationToken)
             ?? throw new NotFoundException(typeof(Review), userId);
     }
 
-    public async Task<IEnumerable<Review>?> FindByUserIdAsync(string userId, 
+    public async Task<IEnumerable<Review>?> FindByUserIdAsync(
+        bool isApproved,
+        string userId, 
         CancellationToken cancellationToken)
     {
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync(cancellationToken);
-
-        const string sql = @"
+        
+        var sql = new StringBuilder(@"
             SELECT
                 *
             FROM
                 ""Reviews""
             WHERE
-                ""ApplicationUserId""=@UserId";
+                ""ApplicationUserId""=@UserId");
+        
+        if (isApproved)
+            sql.Append(@" AND WHERE """"Status""""=0""");
+        
         
         return await connection
             .QueryAsync<Review>(
-                sql, new { UserId = userId })
+                sql.ToString(), 
+                new { UserId = userId })
                     ?? null;
     }
     

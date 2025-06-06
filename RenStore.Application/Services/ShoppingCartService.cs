@@ -1,24 +1,42 @@
-﻿using RenStore.Application.Repository;
+﻿using Microsoft.Extensions.Logging;
+using RenStore.Application.Repository;
 using RenStore.Domain.Entities;
 
 namespace RenStore.Application.Services;
 
 public class ShoppingCartService 
 {
+    private readonly ILogger<ShoppingCartService> logger;
     private readonly IShoppingCartRepository shoppingCartRepository;
 
     public ShoppingCartService(
+        ILogger<ShoppingCartService> logger,
         IShoppingCartRepository shoppingCartRepository)
     {
+        this.logger = logger;
         this.shoppingCartRepository = shoppingCartRepository;
     }
 
     // TODO: исправить баг
     public async Task<decimal> GetShoppingCartTotal(IList<ShoppingCartItem> shoppingCartItems)
     {
-        return shoppingCartItems.Select(cart => 
-            cart.Product.Price * cart.Amount)
-            .Sum();
+        logger.LogInformation("Get shopping cart method is starting.");
+
+        try
+        {
+            var result = shoppingCartItems.Select(cart => 
+                cart.Product.Price * cart.Amount)
+                .Sum();
+            
+            logger.LogInformation("Get shopping cart method is stopped.");
+
+            return result;
+        } 
+        catch (Exception ex)
+        {
+            logger.LogInformation($"Get shopping cart method error. Error: {ex.Message}");
+            throw;
+        }
     }
     
     /*

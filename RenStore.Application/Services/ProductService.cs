@@ -1,15 +1,20 @@
-﻿using RenStore.Application.Repository;
+﻿using Microsoft.Extensions.Logging;
+using RenStore.Application.Repository;
 
 namespace RenStore.Application.Services;
 
 public class ProductService
 {
+    private readonly ILogger<ProductService> logger;
     private readonly IReviewRepository reviewRepository;
     private readonly IProductRepository productRepository;
 
-    public ProductService(IReviewRepository reviewRepository,
+    public ProductService(
+        ILogger<ProductService> logger,
+        IReviewRepository reviewRepository,
         IProductRepository productRepository)
     {
+        this.logger = logger;
         this.reviewRepository = reviewRepository;
         this.productRepository = productRepository;
     }
@@ -27,16 +32,28 @@ public class ProductService
 
     public async Task<decimal> CalculateProductRatingAsync(Guid productId, CancellationToken cancellationToken)
     {
-        var reviews = await reviewRepository.GetByProductIdAsync(productId, cancellationToken);
-        
-        var product = await productRepository.GetByIdAsync(productId, cancellationToken);
+        logger.LogInformation("Calculate Product Rating method is starting.");
 
-        var averageRating = reviews.Average(r => r.Rating);
+        try
+        {
+            var reviews = await reviewRepository.GetByProductIdAsync(productId, cancellationToken);
         
-        product.Rating = (double)averageRating;
+            var product = await productRepository.GetByIdAsync(productId, cancellationToken);
 
-        await productRepository.UpdateAsync(product, cancellationToken);
+            var averageRating = reviews.Average(r => r.Rating);
         
-        return Math.Round(averageRating, 1);
+            product.Rating = (double)averageRating;
+
+            await productRepository.UpdateAsync(product, cancellationToken);
+            
+            logger.LogInformation("Calculate Product Rating method is stopped.");
+            
+            return Math.Round(averageRating, 1);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError($"Calculate Product Rating method error. ProductId: {productId}, Error: {ex.Message}");
+            throw;
+        }
     }
 }

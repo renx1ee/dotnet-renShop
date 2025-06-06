@@ -91,7 +91,6 @@ builder.Services.AddScoped<ProductService>();
 
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<ReviewService>();
-builder.Services.AddScoped<NotificationService>();
 
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<OrderService>();

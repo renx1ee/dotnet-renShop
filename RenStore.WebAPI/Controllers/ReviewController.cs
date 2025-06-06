@@ -55,9 +55,13 @@ public class ReviewController(IMapper mapper) : BaseController
     [HttpGet]
     [MapToApiVersion(1)]
     [Route("/api/v{version:apiVersion}/reviews")]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromHeader] bool isApproved)
     {
-        var result = await Mediator.Send(new GetAllReviewsQuery());
+        var result = await Mediator.Send(
+            new GetAllReviewsQuery()
+            {
+                IsApproved = isApproved
+            });
         
         if (!result.Any())
             return NotFound();
@@ -85,12 +89,13 @@ public class ReviewController(IMapper mapper) : BaseController
     [HttpGet]
     [MapToApiVersion(1)]
     [Route("/api/v{version:apiVersion}/user-reviews/{userId:guid}")]
-    public async Task<IActionResult> GetByUserId(string userId)
+    public async Task<IActionResult> GetByUserId(bool isApproved, string userId)
     {
         var result = await Mediator.Send(
         new GetAllReviewsByUserIdQuery()
         {
-            UserId = userId
+            UserId = userId,
+            IsApproved = isApproved
         });
 
         if (!result.Any())

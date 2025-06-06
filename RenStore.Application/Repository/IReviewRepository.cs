@@ -38,9 +38,10 @@ public interface IReviewRepository
     /// <summary>
     /// Get all Reviews.
     /// </summary>
+    /// <param name="isApproved">Get only approved reviews.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns>Return a IEnumerable collection of Reviews.</returns>
-    Task<IEnumerable<Review?>> GetAllAsync(CancellationToken cancellationToken);
+    Task<IEnumerable<Review?>> GetAllAsync(bool isApproved, CancellationToken cancellationToken);
     /// <summary>
     /// Get all Reviews for moderation.
     /// </summary>
@@ -65,18 +66,20 @@ public interface IReviewRepository
     /// <summary>
     /// Finds a Reviews by User ID.
     /// </summary>
+    /// /// <param name="isApproved">Get only approved reviews.</param>
     /// <param name="userId">User ID.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns>Return IEnumerable collection of Reviews if Reviews is found else returns an empty collection.</returns>
-    Task<IEnumerable<Review>?> FindByUserIdAsync(string userId, CancellationToken cancellationToken);
+    Task<IEnumerable<Review>?> FindByUserIdAsync(bool isApproved, string userId, CancellationToken cancellationToken);
     /// <summary>
     /// Gets a Reviews by User ID.
     /// </summary>
+    /// /// <param name="isApproved">Get only approved reviews.</param>
     /// <param name="userId">User ID.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns>Return IEnumerable collection of Reviews if Reviews is found.</returns>
     /// <exception cref="NotFoundException">Thrown if the Review is not found.</exception>
-    Task<IEnumerable<Review>> GetByUserIdAsync(string userId, CancellationToken cancellationToken);
+    Task<IEnumerable<Review>> GetByUserIdAsync(bool isApproved, string userId, CancellationToken cancellationToken);
     /// <summary>
     /// Finds a Reviews by Product ID.
     /// </summary>

@@ -25,7 +25,11 @@ public class GetAllReviewsByUserIdQueryHandler
     {
         logger.LogInformation($"Handling {nameof(GetAllReviewsByUserIdQueryHandler)}");
         
-        var items = await reviewRepository.GetByUserIdAsync(request.UserId, cancellationToken);
+        var items = await reviewRepository
+            .GetByUserIdAsync(
+                isApproved: request.IsApproved, 
+                userId: request.UserId, 
+                cancellationToken: cancellationToken);
         
         var result = items
             .Select(review => 
