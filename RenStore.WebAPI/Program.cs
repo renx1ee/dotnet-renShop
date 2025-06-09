@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using RenStore.Domain.Entities;
 using RenStore.Application;
 using RenStore.Application.Repository;
@@ -9,16 +10,18 @@ using RenStore.Identity.DuendeServer.WebAPI.Extensions;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using RenStore.Application.BackgroundServices;
-using RenStore.Application.BackgroundsTasks;
-using RenStore.Application.Interfaces;
 using RenStore.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+    
 builder.Services.AddSwaggerGen();
 
 builder.Logging.ClearProviders();

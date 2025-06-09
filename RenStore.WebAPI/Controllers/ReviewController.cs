@@ -10,6 +10,7 @@ using RenStore.Application.Entities.Review.Queries.GetAllReviewsByUserId;
 using RenStore.Application.Entities.Review.Queries.GetFirstByCreatedDate;
 using RenStore.Application.Entities.Review.Queries.GetFirstByRating;
 using RenStore.Domain.Dto.Review;
+using RenStore.Domain.Enums;
 
 namespace RenStore.WebApi.Controllers;
 
@@ -55,12 +56,12 @@ public class ReviewController(IMapper mapper) : BaseController
     [HttpGet]
     [MapToApiVersion(1)]
     [Route("/api/v{version:apiVersion}/reviews")]
-    public async Task<IActionResult> GetAll([FromHeader] bool isApproved)
+    public async Task<IActionResult> GetAll([FromQuery] ReviewStatusFilter status = ReviewStatusFilter.All)
     {
         var result = await Mediator.Send(
             new GetAllReviewsQuery()
             {
-                IsApproved = isApproved
+                Status = status
             });
         
         if (!result.Any())
@@ -85,17 +86,17 @@ public class ReviewController(IMapper mapper) : BaseController
 
         return Ok(result);
     }
-
+    
     [HttpGet]
     [MapToApiVersion(1)]
     [Route("/api/v{version:apiVersion}/user-reviews/{userId:guid}")]
-    public async Task<IActionResult> GetByUserId(bool isApproved, string userId)
+    public async Task<IActionResult> GetByUserId([FromQuery] ReviewStatusFilter status, string userId)
     {
         var result = await Mediator.Send(
         new GetAllReviewsByUserIdQuery()
         {
             UserId = userId,
-            IsApproved = isApproved
+            Status = status
         });
 
         if (!result.Any())

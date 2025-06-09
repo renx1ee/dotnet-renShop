@@ -27,7 +27,7 @@ public class GetAllReviewsByUserIdQueryHandler
         
         var items = await reviewRepository
             .GetByUserIdAsync(
-                isApproved: request.IsApproved, 
+                status: request.Status, 
                 userId: request.UserId, 
                 cancellationToken: cancellationToken);
         

@@ -45,10 +45,11 @@ public class ReviewRepository : IReviewRepository
             ?? throw new NotFoundException(typeof(Review), id);
         
         context.Reviews.Remove(review);
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(cancellationToken);
     }
     
-    public async Task<IEnumerable<Review>?> GetAllAsync(bool isApproved, CancellationToken cancellationToken)
+    // TODO: 
+    public async Task<IEnumerable<Review>?> GetAllAsync(ReviewStatusFilter status, CancellationToken cancellationToken)
     {
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync(cancellationToken);
@@ -59,8 +60,20 @@ public class ReviewRepository : IReviewRepository
             FROM
                 ""Reviews""");
 
-        if (isApproved)
-            sql.Append(@"WHERE ""Status""=0");
+        switch (status)
+        {
+            case ReviewStatusFilter.All:
+                break;
+            case ReviewStatusFilter.Published:
+                sql.Append(@"WHERE ""Status""=0");
+                break;
+            case ReviewStatusFilter.SentForModeration:
+                sql.Append(@"WHERE ""Status""=2");
+                break;
+            case ReviewStatusFilter.Rejected:
+                sql.Append(@"WHERE ""Status""=3");
+                break;
+        }
         
         return await connection
             .QueryAsync<Review>(
@@ -68,7 +81,7 @@ public class ReviewRepository : IReviewRepository
                 cancellationToken)
                     ?? null;
     }
-    
+    // TODO: убрать, т.к. метод выше может так же
     public async Task<IEnumerable<Review>?> GetAllForModerationAsync(CancellationToken cancellationToken)
     {
         await using var connection = new NpgsqlConnection(connectionString);
@@ -94,7 +107,7 @@ public class ReviewRepository : IReviewRepository
         return await this.FindByIdAsync(id, cancellationToken)
             ?? throw new NotFoundException(typeof(Review), id);
     }
-
+    
     public async Task<Review?> FindByIdAsync(Guid id, 
         CancellationToken cancellationToken)
     {
@@ -114,18 +127,18 @@ public class ReviewRepository : IReviewRepository
                 sql, new { Id = id })
                     ?? null;
     }
-
+    
     public async Task<IEnumerable<Review>> GetByUserIdAsync(
-        bool isApproved,
+        ReviewStatusFilter status, 
         string userId,
         CancellationToken cancellationToken)
     {
-        return await this.FindByUserIdAsync(isApproved, userId, cancellationToken)
+        return await this.FindByUserIdAsync(status, userId, cancellationToken)
             ?? throw new NotFoundException(typeof(Review), userId);
     }
-
+    // TODO:
     public async Task<IEnumerable<Review>?> FindByUserIdAsync(
-        bool isApproved,
+        ReviewStatusFilter status, 
         string userId, 
         CancellationToken cancellationToken)
     {
@@ -140,9 +153,20 @@ public class ReviewRepository : IReviewRepository
             WHERE
                 ""ApplicationUserId""=@UserId");
         
-        if (isApproved)
-            sql.Append(@" AND WHERE """"Status""""=0""");
-        
+        switch (status)
+        {
+            case ReviewStatusFilter.All:
+                break;
+            case ReviewStatusFilter.Published:
+                sql.Append(@"AND ""Status""=0");
+                break;
+            case ReviewStatusFilter.SentForModeration:
+                sql.Append(@"AND ""Status""=2");
+                break;
+            case ReviewStatusFilter.Rejected:
+                sql.Append(@"AND ""Status""=3");
+                break;
+        }
         
         return await connection
             .QueryAsync<Review>(
@@ -190,14 +214,14 @@ public class ReviewRepository : IReviewRepository
         await connection.OpenAsync(cancellationToken);
 
         const string sql = @"
-        SELECT
-            *
+            SELECT
+                *
             FROM
                 ""Reviews""
-        WHERE
-            ""ApplicationUserId""=@UserId
-        AND 
-            ""ProductId""=@ProductId";
+            WHERE
+                ""ApplicationUserId""=@UserId
+            AND
+                ""ProductId""=@ProductId";
         
         return await connection
            .QueryAsync<Review>(
