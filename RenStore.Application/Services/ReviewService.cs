@@ -60,6 +60,10 @@ public class ReviewService
             review.Status = status;
             review.ModeratedAt = DateTime.UtcNow;
             await reviewRepository.UpdateAsync(review, cancellationToken);
+
+            if (review.Status == ReviewStatus.Published)
+                return;
+
         }
         catch (Exception ex)
         {

@@ -10,6 +10,8 @@ using RenStore.Identity.DuendeServer.WebAPI.Extensions;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using RenStore.Application.BackgroundServices;
+using RenStore.Application.Queues;
 using RenStore.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -101,12 +103,9 @@ builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<ShoppingCartService>();
 
-/*builder.Services.AddHostedService<PriceCounterBackgroundService>();*/
+builder.Services.AddSingleton<IProductRatingQueue, ProductRatingQueue>();
 
-/*builder.Services.AddSingleton<IBackgroundTaskQueue>(_ =>
-    new BackgroundTaskQueue(
-        capacity: 1000,
-        logger: _.GetRequiredService<ILogger<BackgroundTaskQueue>>()));*/
+builder.Services.AddHostedService<PriceCounterBackgroundService>();
 
 var app = builder.Build();
 

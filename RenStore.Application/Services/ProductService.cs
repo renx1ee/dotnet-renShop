@@ -56,4 +56,9 @@ public class ProductService
             throw;
         }
     }
+
+    ~ProductService()
+    {
+        Console.WriteLine("Диструктор завершен!");
+    }
 }
