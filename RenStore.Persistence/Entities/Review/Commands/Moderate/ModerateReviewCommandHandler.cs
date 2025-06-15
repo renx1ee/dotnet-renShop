@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using RenStore.Application.Entities.Review.Commands.Moderate;
+using RenStore.Application.Queues;
 using RenStore.Application.Repository;
 using RenStore.Application.Services;
 using RenStore.Domain.Enums;
@@ -12,15 +13,18 @@ public class ModerateReviewCommandHandler : IRequestHandler<ModerateReviewComman
     private readonly ILogger<ModerateReviewCommandHandler> logger;
     private readonly ReviewService reviewService;
     private readonly IReviewRepository reviewRepository;
+    private readonly IProductRatingQueue productRatingQueue;
 
     public ModerateReviewCommandHandler(
         ILogger<ModerateReviewCommandHandler> logger,
         ReviewService reviewService,
-        IReviewRepository reviewRepository)
+        IReviewRepository reviewRepository,
+        IProductRatingQueue productRatingQueue)
     {
         this.logger = logger;
         this.reviewService = reviewService;
         this.reviewRepository = reviewRepository;
+        this.productRatingQueue = productRatingQueue;
     }
     
     public async Task Handle(ModerateReviewCommand request, CancellationToken cancellationToken)
@@ -36,6 +40,10 @@ public class ModerateReviewCommandHandler : IRequestHandler<ModerateReviewComman
                 await reviewService.ModerationReviewAsync(
                     review: review!, 
                     status: ReviewStatus.Published, 
+                    cancellationToken: cancellationToken);
+
+                await productRatingQueue.EnqueueAsync(
+                    productId: review!.ProductId,
                     cancellationToken: cancellationToken);
             }
             else
