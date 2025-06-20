@@ -54,4 +54,6 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser, ApplicationRole,
     public DbSet<Seller> Sellers { get; set; }
     public DbSet<Review> Reviews { get; set; }
     public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
+    public DbSet<ProductQuestion> ProductQuestions { get; set; }
+    public DbSet<ProductAnswer> ProductAnswers { get; set; }
 }

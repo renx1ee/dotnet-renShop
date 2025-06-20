@@ -41,7 +41,7 @@ public class ModerateReviewCommandHandler : IRequestHandler<ModerateReviewComman
                     review: review!, 
                     status: ReviewStatus.Published, 
                     cancellationToken: cancellationToken);
-
+                
                 await productRatingQueue.EnqueueAsync(
                     productId: review!.ProductId,
                     cancellationToken: cancellationToken);
@@ -59,6 +59,6 @@ public class ModerateReviewCommandHandler : IRequestHandler<ModerateReviewComman
             logger.LogError($"Moderation Handler Error! Review Id: {request.ReviewId} Error message: {ex.Message}");
         }
         
-        logger.LogInformation("Moderation handler is stopped");    
+        logger.LogInformation("Moderation handler is stopped");
     }
 }

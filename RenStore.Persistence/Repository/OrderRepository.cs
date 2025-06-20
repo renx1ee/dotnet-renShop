@@ -23,7 +23,7 @@ public class OrderRepository : IOrderRepository
     public async Task<Guid> CreateAsync(Order order, CancellationToken cancellationToken)
     {
         await context.Orders.AddAsync(order, cancellationToken);
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(cancellationToken);
         return order.Id;    
     }
 
@@ -33,7 +33,7 @@ public class OrderRepository : IOrderRepository
             ?? throw new NotFoundException(typeof(Order), order.Id);
         
         context.Orders.Update(order);
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
@@ -42,7 +42,7 @@ public class OrderRepository : IOrderRepository
             ?? throw new NotFoundException(typeof(Order), id);
         
         context.Orders.Remove(order);
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(cancellationToken);
     }
     
     public async Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken)

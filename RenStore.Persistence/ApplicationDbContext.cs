@@ -29,6 +29,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<ProductDetail> ProductDetails { get; set; }
     public DbSet<ClothesProduct> ClothesProducts { get; set; } 
     public DbSet<ShoesProduct> ShoesProducts { get; set; }
+    public DbSet<ProductQuestion> ProductQuestions { get; set; }
+    public DbSet<ProductAnswer> ProductAnswers { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<Seller> Sellers { get; set; }
