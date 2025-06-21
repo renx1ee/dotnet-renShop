@@ -35,14 +35,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\ProductAnswer\Command\Create\" />
-    <Folder Include="Entities\ProductAnswer\Command\Delete\" />
     <Folder Include="Entities\ProductAnswer\Queries\GetAllByProductId\" />
     <Folder Include="Entities\ProductAnswer\Queries\GetAllByUserId\" />
     <Folder Include="Entities\ProductAnswer\Queries\GetAll\" />
     <Folder Include="Entities\ProductAnswer\Queries\GetById\" />
-    <Folder Include="Entities\ProductQuestion\Command\Create\" />
-    <Folder Include="Entities\ProductQuestion\Command\Delete\" />
     <Folder Include="Entities\ProductQuestion\Queries\GetAllByProductId\" />
     <Folder Include="Entities\ProductQuestion\Queries\GetAllByUserId\" />
     <Folder Include="Entities\ProductQuestion\Queries\GetAll\" />

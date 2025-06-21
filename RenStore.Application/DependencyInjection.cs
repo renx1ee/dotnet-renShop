@@ -1,59 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using FluentValidation;
-using RenStore.Application.Common.Mappings.Category;
-using RenStore.Application.Common.Mappings.Order;
-using RenStore.Application.Common.Mappings.Product;
-using RenStore.Application.Common.Mappings.Review;
-using RenStore.Application.Common.Mappings.Seller;
-using RenStore.Application.Common.Mappings.ShoppingCart;
-using RenStore.Application.Entities.Category.Commands.Create;
-using RenStore.Application.Entities.Category.Commands.Delete;
-using RenStore.Application.Entities.Category.Commands.Update;
-using RenStore.Application.Entities.Category.Queries.GetAllCategories;
-using RenStore.Application.Entities.Category.Queries.GetCategoryById;
-using RenStore.Application.Entities.Category.Queries.GetCategoryByName;
-using RenStore.Application.Entities.Orders.Commands.Create;
-using RenStore.Application.Entities.Orders.Commands.Delete;
-using RenStore.Application.Entities.Orders.Commands.Update;
-using RenStore.Application.Entities.Orders.Queries.GetAll;
-using RenStore.Application.Entities.Orders.Queries.GetById;
-using RenStore.Application.Entities.Orders.Queries.GetByProductId;
-using RenStore.Application.Entities.Orders.Queries.GetByUserId;
-using RenStore.Application.Entities.Product.Commands.Create.Clothes;
-using RenStore.Application.Entities.Product.Commands.Create.Shoes;
-using RenStore.Application.Entities.Product.Commands.Delete;
-using RenStore.Application.Entities.Product.Commands.Update;
-using RenStore.Application.Entities.Product.Queries.GetByArticle;
-using RenStore.Application.Entities.Product.Queries.GetByName;
-using RenStore.Application.Entities.Product.Queries.GetByNovelty;
-using RenStore.Application.Entities.Product.Queries.GetBySellerId;
-using RenStore.Application.Entities.Product.Queries.GetMinimizedProducts;
-using RenStore.Application.Entities.Product.Queries.GetProductDetails;
-using RenStore.Application.Entities.Product.Queries.GetSortedByPrice;
-using RenStore.Application.Entities.Product.Queries.GetSortedByRating;
-using RenStore.Application.Entities.Review.Commands.Create;
-using RenStore.Application.Entities.Review.Commands.Delete;
-using RenStore.Application.Entities.Review.Commands.Moderate;
-using RenStore.Application.Entities.Review.Commands.Update;
-using RenStore.Application.Entities.Review.Queries.GetAllByProductId;
-using RenStore.Application.Entities.Review.Queries.GetAllForModeration;
-using RenStore.Application.Entities.Review.Queries.GetAllReviews;
-using RenStore.Application.Entities.Review.Queries.GetAllReviewsByUserId;
-using RenStore.Application.Entities.Review.Queries.GetFirstByCreatedDate;
-using RenStore.Application.Entities.Review.Queries.GetFirstByRating;
-using RenStore.Application.Entities.Seller.Command.Create;
-using RenStore.Application.Entities.Seller.Command.Delete;
-using RenStore.Application.Entities.Seller.Command.Update;
-using RenStore.Application.Entities.Seller.Queries.GetAll;
-using RenStore.Application.Entities.Seller.Queries.GetById;
-using RenStore.Application.Entities.Seller.Queries.GetByName;
-using RenStore.Application.Entities.ShoppingCart.Command.Add;
-using RenStore.Application.Entities.ShoppingCart.Command.Clear;
-using RenStore.Application.Entities.ShoppingCart.Command.Remove;
-using RenStore.Application.Entities.ShoppingCart.Query.GetAll;
-using RenStore.Application.Entities.ShoppingCart.Query.GetByUserId;
-using RenStore.Application.Entities.ShoppingCart.Query.GetTotalPrice;
+
 
 namespace RenStore.Application;
 
@@ -161,6 +109,20 @@ public static class DependencyInjection
                 typeof(GetShoppingCartItemsByUserIdQuery).Assembly,
                 typeof(GetAllCartItemsQuery).Assembly,
                 typeof(GetTotalShoppingCartPriceQuery).Assembly
+                ));
+        
+        // Question
+        services.AddMediatR(x =>
+            x.RegisterServicesFromAssemblies(
+                typeof(CreateProductQuestionCommand).Assembly,
+                typeof(DeleteProductQuestionCommand).Assembly
+            ));
+        
+        // Answer
+        services.AddMediatR(x =>
+            x.RegisterServicesFromAssemblies(
+                typeof(CreateProductAnswerCommand).Assembly,
+                typeof(DeleteProductAnswerCommand).Assembly
                 ));
 
         services.AddMediatR(config => config.RegisterServicesFromAssembly(

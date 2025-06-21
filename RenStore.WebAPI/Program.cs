@@ -103,6 +103,9 @@ builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<ShoppingCartService>();
 
+builder.Services.AddScoped<IProductQuestionRepository, ProductQuestionRepository>();
+builder.Services.AddScoped<IProductAnswerRepository, ProductAnswerRepository>();
+
 builder.Services.AddSingleton<IProductRatingQueue, ProductRatingQueue>();
 
 builder.Services.AddHostedService<PriceCounterBackgroundService>();

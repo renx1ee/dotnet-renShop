@@ -1,13 +1,14 @@
-﻿namespace RenStore.Domain.Entities;
+﻿using RenStore.Domain.Entities;
 
-public class ProductQuestion
+namespace RenStore.Application.Entities.ProductQuestion.Queries.GetById;
+
+public class GetProductQuestionByIdVm
 {
     public Guid Id { get; set; }
-    public Product Product { get; set; }
+    public Domain.Entities.Product Product { get; set; }
     public Guid ProductId { get; set; }
     public string ApplicationUserId { get; set; }
     public DateTime CreatedDate { get; set; }
     public string UserName { get; set; }
     public string Message { get; set; }
-    public ProductAnswer? ProductAnswer { get; set; }
 }
