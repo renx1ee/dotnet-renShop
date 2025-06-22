@@ -20,26 +20,26 @@ public class ProductAnswerRepository : IProductAnswerRepository
         connectionString = configuration.GetConnectionString("DefaultConnection")!;
     }
 
-    public async Task<Guid> CreateAsync(ProductAnswer question, CancellationToken cancellationToken)
+    public async Task<Guid> CreateAsync(ProductAnswer answer, CancellationToken cancellationToken)
     {
-        await context.AddAsync(question, cancellationToken);
+        await context.AddAsync(answer, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
-        return question.Id;
+        return answer.Id;
     }
 
-    public async Task UpdateAsync(ProductAnswer question, CancellationToken cancellationToken)
+    public async Task UpdateAsync(ProductAnswer answer, CancellationToken cancellationToken)
     {
-        var result = await this.GetByIdAsync(question.Id, cancellationToken);
+        var result = await this.GetByIdAsync(answer.Id, cancellationToken);
 
-        context.ProductAnswers.Update(question);
+        context.ProductAnswers.Update(answer);
         await context.SaveChangesAsync(cancellationToken);
     }
     
-    public async Task DeleteAsync(Guid questionId, CancellationToken cancellationToken)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var question = await this.GetByIdAsync(questionId, cancellationToken);
+        var answer = await this.GetByIdAsync(id, cancellationToken);
 
-        context.Remove(question);
+        context.Remove(answer);
         await context.SaveChangesAsync(cancellationToken);
     }
     
@@ -48,7 +48,7 @@ public class ProductAnswerRepository : IProductAnswerRepository
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync(cancellationToken);
 
-        const string sql = @"SELECT * FROM ""ProductQuestions""";
+        const string sql = @"SELECT * FROM ""ProductAnswers""";
 
         return await connection
             .QueryAsync<ProductAnswer>(
@@ -65,7 +65,7 @@ public class ProductAnswerRepository : IProductAnswerRepository
             SELECT 
                 * 
             FROM 
-                ""ProductQuestions""
+                ""ProductAnswers""
             WHERE
                 ""Id""=@Id";
 
@@ -90,7 +90,7 @@ public class ProductAnswerRepository : IProductAnswerRepository
             SELECT
                 *
             FROM
-                ""ProductAnswer""
+                ""ProductAnswers""
             WHERE
                 ""ProductId"" = @ProductId 
             AND
@@ -121,7 +121,7 @@ public class ProductAnswerRepository : IProductAnswerRepository
             SELECT
                 *
             FROM
-                ""ProductAnswer""
+                ""ProductAnswers""
             WHERE
                 ""ApplicationUserId"" = @UserId 
             AND
@@ -152,7 +152,7 @@ public class ProductAnswerRepository : IProductAnswerRepository
             SELECT
                 *
             FROM
-                ""ProductAnswer""
+                ""ProductAnswers""
             WHERE
                 ""ProductQuestionId"" = @ProductQuestionId";
         
@@ -169,5 +169,33 @@ public class ProductAnswerRepository : IProductAnswerRepository
     {
         return await this.FindByQuestionIdAsync(questionId, cancellationToken)
             ?? throw new NotFoundException(typeof(ProductAnswer), questionId);
+    }
+    
+    public async Task<ProductAnswer?> FindBySellerIdAsync(Guid sellerId, CancellationToken cancellationToken)
+    {
+        await using var connection = new NpgsqlConnection();
+        await connection.OpenAsync(cancellationToken);
+
+        const string sql = @"
+            SELECT
+                *
+            FROM
+                ""ProductAnswers""
+            WHERE
+                ""SellerId"" = @SellerId";
+        
+        return await connection
+                   .QueryFirstOrDefaultAsync(
+                       sql, new
+                       {
+                           SellerId = sellerId,
+                       }) 
+               ?? null;
+    }
+
+    public async Task<ProductAnswer> GetBySellerIdAsync(Guid sellerId, CancellationToken cancellationToken)
+    {
+        return await this.FindBySellerIdAsync(sellerId, cancellationToken)
+               ?? throw new NotFoundException(typeof(ProductAnswer), sellerId);
     }
 }

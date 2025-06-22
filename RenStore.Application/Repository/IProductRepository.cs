@@ -10,6 +10,7 @@ namespace RenStore.Application.Repository;
 /// Initializes a new repository instance.
 /// </remarks>
 /// <param name="context">Database context.</param>
+/// <param name="connectionString">Database connection string.</param>
 public interface IProductRepository 
 {
     /// <summary>

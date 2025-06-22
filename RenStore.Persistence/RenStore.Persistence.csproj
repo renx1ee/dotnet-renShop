@@ -41,7 +41,6 @@
     <Folder Include="Entities\ProductAnswer\Queries\GetById\" />
     <Folder Include="Entities\ProductQuestion\Queries\GetAllByProductId\" />
     <Folder Include="Entities\ProductQuestion\Queries\GetAllByUserId\" />
-    <Folder Include="Entities\ProductQuestion\Queries\GetAll\" />
     <Folder Include="Entities\ProductQuestion\Queries\GetById\" />
   </ItemGroup>
 

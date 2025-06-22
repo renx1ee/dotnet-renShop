@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RenStore.Persistence.Entities.ProductQuestion.Queries.GetAll;
 
 
 namespace RenStore.Persistence;
@@ -82,7 +83,8 @@ public static class DependencyInjection
         services.AddMediatR(x =>
             x.RegisterServicesFromAssemblies(
                 typeof(CreateProductQuestionCommandHandler).Assembly,
-                typeof(DeleteProductQuestionCommandHandler).Assembly
+                typeof(DeleteProductQuestionCommandHandler).Assembly,
+                typeof(GetAllQuestionsCommandHandler).Assembly
             ));
         
         // Answer
