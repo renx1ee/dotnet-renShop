@@ -35,13 +35,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\ProductAnswer\Queries\GetAllByProductId\" />
-    <Folder Include="Entities\ProductAnswer\Queries\GetAllByUserId\" />
-    <Folder Include="Entities\ProductAnswer\Queries\GetAll\" />
-    <Folder Include="Entities\ProductAnswer\Queries\GetById\" />
-    <Folder Include="Entities\ProductQuestion\Queries\GetAllByProductId\" />
-    <Folder Include="Entities\ProductQuestion\Queries\GetAllByUserId\" />
-    <Folder Include="Entities\ProductQuestion\Queries\GetById\" />
+    <Folder Include="Features\ProductAnswer\Queries\GetAllByProductId\" />
+    <Folder Include="Features\ProductAnswer\Queries\GetAllByUserId\" />
+    <Folder Include="Features\ProductAnswer\Queries\GetAll\" />
+    <Folder Include="Features\ProductAnswer\Queries\GetById\" />
+    <Folder Include="Features\ProductQuestion\Queries\GetAllByProductId\" />
+    <Folder Include="Features\ProductQuestion\Queries\GetAllByUserId\" />
   </ItemGroup>
 
 </Project>

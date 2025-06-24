@@ -1,14 +1,14 @@
 using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using RenStore.Application.Entities.Review.Commands.Create;
-using RenStore.Application.Entities.Review.Commands.Delete;
-using RenStore.Application.Entities.Review.Commands.Update;
-using RenStore.Application.Entities.Review.Queries.GetAllByProductId;
-using RenStore.Application.Entities.Review.Queries.GetAllReviews;
-using RenStore.Application.Entities.Review.Queries.GetAllReviewsByUserId;
-using RenStore.Application.Entities.Review.Queries.GetFirstByCreatedDate;
-using RenStore.Application.Entities.Review.Queries.GetFirstByRating;
+using RenStore.Application.Features.Review.Commands.Create;
+using RenStore.Application.Features.Review.Commands.Delete;
+using RenStore.Application.Features.Review.Commands.Update;
+using RenStore.Application.Features.Review.Queries.GetAllByProductId;
+using RenStore.Application.Features.Review.Queries.GetAllReviews;
+using RenStore.Application.Features.Review.Queries.GetAllReviewsByUserId;
+using RenStore.Application.Features.Review.Queries.GetFirstByCreatedDate;
+using RenStore.Application.Features.Review.Queries.GetFirstByRating;
 using RenStore.Domain.Dto.Review;
 using RenStore.Domain.Enums;
 

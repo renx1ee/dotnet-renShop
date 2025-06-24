@@ -1,10 +1,10 @@
 ﻿using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using RenStore.Application.Entities.ProductAnswer.Command.Create;
-using RenStore.Application.Entities.ProductAnswer.Command.Delete;
-using RenStore.Application.Entities.ProductQuestion.Command.Create;
-using RenStore.Application.Entities.ProductQuestion.Command.Delete;
+using RenStore.Application.Features.ProductAnswer.Command.Create;
+using RenStore.Application.Features.ProductAnswer.Command.Delete;
+using RenStore.Application.Features.ProductQuestion.Command.Create;
+using RenStore.Application.Features.ProductQuestion.Command.Delete;
 
 namespace RenStore.WebApi.Controllers;
 
@@ -83,4 +83,12 @@ public class ProductQuestionController(IMapper mapper) : BaseController
     }
     
     #endregion
+
+    [HttpGet]
+    [MapToApiVersion(1)]
+    [Route("/api/v{version:apiVersion}/question-with-answer/{questionId:guid}")]
+    public async Task<IActionResult> GetQuestionWithAnswer(Guid questionId)
+    {
+        return Ok();
+    }
 }

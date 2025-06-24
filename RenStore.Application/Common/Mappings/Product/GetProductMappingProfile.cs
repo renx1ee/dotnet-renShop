@@ -1,5 +1,4 @@
 using AutoMapper;
-using RenStore.Application.Entities.Product.Queries.GetById;
 
 namespace RenStore.Application.Common.Mappings.Product;
 

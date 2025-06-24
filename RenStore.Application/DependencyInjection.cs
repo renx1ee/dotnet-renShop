@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using FluentValidation;
-using RenStore.Application.Entities.ProductQuestion.Queries.GetAll;
-
 
 namespace RenStore.Application;
 
@@ -37,6 +35,11 @@ public static class DependencyInjection
         services.AddAutoMapper(typeof(GetOrderByIdMappingProfile));
         // Shopping Cart
         services.AddAutoMapper(typeof(AddToCartMappingProfile));
+        // Question
+        services.AddAutoMapper(typeof(GetQuestionByIdMappingProfile));
+        services.AddAutoMapper(typeof(GetQuestionWithAnswerByIdMappingProfile));
+        // Answer
+        services.AddAutoMapper(typeof(GetAnswerMappingProfile));
         
         services.AddValidatorsFromAssemblies([Assembly.GetExecutingAssembly()]);
         
@@ -117,7 +120,9 @@ public static class DependencyInjection
             x.RegisterServicesFromAssemblies(
                 typeof(CreateProductQuestionCommand).Assembly,
                 typeof(DeleteProductQuestionCommand).Assembly,
-                typeof(GetAllQuestionsCommand).Assembly
+                typeof(GetAllQuestionsCommand).Assembly,
+                typeof(GetProductQuestionByIdQuery).Assembly,
+                typeof(GetQuestionWithAnswerByIdQuery).Assembly
             ));
         
         // Answer

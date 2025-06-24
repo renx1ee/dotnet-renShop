@@ -1,12 +1,12 @@
 using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using RenStore.Application.Entities.ShoppingCart.Command.Add;
-using RenStore.Application.Entities.ShoppingCart.Command.Clear;
-using RenStore.Application.Entities.ShoppingCart.Command.Remove;
-using RenStore.Application.Entities.ShoppingCart.Query.GetAll;
-using RenStore.Application.Entities.ShoppingCart.Query.GetByUserId;
-using RenStore.Application.Entities.ShoppingCart.Query.GetTotalPrice;
+using RenStore.Application.Features.ShoppingCart.Command.Add;
+using RenStore.Application.Features.ShoppingCart.Command.Clear;
+using RenStore.Application.Features.ShoppingCart.Command.Remove;
+using RenStore.Application.Features.ShoppingCart.Query.GetAll;
+using RenStore.Application.Features.ShoppingCart.Query.GetByUserId;
+using RenStore.Application.Features.ShoppingCart.Query.GetTotalPrice;
 using RenStore.Domain.Dto.ShoppingCart;
 using RenStore.Identity.DuendeServer.WebAPI.Data.IdentityConfigurations;
 

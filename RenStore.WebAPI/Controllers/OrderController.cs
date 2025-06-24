@@ -1,14 +1,13 @@
 using Asp.Versioning;
 using AutoMapper;
-using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using RenStore.Application.Entities.Orders.Commands.Create;
-using RenStore.Application.Entities.Orders.Commands.Delete;
-using RenStore.Application.Entities.Orders.Commands.Update;
-using RenStore.Application.Entities.Orders.Queries.GetAll;
-using RenStore.Application.Entities.Orders.Queries.GetById;
-using RenStore.Application.Entities.Orders.Queries.GetByProductId;
-using RenStore.Application.Entities.Orders.Queries.GetByUserId;
+using RenStore.Application.Features.Orders.Commands.Create;
+using RenStore.Application.Features.Orders.Commands.Delete;
+using RenStore.Application.Features.Orders.Commands.Update;
+using RenStore.Application.Features.Orders.Queries.GetAll;
+using RenStore.Application.Features.Orders.Queries.GetById;
+using RenStore.Application.Features.Orders.Queries.GetByProductId;
+using RenStore.Application.Features.Orders.Queries.GetByUserId;
 using RenStore.Domain.Dto.Order;
 using RenStore.Identity.DuendeServer.WebAPI.Data.IdentityConfigurations;
 
