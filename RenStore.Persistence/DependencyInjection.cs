@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RenStore.Persistence.Features.ProductQuestion.Queries.GetAllByProductId;
+using RenStore.Persistence.Features.ProductQuestion.Queries.GetAllByUserId;
 using RenStore.Persistence.Features.ProductQuestion.Queries.GetById;
 
 namespace RenStore.Persistence;
@@ -85,7 +87,9 @@ public static class DependencyInjection
                 typeof(DeleteProductQuestionCommandHandler).Assembly,
                 typeof(GetAllQuestionsCommandHandler).Assembly,
                 typeof(GetProductQuestionByIdQueryHandler).Assembly,
-                typeof(GetQuestionWithAnswerByIdQueryHandler).Assembly
+                typeof(GetQuestionWithAnswerByIdQueryHandler).Assembly,
+                typeof(GetAllQuestionsByUserIdQueryHandler).Assembly,
+                typeof(GetAllQuestionsByProductIdQueryHandler).Assembly
             ));
         
         // Answer

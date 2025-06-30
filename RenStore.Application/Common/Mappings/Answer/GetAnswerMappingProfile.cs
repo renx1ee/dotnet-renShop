@@ -7,6 +7,6 @@ public class GetAnswerMappingProfile : Profile
 {
     public GetAnswerMappingProfile()
     {
-        CreateMap<ProductAnswer, AnswerVm>();
+        CreateMap<ProductAnswer, GetQuestionWithAnswerByIdVm>();
     }
 }

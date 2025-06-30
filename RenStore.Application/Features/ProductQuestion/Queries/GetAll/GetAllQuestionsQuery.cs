@@ -2,6 +2,6 @@
 
 namespace RenStore.Application.Features.ProductQuestion.Queries.GetAll;
 
-public class GetAllQuestionsCommand : IRequest<IEnumerable<GetAllQuestionsVm>>
+public class GetAllQuestionsQuery : IRequest<IEnumerable<GetAllQuestionsVm>>
 {
 }

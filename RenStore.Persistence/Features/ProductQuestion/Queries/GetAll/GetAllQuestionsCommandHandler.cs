@@ -6,7 +6,7 @@ using RenStore.Application.Repository;
 namespace RenStore.Persistence.Features.ProductQuestion.Queries.GetAll;
 
 public class GetAllQuestionsCommandHandler 
-    : IRequestHandler<GetAllQuestionsCommand, IEnumerable<GetAllQuestionsVm>>
+    : IRequestHandler<GetAllQuestionsQuery, IEnumerable<GetAllQuestionsVm>>
 {
     private readonly ILogger<GetAllQuestionsCommandHandler> logger;
     private readonly IProductQuestionRepository productQuestionRepository;
@@ -19,7 +19,7 @@ public class GetAllQuestionsCommandHandler
         this.productQuestionRepository = productQuestionRepository;
     }
     
-    public async Task<IEnumerable<GetAllQuestionsVm>> Handle(GetAllQuestionsCommand request, 
+    public async Task<IEnumerable<GetAllQuestionsVm>> Handle(GetAllQuestionsQuery request, 
         CancellationToken cancellationToken)
     {
         logger.LogInformation($"Handling {nameof(GetAllQuestionsCommandHandler)}.");

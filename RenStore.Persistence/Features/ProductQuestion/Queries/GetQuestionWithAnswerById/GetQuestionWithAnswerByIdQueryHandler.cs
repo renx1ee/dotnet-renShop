@@ -47,7 +47,7 @@ public class GetQuestionWithAnswerByIdQueryHandler
             var result = mapper.Map<GetQuestionWithAnswerByIdVm>(question); 
 
             if (answer is not null)
-                result.Answer = mapper.Map<AnswerVm>(question); 
+                result.Answer = mapper.Map<GetQuestionWithAnswerByIdAnswerVm>(question);
             
             logger.LogInformation($"Handled {nameof(GetQuestionWithAnswerByIdQueryHandler)}");
 

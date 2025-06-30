@@ -38,9 +38,6 @@
     <Folder Include="Features\ProductAnswer\Queries\GetAllByUserId\" />
     <Folder Include="Features\ProductAnswer\Queries\GetAll\" />
     <Folder Include="Features\ProductAnswer\Queries\GetById\" />
-    <Folder Include="Features\ProductQuestion\Queries\GetAllByProductId\" />
-    <Folder Include="Features\ProductQuestion\Queries\GetAllByUserId\" />
-    <Folder Include="Features\ProductQuestion\Queries\GetAllQuestionsWithAnswers\" />
     <Folder Include="Features\Product\Notifications\" />
   </ItemGroup>
 

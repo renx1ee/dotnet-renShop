@@ -9,10 +9,10 @@ public class GetQuestionWithAnswerByIdVm
     public DateTime QuestionCreatedDate { get; set; }
     public string UserName { get; set; }
     public string QuestionMessage { get; set; }
-    public AnswerVm? Answer { get; set; }
+    public GetQuestionWithAnswerByIdAnswerVm? Answer { get; set; }
 }
 
-public class AnswerVm
+public class GetQuestionWithAnswerByIdAnswerVm
 {
     public Guid AnswerId { get; set; }
     public DateTime AnswerCreatedDate { get; set; }

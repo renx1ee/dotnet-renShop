@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using FluentValidation;
+using RenStore.Application.Features.ProductQuestion.Queries.GetAllByProductId;
+using RenStore.Application.Features.ProductQuestion.Queries.GetAllByUserId;
+using RenStore.Application.Features.ProductQuestion.Queries.GetAllQuestionsWithAnswers;
 
 namespace RenStore.Application;
 
@@ -114,17 +117,18 @@ public static class DependencyInjection
                 typeof(GetAllCartItemsQuery).Assembly,
                 typeof(GetTotalShoppingCartPriceQuery).Assembly
                 ));
-        
         // Question
         services.AddMediatR(x =>
             x.RegisterServicesFromAssemblies(
                 typeof(CreateProductQuestionCommand).Assembly,
                 typeof(DeleteProductQuestionCommand).Assembly,
-                typeof(GetAllQuestionsCommand).Assembly,
+                typeof(GetAllQuestionsQuery).Assembly,
                 typeof(GetProductQuestionByIdQuery).Assembly,
-                typeof(GetQuestionWithAnswerByIdQuery).Assembly
+                typeof(GetQuestionWithAnswerByIdQuery).Assembly,
+                typeof(GetAllQuestionsByUserIdQuery).Assembly,
+                typeof(GetAllQuestionsByProductIdQuery).Assembly,
+                typeof(GetAllQuestionsWithAnswersQuery).Assembly
             ));
-        
         // Answer
         services.AddMediatR(x =>
             x.RegisterServicesFromAssemblies(

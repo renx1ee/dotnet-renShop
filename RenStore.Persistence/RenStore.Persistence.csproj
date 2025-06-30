@@ -39,8 +39,6 @@
     <Folder Include="Features\ProductAnswer\Queries\GetAllByUserId\" />
     <Folder Include="Features\ProductAnswer\Queries\GetAll\" />
     <Folder Include="Features\ProductAnswer\Queries\GetById\" />
-    <Folder Include="Features\ProductQuestion\Queries\GetAllByProductId\" />
-    <Folder Include="Features\ProductQuestion\Queries\GetAllByUserId\" />
   </ItemGroup>
 
 </Project>
