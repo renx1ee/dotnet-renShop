@@ -1,8 +1,9 @@
 using RenStore.Microservice.Payment.Endpoints;
+using RenStore.Microservice.Payment.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddOpenApi();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
 var app = builder.Build();
 

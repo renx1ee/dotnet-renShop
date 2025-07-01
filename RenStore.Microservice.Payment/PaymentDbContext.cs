@@ -9,5 +9,5 @@ public class PaymentDbContext(DbContextOptions<DbContext> options) : DbContext(o
     {
     }
     
-    public DbSet<Purchase> Purchases { get; set; }
+    public DbSet<Models.Payment> Payments { get; set; }
 }

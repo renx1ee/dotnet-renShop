@@ -2,7 +2,7 @@
 
 public enum PaymentMethodType
 {
-    CreditCard,  
-    DebitCard, 
+    CreditCard,
+    DebitCard,
     Sbp
 }
