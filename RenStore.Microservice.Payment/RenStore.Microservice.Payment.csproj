@@ -18,8 +18,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Common\Validation\" />
+      <Folder Include="Exceptions\" />
       <Folder Include="Queues\" />
-      <Folder Include="Senders\" />
     </ItemGroup>
 
 </Project>

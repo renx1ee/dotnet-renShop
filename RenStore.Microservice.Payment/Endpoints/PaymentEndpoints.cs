@@ -1,4 +1,5 @@
 ﻿using RenStore.Microservice.Payment.Repository;
+using RenStore.Microservice.Payment.Requests;
 using RenStore.Microservice.Payment.Services;
 
 namespace RenStore.Microservice.Payment.Endpoints;
@@ -18,19 +19,24 @@ public static class PaymentEndpoints
         return group;
     }
 
-    public async static Task<IResult> PayCard(
+    private static async Task<IResult> PayCard(
         PaymentCardService cardService)
     {
         return Results.Ok();
     }
     
-    public async static Task<IResult> PaySbp(
-        PaymentSbpService sbpService)
+    private static async Task<IResult> PaySbp(
+        PaymentSBPService paymentSbpService,
+        PaymentSBPRequest request)
     {
-        return Results.Ok();
+        var result = await paymentSbpService.PayAsync(request, CancellationToken.None);
+        
+        if(result) return Results.Ok();
+        
+        return Results.BadRequest();
     }
     
-    public async static Task<IResult> CancelPayment(
+    private static async Task<IResult> CancelPayment(
         IPaymentRepository paymentRepository)
     {
         return Results.Ok();

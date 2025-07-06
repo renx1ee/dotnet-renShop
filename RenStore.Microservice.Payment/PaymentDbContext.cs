@@ -10,4 +10,6 @@ public class PaymentDbContext(DbContextOptions<DbContext> options) : DbContext(o
     }
     
     public DbSet<Models.Payment> Payments { get; set; }
+    public DbSet<Loggs> Loggs { get; set; }
+    public DbSet<Address> Addresses { get; set; }
 }

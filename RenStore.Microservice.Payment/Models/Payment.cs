@@ -1,4 +1,5 @@
-﻿using RenStore.Microservice.Payment.Enums;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using RenStore.Microservice.Payment.Enums;
 
 namespace RenStore.Microservice.Payment.Models;
 
