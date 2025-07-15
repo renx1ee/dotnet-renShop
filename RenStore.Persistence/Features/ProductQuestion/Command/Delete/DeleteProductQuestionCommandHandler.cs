@@ -7,11 +7,11 @@ namespace RenStore.Persistence.Features.ProductQuestion.Command.Delete;
 
 public class DeleteProductQuestionCommandHandler : IRequestHandler<DeleteProductQuestionCommand>
 {
-    private readonly Logger<DeleteProductQuestionCommandHandler> logger;
+    private readonly ILogger<DeleteProductQuestionCommandHandler> logger;
     private readonly IProductQuestionRepository productQuestionRepository;
     
     public DeleteProductQuestionCommandHandler(
-        Logger<DeleteProductQuestionCommandHandler> logger,
+        ILogger<DeleteProductQuestionCommandHandler> logger,
         IProductQuestionRepository productQuestionRepository)
     {
         this.logger = logger;

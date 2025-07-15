@@ -3,8 +3,13 @@ using RenStore.Microservice.Payment.Models;
 
 namespace RenStore.Microservice.Payment;
 
-public class PaymentDbContext(DbContextOptions<DbContext> options) : DbContext(options)
+public class PaymentDbContext : DbContext
 {
+    public PaymentDbContext(DbContextOptions<PaymentDbContext> options) 
+        : base(options)
+    {
+    }
+    
     protected override void OnModelCreating(ModelBuilder builder)
     {
     }

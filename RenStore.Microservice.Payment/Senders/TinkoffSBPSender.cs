@@ -1,4 +1,5 @@
-﻿using RenStore.Microservice.Payment.Requests;
+﻿using RenStore.Microservice.Payment.Common;
+using RenStore.Microservice.Payment.Requests;
 using RenStore.Microservice.Payment.Responses;
 
 namespace RenStore.Microservice.Payment.Senders;
@@ -6,16 +7,16 @@ namespace RenStore.Microservice.Payment.Senders;
 public class TinkoffSBPSender : ITinkoffSBPSender
 {
     private readonly ILogger<TinkoffSBPSender> logger;
-    private readonly IHttpClientFactory clientFactory;
+    private readonly HttpClient httpClient;
     private readonly IConfiguration configuration;
 
     public TinkoffSBPSender(
         ILogger<TinkoffSBPSender> logger,
-        IHttpClientFactory clientFactory,
+        HttpClient httpClient,
         IConfiguration configuration)
     {
         this.logger = logger;
-        this.clientFactory = clientFactory;
+        this.httpClient = httpClient;
         this.configuration = configuration;
     }
     
@@ -25,8 +26,6 @@ public class TinkoffSBPSender : ITinkoffSBPSender
         
         try
         {
-            var httpClient = clientFactory.CreateClient();
-
             string url = configuration.GetValue<string>("TinkoffPaymentUrl") 
                 ?? throw new Exception("Url is not found.");
             

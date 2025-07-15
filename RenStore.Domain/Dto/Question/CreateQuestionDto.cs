@@ -1,8 +1,3 @@
 ﻿namespace RenStore.Domain.Dto.Question;
 
-public class CreateQuestionDto
-{
-    public Guid ProductId { get; set; }
-    public string ApplicationUserId { get; set; }
-    public string Message { get; set; }
-}
+public record CreateQuestionDto(Guid ProductId, string ApplicationUserId, string Message);

@@ -7,12 +7,12 @@ namespace RenStore.Persistence.Features.ProductAnswer.Command.Create;
 
 public class CreateProductAnswerCommandHandler : IRequestHandler<CreateProductAnswerCommand, Guid>
 {
-    private readonly Logger<CreateProductAnswerCommandHandler> logger;
+    private readonly ILogger<CreateProductAnswerCommandHandler> logger;
     private readonly IProductQuestionRepository productQuestionRepository;
     private readonly IProductAnswerRepository productAnswerRepository;
 
     public CreateProductAnswerCommandHandler(
-        Logger<CreateProductAnswerCommandHandler> logger,
+        ILogger<CreateProductAnswerCommandHandler> logger,
         IProductQuestionRepository productQuestionRepository,
         IProductAnswerRepository productAnswerRepository)
     {

@@ -31,6 +31,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenStore.Microservice.Cache
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenStore.Microservice.Payment", "RenStore.Microservice.Payment\RenStore.Microservice.Payment.csproj", "{1F394098-F93F-42E5-9908-C2BD9161C9C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenStore.Microservices.Bonuses", "RenStore.Microservices.Bonuses\RenStore.Microservices.Bonuses.csproj", "{D39171FC-31BF-4398-8DCE-2502B8CF9243}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenStore.Microservice.Delivery", "RenStore.Microservice.Delivery\RenStore.Microservice.Delivery.csproj", "{79DF8C19-333A-4E5E-9F1F-4897EF4B8298}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +77,14 @@ Global
 		{1F394098-F93F-42E5-9908-C2BD9161C9C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F394098-F93F-42E5-9908-C2BD9161C9C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F394098-F93F-42E5-9908-C2BD9161C9C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D39171FC-31BF-4398-8DCE-2502B8CF9243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D39171FC-31BF-4398-8DCE-2502B8CF9243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D39171FC-31BF-4398-8DCE-2502B8CF9243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D39171FC-31BF-4398-8DCE-2502B8CF9243}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79DF8C19-333A-4E5E-9F1F-4897EF4B8298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79DF8C19-333A-4E5E-9F1F-4897EF4B8298}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79DF8C19-333A-4E5E-9F1F-4897EF4B8298}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79DF8C19-333A-4E5E-9F1F-4897EF4B8298}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +99,8 @@ Global
 		{78C113E2-26C8-4890-9073-F5CA122C003D} = {265FD3CF-2AE1-4B79-9570-C7BD742ADDAB}
 		{21CD05E9-1ACA-402B-9AD4-59B03E9960DD} = {E7F576C7-B064-48DE-BF25-A8F8FCEACD82}
 		{1F394098-F93F-42E5-9908-C2BD9161C9C3} = {265FD3CF-2AE1-4B79-9570-C7BD742ADDAB}
+		{D39171FC-31BF-4398-8DCE-2502B8CF9243} = {265FD3CF-2AE1-4B79-9570-C7BD742ADDAB}
+		{79DF8C19-333A-4E5E-9F1F-4897EF4B8298} = {265FD3CF-2AE1-4B79-9570-C7BD742ADDAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {057C7BB5-998A-46BB-97AF-CF22F6A756CA}

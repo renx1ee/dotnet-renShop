@@ -20,24 +20,31 @@ public static class PaymentEndpoints
     }
 
     private static async Task<IResult> PayCard(
-        PaymentCardService cardService)
+        PaymentCardService cardService,
+        CancellationToken cancellationToken)
     {
         return Results.Ok();
     }
     
     private static async Task<IResult> PaySbp(
+        PaymentSBPRequest request,
         PaymentSBPService paymentSbpService,
-        PaymentSBPRequest request)
+        CancellationToken cancellationToken)
     {
-        var result = await paymentSbpService.PayAsync(request, CancellationToken.None);
+        var result = 
+            await paymentSbpService.PayAsync(
+                request: request,
+                cancellationToken: cancellationToken);
         
-        if(result) return Results.Ok();
+        if(result.IsSuccess) 
+            return Results.Accepted();
         
         return Results.BadRequest();
     }
     
     private static async Task<IResult> CancelPayment(
-        IPaymentRepository paymentRepository)
+        IPaymentRepository paymentRepository,
+        CancellationToken cancellationToken)
     {
         return Results.Ok();
     }

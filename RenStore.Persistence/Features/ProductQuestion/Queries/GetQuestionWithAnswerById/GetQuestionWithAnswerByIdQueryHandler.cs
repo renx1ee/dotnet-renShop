@@ -40,7 +40,7 @@ public class GetQuestionWithAnswerByIdQueryHandler
                     cancellationToken: cancellationToken);
             
             var answer = 
-                await this.productAnswerRepository.FindByQuestionIdAsync(
+                await this.productAnswerRepository.FindByQuestionIdAsync( 
                     questionId: request.Id, 
                     cancellationToken: cancellationToken);
 
