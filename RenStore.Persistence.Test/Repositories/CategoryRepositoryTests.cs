@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Configuration;
-using Moq;
 using Npgsql;
 using RenStore.Domain.Entities;
 using RenStore.Persistence.Repository;

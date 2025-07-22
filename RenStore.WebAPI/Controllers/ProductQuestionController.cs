@@ -3,12 +3,14 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RenStore.Application.Features.ProductAnswer.Command.Create;
 using RenStore.Application.Features.ProductAnswer.Command.Delete;
+using RenStore.Application.Features.ProductAnswer.Queries.GetById;
 using RenStore.Application.Features.ProductQuestion.Command.Create;
 using RenStore.Application.Features.ProductQuestion.Command.Delete;
 using RenStore.Application.Features.ProductQuestion.Queries.GetAll;
 using RenStore.Application.Features.ProductQuestion.Queries.GetAllByProductId;
 using RenStore.Application.Features.ProductQuestion.Queries.GetAllByUserId;
 using RenStore.Application.Features.ProductQuestion.Queries.GetQuestionWithAnswerById;
+using RenStore.Domain.Dto.Answer;
 using RenStore.Domain.Dto.Question;
 
 namespace RenStore.WebApi.Controllers;
@@ -123,14 +125,14 @@ public class ProductQuestionController(IMapper mapper) : BaseController
     [HttpPost]
     [MapToApiVersion(1)]
     [Route("/api/v{version:apiVersion}/answer/{productQuestionId:guid}/{sellerId:int}/{message}")]
-    public async Task<IActionResult> CreateAnswer(Guid productQuestionId, int sellerId, string message)
+    public async Task<IActionResult> CreateAnswer(CreateAnswerDto dto)
     {
         var result = await Mediator.Send(
             new CreateProductAnswerCommand()
             {
-                ProductQuestionId = productQuestionId,
-                SellerId = sellerId,
-                Message = message
+                ProductQuestionId = dto.ProductQuestionId,
+                SellerId = dto.SellerId,
+                Message = dto.Message
             });
 
         if (result == Guid.Empty)
@@ -151,6 +153,23 @@ public class ProductQuestionController(IMapper mapper) : BaseController
             });
 
         return Accepted();
+    }
+
+    [HttpGet]
+    [MapToApiVersion(1)]
+    [Route("/api/v{version:apiVersion}/answer/{answerId:guid}")]
+    public async Task<IActionResult> GetAnswerById(Guid answerId)
+    {
+        var result = await Mediator.Send(
+            new GetAnswerByIdQuery()
+            {
+                Id = answerId
+            });
+        
+        if(result is not null)
+            return Ok(result);
+
+        return NotFound();
     }
     
     #endregion

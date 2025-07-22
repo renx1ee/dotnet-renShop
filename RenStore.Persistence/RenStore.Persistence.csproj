@@ -34,11 +34,4 @@
     </Reference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\ProductAnswer\Queries\GetAllByProductId\" />
-    <Folder Include="Features\ProductAnswer\Queries\GetAllByUserId\" />
-    <Folder Include="Features\ProductAnswer\Queries\GetAll\" />
-    <Folder Include="Features\ProductAnswer\Queries\GetById\" />
-  </ItemGroup>
-
 </Project>
