@@ -30,9 +30,9 @@ public class ProductRepository : IProductRepository
         product.ProductDetailId = product.ProductDetail.Id;
         
         var validProduct = await ProductValidCheckerAsync(product)
-            ?? throw new NotFoundException(typeof(Product), product.Id);;
+            ?? throw new NotFoundException(typeof(Product), product.Id);
             
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(cancellationToken);
         
         return product.Id;
      }
@@ -59,7 +59,7 @@ public class ProductRepository : IProductRepository
         
         context.Entry<Product>(model).State = EntityState.Detached;
         context.Products.Update(product);
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
@@ -68,7 +68,7 @@ public class ProductRepository : IProductRepository
             ?? throw new NotFoundException(typeof(Product), id);
         
         context.Products.Remove(product);
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken)

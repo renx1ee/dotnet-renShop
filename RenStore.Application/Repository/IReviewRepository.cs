@@ -1,6 +1,5 @@
 using RenStore.Domain.Entities;
 using RenStore.Domain.Enums;
-using RenStore.Domain.Interfaces.Repository;
 
 namespace RenStore.Application.Repository;
 /// <summary>

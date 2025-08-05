@@ -60,3 +60,8 @@ global using RenStore.Application.Common.Mappings.ShoppingCart;
 global using RenStore.Application.Features.ProductQuestion.Queries.GetQuestionWithAnswerById;
 global using RenStore.Application.Common.Mappings.Answer;
 global using RenStore.Application.Common.Mappings.Question;
+global using RenStore.Application.Features.ProductAnswer.Queries.GetById;
+global using RenStore.Application.Features.ProductQuestion.Queries.GetAllByProductId;
+global using RenStore.Application.Features.ProductQuestion.Queries.GetAllByUserId;
+global using RenStore.Application.Features.ProductQuestion.Queries.GetAllQuestionsWithAnswers;
+global using RenStore.Persistence.Features.Category.Command.Update;

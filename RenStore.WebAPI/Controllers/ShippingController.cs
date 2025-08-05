@@ -8,6 +8,7 @@ namespace RenStore.WebApi.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 public class ShippingController : BaseController
 {
+    //TODO:
     [HttpGet]
     [MapToApiVersion(1)]
     [Route("/api/v{version:apiVersion}/methods")]
@@ -16,6 +17,7 @@ public class ShippingController : BaseController
         return Ok();
     }
     
+    //TODO:
     [HttpGet]
     [MapToApiVersion(1)]
     [Route("/api/v{version:apiVersion}/calculate")]
@@ -24,6 +26,7 @@ public class ShippingController : BaseController
         return Ok();
     }
     
+    //TODO:
     [HttpPost]
     [MapToApiVersion(1)]
     [Route("/api/v{version:apiVersion}/track")]

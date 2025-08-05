@@ -14,9 +14,4 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Events\Review\" />
-    <Folder Include="Interfaces\Service\" />
-  </ItemGroup>
-
 </Project>

@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using FluentValidation;
-using RenStore.Application.Features.ProductAnswer.Queries.GetById;
-using RenStore.Application.Features.ProductQuestion.Queries.GetAllByProductId;
-using RenStore.Application.Features.ProductQuestion.Queries.GetAllByUserId;
-using RenStore.Application.Features.ProductQuestion.Queries.GetAllQuestionsWithAnswers;
+using RenStore.Persistence.Features.Review.Commands.Create;
+using RenStore.Persistence.Features.Review.Commands.Delete;
+using RenStore.Persistence.Features.Review.Commands.Moderate;
+using RenStore.Persistence.Features.Review.Commands.Update;
 
 namespace RenStore.Application;
 
@@ -61,7 +61,17 @@ public static class DependencyInjection
                 typeof(GetSortedProductsByRatingQuery).Assembly,
                 typeof(GetProductBySellerIdQuery).Assembly,
                 typeof(GetProductByNoveltyQuery).Assembly,
-                typeof(GetProductByNameQuery).Assembly
+                typeof(GetProductByNameQuery).Assembly,
+                typeof(CreateClothesProductCommandHandler).Assembly,
+                typeof(CreateShoesProductCommandHandler).Assembly,
+                typeof(UpdateProductCommandHandler).Assembly,
+                typeof(GetProductByIdQueryHandler).Assembly,
+                typeof(GetMiniProductListQueryHandler).Assembly,
+                typeof(GetProductByArticleQueryHandler).Assembly,
+                typeof(GetSortedProductsByPriceQueryHandler).Assembly,
+                typeof(GetSortedProductsByRatingQueryHandler).Assembly,
+                typeof(GetProductBySellerIdQueryHandler).Assembly,
+                typeof(GetProductByNoveltyQueryHandler).Assembly
                 ));
         // Category
         services.AddMediatR(x =>
@@ -71,7 +81,13 @@ public static class DependencyInjection
                 typeof(DeleteCategoryCommand).Assembly,
                 typeof(GetCategoriesListQuery).Assembly,
                 typeof(GetCategoryByIdQuery).Assembly,
-                typeof(GetCategoryByNameQuery).Assembly
+                typeof(GetCategoryByNameQuery).Assembly,
+                typeof(CreateCategoryCommandHandler).Assembly,
+                typeof(UpdateCategoryCommandHandler).Assembly,
+                typeof(DeleteCategoryCommandHandler).Assembly,
+                typeof(GetAllCategoriesQueryHandler).Assembly,
+                typeof(GetCategoryByIdQueryHandler).Assembly,
+                typeof(GetCategoryByNameQueryHandler).Assembly
                 ));
         // Seller
         services.AddMediatR(x =>
@@ -81,7 +97,13 @@ public static class DependencyInjection
                 typeof(DeleteSellerCommand).Assembly,
                 typeof(GetAllSellersListQuery).Assembly,
                 typeof(GetSellerByIdQuery).Assembly,
-                typeof(GetSellerByNameQuery).Assembly
+                typeof(GetSellerByNameQuery).Assembly,
+                typeof(CreateSellerCommandHandler).Assembly,
+                typeof(UpdateSellerCommandHandler).Assembly,
+                typeof(DeleteSellerCommandHandler).Assembly,
+                typeof(GetAllSellersQueryHandler).Assembly,
+                typeof(GetCategoryByIdQueryHandler).Assembly,
+                typeof(GetSellerByNameQueryHandler).Assembly
                 ));
         // Review
         services.AddMediatR(x =>
@@ -95,7 +117,15 @@ public static class DependencyInjection
                 typeof(GetAllReviewsByUserIdQuery).Assembly,
                 typeof(GetFirstReviewsByDateQuery).Assembly,
                 typeof(GetFirstReviewsByRatingQuery).Assembly,
-                typeof(GetAllForModerationRequest).Assembly
+                typeof(GetAllForModerationRequest).Assembly,
+                typeof(CreateReviewCommandHandler).Assembly,
+                typeof(UpdateReviewCommandHandler).Assembly,
+                typeof(DeleteReviewCommandHandler).Assembly,
+                typeof(ModerateReviewCommandHandler).Assembly,
+                typeof(GetAllCategoriesQueryHandler).Assembly,
+                typeof(GetAllReviewsByProductIdQueryHandler).Assembly,
+                typeof(GetAllReviewsByUserIdQueryHandler).Assembly,
+                typeof(GetAllForModerationRequestHandler).Assembly
                 ));
         // Order
         services.AddMediatR(x =>
@@ -106,7 +136,14 @@ public static class DependencyInjection
                 typeof(GetAllOrdersQuery).Assembly,
                 typeof(GetOrderByIdQuery).Assembly,
                 typeof(GetOrdersByProductIdQuery).Assembly,
-                typeof(GetOrdersByUserIdQuery).Assembly
+                typeof(GetOrdersByUserIdQuery).Assembly,
+                typeof(CreateOrderCommandHandler).Assembly,
+                typeof(UpdateOrderCommandHandler).Assembly,
+                typeof(DeleteOrderCommandHandler).Assembly,
+                typeof(GetAllCategoriesQueryHandler).Assembly,
+                typeof(GetOrderByIdQueryHandler).Assembly,
+                typeof(GetOrdersByProductIdQueryHandler).Assembly,
+                typeof(GetOrdersByUserIdQueryHandler).Assembly
                 ));
         // Shopping Cart
         services.AddMediatR(x =>
@@ -116,7 +153,14 @@ public static class DependencyInjection
                 typeof(ClearCartCommand).Assembly,
                 typeof(GetShoppingCartItemsByUserIdQuery).Assembly,
                 typeof(GetAllCartItemsQuery).Assembly,
-                typeof(GetTotalShoppingCartPriceQuery).Assembly
+                typeof(GetTotalShoppingCartPriceQuery).Assembly,
+                typeof(AddToCartCommandHandler).Assembly,
+                typeof(RemoveFromCartCommandHandler).Assembly,
+                typeof(ClearCartCommandHandler).Assembly,
+                typeof(GetShoppingCartItemsByUserIdQueryHandler).Assembly,
+                typeof(GetTotalShoppingCartPriceQueryHandler).Assembly,
+                typeof(GetAllCartItemsQueryHandler).Assembly,
+                typeof(GetTotalShoppingCartPriceQueryHandler).Assembly
                 ));
         // Question
         services.AddMediatR(x =>
@@ -128,14 +172,24 @@ public static class DependencyInjection
                 typeof(GetQuestionWithAnswerByIdQuery).Assembly,
                 typeof(GetAllQuestionsByUserIdQuery).Assembly,
                 typeof(GetAllQuestionsByProductIdQuery).Assembly,
-                typeof(GetAllQuestionsWithAnswersQuery).Assembly
+                typeof(GetAllQuestionsWithAnswersQuery).Assembly,
+                typeof(CreateProductQuestionCommandHandler).Assembly,
+                typeof(DeleteProductQuestionCommandHandler).Assembly,
+                typeof(GetAllQuestionsCommandHandler).Assembly,
+                typeof(GetProductQuestionByIdQueryHandler).Assembly,
+                typeof(GetQuestionWithAnswerByIdQueryHandler).Assembly,
+                typeof(GetAllQuestionsByUserIdQueryHandler).Assembly,
+                typeof(GetAllQuestionsByProductIdQueryHandler).Assembly
             ));
         // Answer
         services.AddMediatR(x =>
             x.RegisterServicesFromAssemblies(
                 typeof(CreateProductAnswerCommand).Assembly,
                 typeof(DeleteProductAnswerCommand).Assembly,
-                typeof(GetAnswerByIdQuery).Assembly
+                typeof(GetAnswerByIdQuery).Assembly,
+                typeof(CreateProductAnswerCommandHandler).Assembly,
+                typeof(DeleteProductAnswerCommandHandler).Assembly,
+                typeof(GetAnswerByIdQueryHandler).Assembly
                 ));
 
         services.AddMediatR(config => config.RegisterServicesFromAssembly(

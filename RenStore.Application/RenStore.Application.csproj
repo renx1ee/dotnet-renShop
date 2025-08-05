@@ -36,7 +36,6 @@
   <ItemGroup>
     <Folder Include="Features\ProductAnswer\Queries\GetAllByProductId\" />
     <Folder Include="Features\ProductAnswer\Queries\GetAllByUserId\" />
-    <Folder Include="Features\Product\Notifications\" />
   </ItemGroup>
 
 </Project>
