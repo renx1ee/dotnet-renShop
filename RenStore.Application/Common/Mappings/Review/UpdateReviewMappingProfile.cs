@@ -1,5 +1,5 @@
 using AutoMapper;
-using RenStore.Domain.Dto.Review;
+using RenStore.Application.Dto.Review;
 
 namespace RenStore.Application.Common.Mappings.Review;
 

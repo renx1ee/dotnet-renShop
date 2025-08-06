@@ -1,8 +1,8 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using RenStore.Application.Dto.Review;
 using RenStore.Application.Features.Review.Commands.Moderate;
 using RenStore.Application.Features.Review.Queries.GetAllForModeration;
-using RenStore.Domain.Dto.Review;
 
 namespace RenStore.WebApi.Controllers;
 

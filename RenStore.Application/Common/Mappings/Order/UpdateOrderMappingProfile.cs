@@ -1,5 +1,5 @@
 using AutoMapper;
-using RenStore.Domain.Dto.Order;
+using RenStore.Application.Dto.Order;
 
 namespace RenStore.Application.Common.Mappings.Order;
 

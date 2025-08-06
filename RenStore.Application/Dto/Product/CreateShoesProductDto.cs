@@ -1,7 +1,7 @@
 using RenStore.Domain.Enums;
 using RenStore.Domain.Enums.Shoes;
 
-namespace RenStore.Domain.Dto.Product;
+namespace RenStore.Application.Dto.Product;
 
 public class CreateShoesProductDto : CreateProductBaseDto
 {

@@ -1,6 +1,6 @@
 using RenStore.Domain.Enums;
 
-namespace RenStore.Domain.Dto.Product;
+namespace RenStore.Application.Dto.Product;
 
 public class CreateProductBaseDto
 {

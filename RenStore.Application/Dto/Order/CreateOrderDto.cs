@@ -1,4 +1,4 @@
-namespace RenStore.Domain.Dto.Order;
+namespace RenStore.Application.Dto.Order;
 
 public class CreateOrderDto
 {

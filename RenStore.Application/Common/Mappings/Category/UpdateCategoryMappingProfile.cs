@@ -1,5 +1,5 @@
 using AutoMapper;
-using RenStore.Domain.Dto.Category;
+using RenStore.Application.Dto.Category;
 
 namespace RenStore.Application.Common.Mappings.Category;
 

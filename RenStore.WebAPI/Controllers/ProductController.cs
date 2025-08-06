@@ -2,6 +2,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RenStore.Application.Dto.Product;
 using RenStore.Application.Features.Product.Commands.Create.Clothes;
 using RenStore.Application.Features.Product.Commands.Create.Shoes;
 using RenStore.Application.Features.Product.Commands.Delete;
@@ -14,7 +15,6 @@ using RenStore.Application.Features.Product.Queries.GetBySellerId;
 using RenStore.Application.Features.Product.Queries.GetMinimizedProducts;
 using RenStore.Application.Features.Product.Queries.GetSortedByPrice;
 using RenStore.Application.Features.Product.Queries.GetSortedByRating;
-using RenStore.Domain.Dto.Product;
 
 namespace RenStore.WebApi.Controllers;
 

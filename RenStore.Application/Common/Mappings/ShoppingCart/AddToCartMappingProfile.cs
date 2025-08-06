@@ -1,5 +1,5 @@
 using AutoMapper;
-using RenStore.Domain.Dto.ShoppingCart;
+using RenStore.Application.Dto.ShoppingCart;
 
 namespace RenStore.Application.Common.Mappings.ShoppingCart;
 

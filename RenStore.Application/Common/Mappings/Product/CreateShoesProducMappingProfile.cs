@@ -1,5 +1,5 @@
 using AutoMapper;
-using RenStore.Domain.Dto.Product;
+using RenStore.Application.Dto.Product;
 using RenStore.Domain.Entities;
 using RenStore.Domain.Entities.Products;
 

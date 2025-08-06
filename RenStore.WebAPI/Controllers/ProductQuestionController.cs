@@ -1,6 +1,8 @@
 ﻿using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using RenStore.Application.Dto.Answer;
+using RenStore.Application.Dto.Question;
 using RenStore.Application.Features.ProductAnswer.Command.Create;
 using RenStore.Application.Features.ProductAnswer.Command.Delete;
 using RenStore.Application.Features.ProductAnswer.Queries.GetById;
@@ -10,8 +12,6 @@ using RenStore.Application.Features.ProductQuestion.Queries.GetAll;
 using RenStore.Application.Features.ProductQuestion.Queries.GetAllByProductId;
 using RenStore.Application.Features.ProductQuestion.Queries.GetAllByUserId;
 using RenStore.Application.Features.ProductQuestion.Queries.GetQuestionWithAnswerById;
-using RenStore.Domain.Dto.Answer;
-using RenStore.Domain.Dto.Question;
 
 namespace RenStore.WebApi.Controllers;
 

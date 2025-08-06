@@ -1,4 +1,4 @@
-namespace RenStore.Domain.Dto.Category;
+namespace RenStore.Application.Dto.Category;
 
 public class CreateCategoryDto
 {

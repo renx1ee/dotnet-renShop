@@ -1,4 +1,4 @@
-namespace RenStore.Domain.Dto.ShoppingCart;
+namespace RenStore.Application.Dto.ShoppingCart;
 
 public class AddToCartDto
 {

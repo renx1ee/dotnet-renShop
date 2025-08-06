@@ -1,5 +1,5 @@
 using AutoMapper;
-using RenStore.Domain.Dto.Seller;
+using RenStore.Application.Dto.Seller;
 
 namespace RenStore.Application.Common.Mappings.Seller;
 

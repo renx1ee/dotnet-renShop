@@ -1,13 +1,13 @@
 using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using RenStore.Application.Dto.Seller;
 using RenStore.Application.Features.Seller.Command.Create;
 using RenStore.Application.Features.Seller.Command.Delete;
 using RenStore.Application.Features.Seller.Command.Update;
 using RenStore.Application.Features.Seller.Queries.GetAll;
 using RenStore.Application.Features.Seller.Queries.GetById;
 using RenStore.Application.Features.Seller.Queries.GetByName;
-using RenStore.Domain.Dto.Seller;
 
 namespace RenStore.WebApi.Controllers;
 

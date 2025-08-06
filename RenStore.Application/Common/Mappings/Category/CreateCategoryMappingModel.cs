@@ -1,6 +1,6 @@
 using AutoMapper;
+using RenStore.Application.Dto.Category;
 using RenStore.Application.Features.Category.Commands.Create;
-using RenStore.Domain.Dto.Category;
 
 namespace RenStore.Application.Common.Mappings.Category;
 

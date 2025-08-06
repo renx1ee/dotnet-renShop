@@ -1,6 +1,6 @@
-namespace RenStore.Domain.Dto.Seller;
+namespace RenStore.Application.Dto.Seller;
 
-public class CreateSellerDto 
+public class UpdateSellerDto
 {
     public string Name { get; set; }
     public string Description { get; set; }

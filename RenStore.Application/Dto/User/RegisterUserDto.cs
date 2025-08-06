@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace RenStore.Domain.Dto.User;
+namespace RenStore.Application.Dto.User;
 
 public record RegisterUserDto(
     [Required] string? Email, 

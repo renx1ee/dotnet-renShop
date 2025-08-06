@@ -1,4 +1,4 @@
-namespace RenStore.Domain.Dto.Review;
+namespace RenStore.Application.Dto.Review;
 
 public class CreateReviewDto
 {
