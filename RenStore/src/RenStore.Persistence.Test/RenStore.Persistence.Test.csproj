@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+        <RootNamespace>RenStore.Persistence.Test</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="coverlet.collector" Version="6.0.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.4" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+        <PackageReference Include="Moq" Version="4.20.72" />
+        <PackageReference Include="xunit" Version="2.9.2" />
+        <PackageReference Include="Xunit.Logging" Version="1.2.0" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="Xunit" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\RenStore.Application\RenStore.Application.csproj" />
+      <ProjectReference Include="..\RenStore.Domain\RenStore.Domain.csproj" />
+      <ProjectReference Include="..\RenStore.Identity.DuendeServer.WebAPI\RenStore.Identity.DuendeServer.WebAPI.csproj" />
+      <ProjectReference Include="..\RenStore.Persistence\RenStore.Persistence.csproj" />
+      <ProjectReference Include="..\RenStore.WebAPI\RenStore.WebAPI.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="JetBrains.ReSharper.TestRunner.Merged">
+        <HintPath>..\..\..\..\..\..\..\..\snap\rider\554\lib\ReSharperHost\TestRunner\netcoreapp3.0\JetBrains.ReSharper.TestRunner.Merged.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Categories\Commands\" />
+      <Folder Include="Categories\Queries\" />
+      <Folder Include="Products\Queries\" />
+      <Folder Include="Sellers\Commands\" />
+      <Folder Include="Sellers\Queries\" />
+    </ItemGroup>
+
+</Project>
