@@ -1,0 +1,12 @@
+/Users/re/Documents/Projects/C#/RenStore/src/RenStore.Domain/bin/Debug/net9.0/RenStore.Domain.deps.json
+/Users/re/Documents/Projects/C#/RenStore/src/RenStore.Domain/bin/Debug/net9.0/RenStore.Domain.dll
+/Users/re/Documents/Projects/C#/RenStore/src/RenStore.Domain/bin/Debug/net9.0/RenStore.Domain.pdb
+/Users/re/Documents/Projects/C#/RenStore/src/RenStore.Domain/obj/Debug/net9.0/RenStore.Domain.csproj.AssemblyReference.cache
+/Users/re/Documents/Projects/C#/RenStore/src/RenStore.Domain/obj/Debug/net9.0/RenStore.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/re/Documents/Projects/C#/RenStore/src/RenStore.Domain/obj/Debug/net9.0/RenStore.Domain.AssemblyInfoInputs.cache
+/Users/re/Documents/Projects/C#/RenStore/src/RenStore.Domain/obj/Debug/net9.0/RenStore.Domain.AssemblyInfo.cs
+/Users/re/Documents/Projects/C#/RenStore/src/RenStore.Domain/obj/Debug/net9.0/RenStore.Domain.csproj.CoreCompileInputs.cache
+/Users/re/Documents/Projects/C#/RenStore/src/RenStore.Domain/obj/Debug/net9.0/RenStore.Domain.dll
+/Users/re/Documents/Projects/C#/RenStore/src/RenStore.Domain/obj/Debug/net9.0/refint/RenStore.Domain.dll
+/Users/re/Documents/Projects/C#/RenStore/src/RenStore.Domain/obj/Debug/net9.0/RenStore.Domain.pdb
+/Users/re/Documents/Projects/C#/RenStore/src/RenStore.Domain/obj/Debug/net9.0/ref/RenStore.Domain.dll

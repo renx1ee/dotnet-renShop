@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "dgSpecHash": "rUZ3bjHfpww=",
+  "success": true,
+  "projectFilePath": "/Users/re/Documents/Projects/C#/RenStore/src/RenStore.Microservice.Cache/RenStore.Microservice.Cache.csproj",
+  "expectedPackageFiles": [
+    "/Users/re/.nuget/packages/asp.versioning.abstractions/8.1.0/asp.versioning.abstractions.8.1.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/asp.versioning.http/8.1.0/asp.versioning.http.8.1.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/asp.versioning.mvc/8.1.0/asp.versioning.mvc.8.1.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/asp.versioning.mvc.apiexplorer/8.1.0/asp.versioning.mvc.apiexplorer.8.1.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.openapi/9.0.2/microsoft.aspnetcore.openapi.9.0.2.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.caching.abstractions/9.0.2/microsoft.extensions.caching.abstractions.9.0.2.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.caching.stackexchangeredis/9.0.2/microsoft.extensions.caching.stackexchangeredis.9.0.2.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/9.0.2/microsoft.extensions.dependencyinjection.abstractions.9.0.2.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.logging.abstractions/9.0.2/microsoft.extensions.logging.abstractions.9.0.2.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.options/9.0.2/microsoft.extensions.options.9.0.2.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.primitives/9.0.2/microsoft.extensions.primitives.9.0.2.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.openapi/1.6.23/microsoft.openapi.1.6.23.nupkg.sha512",
+    "/Users/re/.nuget/packages/pipelines.sockets.unofficial/2.2.8/pipelines.sockets.unofficial.2.2.8.nupkg.sha512",
+    "/Users/re/.nuget/packages/stackexchange.redis/2.7.27/stackexchange.redis.2.7.27.nupkg.sha512",
+    "/Users/re/.nuget/packages/swashbuckle.aspnetcore/8.1.1/swashbuckle.aspnetcore.8.1.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/swashbuckle.aspnetcore.swagger/8.1.1/swashbuckle.aspnetcore.swagger.8.1.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/swashbuckle.aspnetcore.swaggergen/8.1.1/swashbuckle.aspnetcore.swaggergen.8.1.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/swashbuckle.aspnetcore.swaggerui/8.1.1/swashbuckle.aspnetcore.swaggerui.8.1.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/system.io.pipelines/5.0.1/system.io.pipelines.5.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

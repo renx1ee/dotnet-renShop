@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenStore.Persistence.Test", "RenStore.Persistence.Test\RenStore.Persistence.Test.csproj", "{CA1553F7-41C7-E7C9-A7F4-961365966ECA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA1553F7-41C7-E7C9-A7F4-961365966ECA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA1553F7-41C7-E7C9-A7F4-961365966ECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA1553F7-41C7-E7C9-A7F4-961365966ECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA1553F7-41C7-E7C9-A7F4-961365966ECA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {267A98B7-B7B6-4AFA-8867-ED9592506D77}
+	EndGlobalSection
+EndGlobal

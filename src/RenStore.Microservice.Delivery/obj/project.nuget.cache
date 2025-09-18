@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "mY4QelsL7rA=",
+  "success": true,
+  "projectFilePath": "/Users/re/Documents/Projects/C#/RenStore/src/RenStore.Microservice.Delivery/RenStore.Microservice.Delivery.csproj",
+  "expectedPackageFiles": [
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.openapi/9.0.6/microsoft.aspnetcore.openapi.9.0.6.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}

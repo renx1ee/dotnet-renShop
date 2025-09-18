@@ -1,0 +1,97 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/re/Documents/Projects/C#/RenStore/tests/RenStore.Persistence.Test/RenStore.Persistence.Test.csproj": {}
+  },
+  "projects": {
+    "/Users/re/Documents/Projects/C#/RenStore/tests/RenStore.Persistence.Test/RenStore.Persistence.Test.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/re/Documents/Projects/C#/RenStore/tests/RenStore.Persistence.Test/RenStore.Persistence.Test.csproj",
+        "projectName": "RenStore.Persistence.Test",
+        "projectPath": "/Users/re/Documents/Projects/C#/RenStore/tests/RenStore.Persistence.Test/RenStore.Persistence.Test.csproj",
+        "packagesPath": "/Users/re/.nuget/packages/",
+        "outputPath": "/Users/re/Documents/Projects/C#/RenStore/tests/RenStore.Persistence.Test/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/re/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.11.1, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.72, )"
+            },
+            "Xunit.Logging": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.9.2, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.8.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.304/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

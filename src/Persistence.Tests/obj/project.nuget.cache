@@ -1,0 +1,247 @@
+{
+  "version": 2,
+  "dgSpecHash": "sNCsYXihHjU=",
+  "success": true,
+  "projectFilePath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+  "expectedPackageFiles": [
+    "/Users/re/.nuget/packages/automapper/14.0.0/automapper.14.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/castle.core/5.1.1/castle.core.5.1.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/coverlet.collector/6.0.2/coverlet.collector.6.0.2.nupkg.sha512",
+    "/Users/re/.nuget/packages/dapper/2.1.66/dapper.2.1.66.nupkg.sha512",
+    "/Users/re/.nuget/packages/duende.identityserver/7.1.0-preview.1/duende.identityserver.7.1.0-preview.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/duende.identityserver.aspnetidentity/7.1.0-preview.1/duende.identityserver.aspnetidentity.7.1.0-preview.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/duende.identityserver.storage/7.1.0-preview.1/duende.identityserver.storage.7.1.0-preview.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/entityframework/6.1.0/entityframework.6.1.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/fluentvalidation/12.0.0-preview1/fluentvalidation.12.0.0-preview1.nupkg.sha512",
+    "/Users/re/.nuget/packages/fluentvalidation.dependencyinjectionextensions/12.0.0-preview1/fluentvalidation.dependencyinjectionextensions.12.0.0-preview1.nupkg.sha512",
+    "/Users/re/.nuget/packages/identitymodel/6.2.0/identitymodel.6.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/mediatr/12.4.1/mediatr.12.4.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/mediatr.extensions/0.6.0/mediatr.extensions.0.6.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/mediatr.extensions.microsoft.dependencyinjection/11.1.0/mediatr.extensions.microsoft.dependencyinjection.11.1.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnet.identity.core/2.2.4/microsoft.aspnet.identity.core.2.2.4.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnet.identity.entityframework/2.2.4/microsoft.aspnet.identity.entityframework.2.2.4.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnet.identity.owin/2.2.4/microsoft.aspnet.identity.owin.2.2.4.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.authentication/2.2.0/microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.2.0/microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.authentication.cookies/2.2.0/microsoft.aspnetcore.authentication.cookies.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.authentication.core/2.2.0/microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.authentication.openidconnect/9.0.0-rc.2.24474.3/microsoft.aspnetcore.authentication.openidconnect.9.0.0-rc.2.24474.3.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.cryptography.internal/9.0.0/microsoft.aspnetcore.cryptography.internal.9.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.cryptography.keyderivation/9.0.0/microsoft.aspnetcore.cryptography.keyderivation.9.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.dataprotection/2.2.0/microsoft.aspnetcore.dataprotection.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.dataprotection.abstractions/9.0.0-rc.2.24474.3/microsoft.aspnetcore.dataprotection.abstractions.9.0.0-rc.2.24474.3.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.hosting.abstractions/2.2.0/microsoft.aspnetcore.hosting.abstractions.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.hosting.server.abstractions/2.2.0/microsoft.aspnetcore.hosting.server.abstractions.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.http/2.2.0/microsoft.aspnetcore.http.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.http.abstractions/2.2.0/microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.http.extensions/2.2.0/microsoft.aspnetcore.http.extensions.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.http.features/2.2.0/microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.identity/2.2.0/microsoft.aspnetcore.identity.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.aspnetcore.webutilities/2.2.0/microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.codecoverage/17.12.0/microsoft.codecoverage.17.12.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.entityframeworkcore/9.0.9/microsoft.entityframeworkcore.9.0.9.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.entityframeworkcore.abstractions/9.0.9/microsoft.entityframeworkcore.abstractions.9.0.9.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.entityframeworkcore.analyzers/9.0.9/microsoft.entityframeworkcore.analyzers.9.0.9.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.entityframeworkcore.inmemory/9.0.9/microsoft.entityframeworkcore.inmemory.9.0.9.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.entityframeworkcore.relational/9.0.0/microsoft.entityframeworkcore.relational.9.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.caching.abstractions/9.0.9/microsoft.extensions.caching.abstractions.9.0.9.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.caching.memory/9.0.9/microsoft.extensions.caching.memory.9.0.9.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.configuration/9.0.0/microsoft.extensions.configuration.9.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.configuration.abstractions/9.0.0/microsoft.extensions.configuration.abstractions.9.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.configuration.binder/9.0.0/microsoft.extensions.configuration.binder.9.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.dependencyinjection/9.0.9/microsoft.extensions.dependencyinjection.9.0.9.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/9.0.9/microsoft.extensions.dependencyinjection.abstractions.9.0.9.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.fileproviders.abstractions/2.2.0/microsoft.extensions.fileproviders.abstractions.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.hosting.abstractions/2.2.0/microsoft.extensions.hosting.abstractions.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.identity.core/9.0.0/microsoft.extensions.identity.core.9.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.identity.stores/9.0.0/microsoft.extensions.identity.stores.9.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.logging/9.0.9/microsoft.extensions.logging.9.0.9.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.logging.abstractions/9.0.9/microsoft.extensions.logging.abstractions.9.0.9.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.logging.configuration/9.0.0/microsoft.extensions.logging.configuration.9.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.logging.console/9.0.0/microsoft.extensions.logging.console.9.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.objectpool/2.2.0/microsoft.extensions.objectpool.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.options/9.0.9/microsoft.extensions.options.9.0.9.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.options.configurationextensions/9.0.0/microsoft.extensions.options.configurationextensions.9.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.primitives/9.0.9/microsoft.extensions.primitives.9.0.9.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.extensions.webencoders/2.2.0/microsoft.extensions.webencoders.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.identitymodel.abstractions/8.0.1/microsoft.identitymodel.abstractions.8.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.0.1/microsoft.identitymodel.jsonwebtokens.8.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.identitymodel.logging/8.0.1/microsoft.identitymodel.logging.8.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.identitymodel.protocols/8.0.1/microsoft.identitymodel.protocols.8.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/8.0.1/microsoft.identitymodel.protocols.openidconnect.8.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.identitymodel.tokens/8.0.1/microsoft.identitymodel.tokens.8.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.net.http.headers/2.2.0/microsoft.net.http.headers.2.2.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.net.test.sdk/17.12.0/microsoft.net.test.sdk.17.12.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.netcore.platforms/2.0.0/microsoft.netcore.platforms.2.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.owin/3.0.1/microsoft.owin.3.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.owin.security/3.0.1/microsoft.owin.security.3.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.owin.security.cookies/3.0.1/microsoft.owin.security.cookies.3.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.owin.security.oauth/3.0.1/microsoft.owin.security.oauth.3.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.testplatform.objectmodel/17.12.0/microsoft.testplatform.objectmodel.17.12.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.testplatform.testhost/17.12.0/microsoft.testplatform.testhost.17.12.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/microsoft.win32.registry/4.5.0/microsoft.win32.registry.4.5.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/moq/4.20.72/moq.4.20.72.nupkg.sha512",
+    "/Users/re/.nuget/packages/moq.dapper/1.0.7/moq.dapper.1.0.7.nupkg.sha512",
+    "/Users/re/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/nlog/5.4.0/nlog.5.4.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/nlog.extensions.logging/5.4.0/nlog.extensions.logging.5.4.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/nlog.web.aspnetcore/5.4.0/nlog.web.aspnetcore.5.4.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/npgsql/9.0.1/npgsql.9.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/npgsql.entityframeworkcore.postgresql/9.0.1/npgsql.entityframeworkcore.postgresql.9.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/owin/1.0.0/owin.1.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/system.buffers/4.5.0/system.buffers.4.5.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/system.diagnostics.eventlog/6.0.0/system.diagnostics.eventlog.6.0.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/system.identitymodel.tokens.jwt/8.0.1/system.identitymodel.tokens.jwt.8.0.1.nupkg.sha512",
+    "/Users/re/.nuget/packages/system.reflection.metadata/1.6.0/system.reflection.metadata.1.6.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/system.security.accesscontrol/4.5.0/system.security.accesscontrol.4.5.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/system.security.cryptography.cng/4.5.0/system.security.cryptography.cng.4.5.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/system.security.cryptography.pkcs/4.5.0/system.security.cryptography.pkcs.4.5.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/system.security.cryptography.xml/4.5.0/system.security.cryptography.xml.4.5.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/system.security.permissions/4.5.0/system.security.permissions.4.5.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/system.security.principal.windows/4.5.0/system.security.principal.windows.4.5.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/system.text.encodings.web/4.5.0/system.text.encodings.web.4.5.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/xunit/2.9.2/xunit.2.9.2.nupkg.sha512",
+    "/Users/re/.nuget/packages/xunit.abstractions/2.0.3/xunit.abstractions.2.0.3.nupkg.sha512",
+    "/Users/re/.nuget/packages/xunit.analyzers/1.16.0/xunit.analyzers.1.16.0.nupkg.sha512",
+    "/Users/re/.nuget/packages/xunit.assert/2.9.2/xunit.assert.2.9.2.nupkg.sha512",
+    "/Users/re/.nuget/packages/xunit.core/2.9.2/xunit.core.2.9.2.nupkg.sha512",
+    "/Users/re/.nuget/packages/xunit.extensibility.core/2.9.2/xunit.extensibility.core.2.9.2.nupkg.sha512",
+    "/Users/re/.nuget/packages/xunit.extensibility.execution/2.9.2/xunit.extensibility.execution.2.9.2.nupkg.sha512",
+    "/Users/re/.nuget/packages/xunit.runner.visualstudio/2.8.2/xunit.runner.visualstudio.2.8.2.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "message": "Detected package version outside of dependency constraint: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 requires MediatR (>= 11.0.0 && < 12.0.0) but version MediatR 12.4.1 was resolved.",
+      "projectPath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "libraryId": "MediatR",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "message": "Package 'EntityFramework 6.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net9.0'. This package may not be fully compatible with your project.",
+      "projectPath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "libraryId": "EntityFramework",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "message": "Package 'MediatR.Extensions 0.6.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net9.0'. This package may not be fully compatible with your project.",
+      "projectPath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "libraryId": "MediatR.Extensions",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "message": "Package 'Microsoft.AspNet.Identity.Core 2.2.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net9.0'. This package may not be fully compatible with your project.",
+      "projectPath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "libraryId": "Microsoft.AspNet.Identity.Core",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "message": "Package 'Microsoft.AspNet.Identity.EntityFramework 2.2.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net9.0'. This package may not be fully compatible with your project.",
+      "projectPath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "libraryId": "Microsoft.AspNet.Identity.EntityFramework",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "message": "Package 'Microsoft.AspNet.Identity.Owin 2.2.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net9.0'. This package may not be fully compatible with your project.",
+      "projectPath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "libraryId": "Microsoft.AspNet.Identity.Owin",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "message": "Package 'Microsoft.Owin 3.0.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net9.0'. This package may not be fully compatible with your project.",
+      "projectPath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "libraryId": "Microsoft.Owin",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "message": "Package 'Microsoft.Owin.Security 3.0.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net9.0'. This package may not be fully compatible with your project.",
+      "projectPath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "libraryId": "Microsoft.Owin.Security",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "message": "Package 'Microsoft.Owin.Security.Cookies 3.0.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net9.0'. This package may not be fully compatible with your project.",
+      "projectPath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "libraryId": "Microsoft.Owin.Security.Cookies",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "message": "Package 'Microsoft.Owin.Security.OAuth 3.0.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net9.0'. This package may not be fully compatible with your project.",
+      "projectPath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "libraryId": "Microsoft.Owin.Security.OAuth",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "message": "Package 'Owin 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net9.0'. This package may not be fully compatible with your project.",
+      "projectPath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/re/Documents/Projects/C#/RenStore/src/Persistence.Tests/Persistence.Tests.csproj",
+      "libraryId": "Owin",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    }
+  ]
+}
