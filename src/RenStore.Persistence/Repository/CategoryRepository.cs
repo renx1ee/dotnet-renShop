@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using RenStore.Application.Common.Exceptions;
@@ -19,6 +20,14 @@ public class CategoryRepository : ICategoryRepository
         this.context = context;
         connectionString = configuration.GetConnectionString("DefaultConnection");
     }
+    
+    public CategoryRepository(
+        ApplicationDbContext context,
+        string connectionString)
+    {
+        this.context = context;
+        this.connectionString = connectionString;
+    }
 
     public async Task<int> CreateAsync(Category category, 
         CancellationToken cancellationToken)
@@ -35,17 +44,29 @@ public class CategoryRepository : ICategoryRepository
     public async Task UpdateAsync(Category category, 
         CancellationToken cancellationToken)
     {
-        Category model = await GetByIdAsync(category.Id, cancellationToken)
+        var model = await context.Categories
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c => 
+                    c.Id == category.Id, 
+                cancellationToken)
             ?? throw new NotFoundException(typeof(Category), category.Id);
-            
-        context.Categories.Update(category);
-        await context.SaveChangesAsync();
+        
+        category.Name = model.Name;
+        category.Description = model.Description;
+        category.ImagePath = model.ImagePath;
+        
+        context.Update(category);
+        await context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(int id, 
         CancellationToken cancellationToken)
     {
-        Category category = await GetByIdAsync(id, cancellationToken);
+        var category = await context.Categories
+            .FirstOrDefaultAsync(c => 
+                c.Id == id,
+                cancellationToken)
+            ?? throw new NotFoundException(typeof(Category), id);
         
         context.Categories.Remove(category);
         await context.SaveChangesAsync();

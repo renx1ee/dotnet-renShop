@@ -20,6 +20,14 @@ public class SellerRepository : ISellerRepository
         connectionString = configuration.GetConnectionString("DefaultConnection");
         this.context = context;
     }
+    
+    public SellerRepository(
+        ApplicationDbContext context,
+        string connectionString)
+    {
+        this.connectionString = connectionString;
+        this.context = context;
+    }
 
     public async Task<int> CreateAsync(Seller seller, CancellationToken cancellationToken)
     {
@@ -39,8 +47,11 @@ public class SellerRepository : ISellerRepository
 
     public async Task DeleteAsync(int id, CancellationToken cancellationToken)
     {
-        Seller seller = await GetByIdAsync(id, cancellationToken)
-            ?? throw new NotFoundException(typeof(Seller), id);
+        var seller = await context.Sellers
+            .FirstOrDefaultAsync(s => 
+                s.Id == id, 
+                cancellationToken)
+            ?? throw new NotFoundException(typeof(Category), id);
         
         context.Sellers.Remove(seller);
         await context.SaveChangesAsync();
