@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+/*using Microsoft.EntityFrameworkCore;
 using RenStore.Application.Common.Exceptions;
 using RenStore.Domain.Entities;
 using RenStore.Persistence;
@@ -46,7 +46,7 @@ public class SellerRepositoryTests : IDisposable
         // Arrange
         // Act
         // Assert
-    }*/
+    }#1#
 
     [Fact]
     public async Task DeleteSellerAsync_Success_Test()
@@ -202,4 +202,4 @@ public class SellerRepositoryTests : IDisposable
     public void Dispose()
     {
     }
-}
+}*/

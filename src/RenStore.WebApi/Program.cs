@@ -106,6 +106,8 @@ builder.Services.AddScoped<ShoppingCartService>();
 builder.Services.AddScoped<IProductQuestionRepository, ProductQuestionRepository>();
 builder.Services.AddScoped<IProductAnswerRepository, ProductAnswerRepository>();
 
+builder.Services.AddScoped<IColorRepository, ColorRepository>();
+
 builder.Services.AddSingleton<IProductRatingQueue, ProductRatingQueue>();
 
 builder.Services.AddHostedService<PriceCounterBackgroundService>();

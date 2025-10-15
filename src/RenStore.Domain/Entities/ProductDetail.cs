@@ -4,7 +4,7 @@ public class ProductDetail
 {
     public Guid Id { get; set; }
     public uint Article { get; set; }
-    public string Brend { get; set; }
+    public string Brand { get; set; }
     // Страна производства
     public string? CountryOfManufacture { get; set; }
     // Особенности модели

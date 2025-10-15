@@ -32,7 +32,7 @@ public class CreateClothesProductMappingProfile : Profile
             .ForMember(model => model.ProductDetail, opt =>
                 opt.MapFrom(item => new ProductDetail
                 {
-                    Brend = item.Brend,
+                    Brand = item.Brend,
                     CountryOfManufacture = item.CountryOfManufacture,
                     ModelFeatures = item.ModelFeatures,
                     DecorativeElements = item.DecorativeElements,

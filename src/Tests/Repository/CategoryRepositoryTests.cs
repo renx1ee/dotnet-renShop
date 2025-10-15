@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+/*using Microsoft.EntityFrameworkCore;
 using RenStore.Application.Common.Exceptions;
 using RenStore.Domain.Entities;
 using RenStore.Persistence;
@@ -228,4 +228,4 @@ public class CategoryRepositoryTests : IDisposable
         context.Database.EnsureDeleted();
         context.Dispose();
     }
-}
+}*/

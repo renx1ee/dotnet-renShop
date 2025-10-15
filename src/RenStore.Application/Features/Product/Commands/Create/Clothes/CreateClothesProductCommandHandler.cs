@@ -37,10 +37,11 @@ public class CreateClothesProductCommandHandler
     {
         logger.LogInformation($"Handling {nameof(CreateClothesProductCommand)}");
 
-        var category = await categoryRepository.GetByNameAsync("Clothes", cancellationToken);
-        var seller = await sellerRepository.GetByIdAsync(request.SellerId, cancellationToken);
+        // TODO:
+        var category = await categoryRepository.FindByNameAsync("Clothes", cancellationToken);
+        var seller = await sellerRepository.FindByIdAsync(request.SellerId, cancellationToken);
 
-        if (category == null || seller == null)
+        if (category is null || seller is null)
             return Guid.Empty;
         
         var discount = await productService.CalculateDiscountByPriceAsync(
@@ -56,6 +57,7 @@ public class CreateClothesProductCommandHandler
         product.Discount = discount;
         product.ProductDetail.Article = article; 
         product.CreatedDate = DateTime.UtcNow;
+        // TODO:
         product.ImagePath = "sources/images/products/clothes/" + product.Id + ".jpg";
         product.ImagePath = "sources/images/products/clothes/mini/" + product.Id + ".jpg";
         

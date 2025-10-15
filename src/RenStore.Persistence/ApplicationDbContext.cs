@@ -11,6 +11,8 @@ public class ApplicationDbContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.ApplyConfiguration(new ColorConfiguration());
+        
         modelBuilder.ApplyConfiguration(new ProductConfiguration());
         modelBuilder.ApplyConfiguration(new ProductDetailConfiguration());
         modelBuilder.ApplyConfiguration(new ClothesProductConfiguration());
@@ -36,4 +38,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<Seller> Sellers { get; set; }
     public DbSet<Review> Reviews { get; set; }
     public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
+    
+    public DbSet<Color> Colors { get; set; }
 }

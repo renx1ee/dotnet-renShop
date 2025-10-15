@@ -52,7 +52,7 @@ public class GetProductMappingProfile : Profile
 
             #region Product Details Mapper
             .ForMember(model => model.Brend, opt =>
-                opt.MapFrom(product => product.ProductDetail.Brend))
+                opt.MapFrom(product => product.ProductDetail.Brand))
             .ForMember(model => model.CountryOfManufacture, opt =>
                 opt.MapFrom(product => product.ProductDetail.CountryOfManufacture))
             .ForMember(model => model.ModelFeatures, opt =>

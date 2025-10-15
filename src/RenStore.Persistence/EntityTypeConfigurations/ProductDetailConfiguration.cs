@@ -16,7 +16,7 @@ public class ProductDetailConfiguration : IEntityTypeConfiguration<ProductDetail
             .IsRequired();
         
         builder
-            .Property(detail => detail.Brend)
+            .Property(detail => detail.Brand)
             .HasMaxLength(25)
             .IsRequired();
         

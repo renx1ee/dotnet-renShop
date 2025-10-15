@@ -38,7 +38,7 @@ public class CreateClothesProductCommandValidator
             .NotNull()
             .WithMessage("");
         
-        RuleFor(clothes => clothes.ProductDetail.Brend)
+        RuleFor(clothes => clothes.ProductDetail.Brand)
             .MaximumLength(25)
             .NotEmpty()
             .NotNull()

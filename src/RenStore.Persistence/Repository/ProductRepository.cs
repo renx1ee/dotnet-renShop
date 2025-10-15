@@ -22,6 +22,14 @@ public class ProductRepository : IProductRepository
         connectionString = configuration.GetConnectionString("DefaultConnection");
         this.context = context;
     }
+    
+    public ProductRepository(
+        ApplicationDbContext context,
+        string connectionString)
+    {
+        this.connectionString = connectionString;
+        this.context = context;
+    }
 
     public async Task<Guid> CreateAsync(Product product, CancellationToken cancellationToken)
     {

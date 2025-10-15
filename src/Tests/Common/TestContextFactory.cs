@@ -1,11 +1,75 @@
 using Microsoft.EntityFrameworkCore;
 using RenStore.Domain.Entities;
-using RenStore.Domain.Enums;
 using RenStore.Persistence;
 
 namespace Tests.Common;
 
 public class TestContextFactory
+{
+    public static string ConnectionString = "Server=localhost;Port=5432;DataBase=UnitRenstoreTests; User Id=re;Password=postgres;Include Error Detail=True";
+    
+    public static readonly int ColorIdForUpdate = 1;
+    public static readonly int ColorIdForDelete = 2;
+    public static readonly int ColorIdForGetting = 3;
+
+    public static readonly string ColorNameForCreate = nameof(ColorNameForCreate);
+    public static readonly string ColorNameForUpdate = nameof(ColorNameForUpdate);
+    public static readonly string ColorNameForDelete = nameof(ColorNameForDelete);
+    public static readonly string ColorNameForGetting = nameof(ColorNameForGetting);
+    
+    public static ApplicationDbContext CreateReadyContext()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseNpgsql(ConnectionString)
+            .Options;
+
+        var context = new ApplicationDbContext(options);
+        
+        context.Database.EnsureCreated();
+        
+        context.Colors.RemoveRange(context.Colors);
+
+        var colors = new[]
+        {
+            new Color()
+            {
+                Id = ColorIdForUpdate,
+                Name = ColorNameForUpdate,
+                NormalizedName = ColorNameForUpdate.ToUpper(),
+                NameRu = "колорНейм1",
+                ColorCode = "#123",
+                Description = Guid.NewGuid().ToString(),
+            },
+            new Color()
+            {
+                Id = ColorIdForDelete,
+                Name = ColorNameForDelete,
+                NormalizedName = ColorNameForDelete.ToUpper(),
+                NameRu = "колорНейм2",
+                ColorCode = "#123",
+                Description = Guid.NewGuid().ToString(),
+            },
+            new Color()
+            {
+                Id = ColorIdForGetting,
+                Name = ColorNameForGetting,
+                NormalizedName = ColorNameForGetting.ToUpper(),
+                NameRu = "колорНейм3",
+                ColorCode = "#123",
+                Description = Guid.NewGuid().ToString(),
+            }
+        };
+        
+        context.Colors.AddRange(colors);
+        context.SaveChanges();
+        
+        context.ChangeTracker.Clear();
+        
+        return context;
+    }
+}
+
+/*public class TestContextFactory
 {
     public static string ConnectionString = "Server=localhost;Port=5432;DataBase=UnitTestsDb; User Id=re;Password=postgres ;Include Error Detail=True";
     
@@ -73,9 +137,8 @@ public class TestContextFactory
                 SellerId = SellerIdForGetting,
                 /*ProductDetailId = null,
                 ClothesProductId = null,
-                ShoesProductId = null,*/
+                ShoesProductId = null,#1#
                 CreatedDate = DateTime.UtcNow,
-                
             }
         };
 
@@ -123,7 +186,14 @@ public class TestContextFactory
                 Name = CategoryNameForGetting,
                 Description = "Test Description",
                 ImagePath = "/images/category/test_category.img"
-            }
+            },
+            new Category
+            {
+                Id = 234234,
+                Name = "Clothes",
+                Description = "Category for update description",
+                ImagePath = "/images/category/delete_category.img"
+            },
         };
 
         var orders = new[]
@@ -179,4 +249,4 @@ public class TestContextFactory
         
         return context;
     }
-}
+}*/

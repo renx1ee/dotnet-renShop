@@ -30,7 +30,7 @@ dotnet tool update --global dotnet-ef
 
 #### Adding the first migration
 ```
-dotnet ef migrations add initial -c ApplicationDbContext --project ./RenStore.Persistence -s "E:\Projects\C#\ASP.NET Core\ShopDeveloped\RenStore.WebApi"
+dotnet ef migrations add initial -c ApplicationDbContext --project ./RenStore.Persistence -s "/Users/re/Documents/Projects/C#/RenStore/src/RenStore.WebApi"
 ```
 ```
 dotnet ef migrations add initial -c ApplicationDbContext --project ./RenStore.Persistence -s "/home/renx1ee/Documents/Projects/C#/ASP.Net Core/ShopDeveloped/RenStore.WebApi"
