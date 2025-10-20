@@ -10,12 +10,29 @@ public class TestContextFactory
     
     public static readonly int ColorIdForUpdate = 1;
     public static readonly int ColorIdForDelete = 2;
-    public static readonly int ColorIdForGetting = 3;
-
-    public static readonly string ColorNameForCreate = nameof(ColorNameForCreate);
-    public static readonly string ColorNameForUpdate = nameof(ColorNameForUpdate);
-    public static readonly string ColorNameForDelete = nameof(ColorNameForDelete);
-    public static readonly string ColorNameForGetting = nameof(ColorNameForGetting);
+    public static readonly int ColorIdForGetting1 = 3;
+    public static readonly int ColorIdForGetting2 = 4;
+    public static readonly int ColorIdForGetting3 = 5;
+    public static readonly int ColorIdForGetting4 = 6;
+    public static readonly int ColorIdForGetting5 = 7;
+    public static readonly int ColorIdForGetting6 = 8;
+    
+    public static readonly string ColorNameForCreate = "White";
+    public static readonly string ColorNameForUpdate = "Black";
+    public static readonly string ColorNameForDelete = "Green";
+    public static readonly string ColorNameForGetting1 = "Blue";
+    public static readonly string ColorNameForGetting2 = "Purple";
+    public static readonly string ColorNameForGetting3 = "Yellow";
+    public static readonly string ColorNameForGetting4 = "Red";
+    public static readonly string ColorNameForGetting5 = "Gray";
+    public static readonly string ColorNameForGetting6 = "DarkGray";
+    
+    public static readonly long SellerIdForCreate = 3245;
+    public static readonly long SellerIdForUpdate = 1232;
+    public static readonly long SellerIdForDelete = 3422;
+    public static readonly long SellerIdForGetting = 1842;
+    public static readonly Guid UserIdForGettingSeller = Guid.NewGuid();
+    public static readonly string SellerNameForGetting = nameof(SellerNameForGetting);
     
     public static ApplicationDbContext CreateReadyContext()
     {
@@ -51,15 +68,115 @@ public class TestContextFactory
             },
             new Color()
             {
-                Id = ColorIdForGetting,
-                Name = ColorNameForGetting,
-                NormalizedName = ColorNameForGetting.ToUpper(),
+                Id = ColorIdForGetting1,
+                Name = ColorNameForGetting1,
+                NormalizedName = ColorNameForGetting1.ToUpper(),
                 NameRu = "колорНейм3",
+                ColorCode = "#123",
+                Description = Guid.NewGuid().ToString(),
+            },
+            new Color()
+            {
+                Id = ColorIdForGetting2,
+                Name = ColorNameForGetting2,
+                NormalizedName = ColorNameForGetting2.ToUpper(),
+                NameRu = "колорНейм4",
+                ColorCode = "#123",
+                Description = Guid.NewGuid().ToString(),
+            },
+            new Color()
+            {
+                Id = ColorIdForGetting3,
+                Name = ColorNameForGetting3,
+                NormalizedName = ColorNameForGetting3.ToUpper(),
+                NameRu = "колорНейм5",
+                ColorCode = "#123",
+                Description = Guid.NewGuid().ToString(),
+            }
+            ,
+            new Color()
+            {
+                Id = ColorIdForGetting4,
+                Name = ColorNameForGetting4,
+                NormalizedName = ColorNameForGetting4.ToUpper(),
+                NameRu = "колорНейм6",
+                ColorCode = "#123",
+                Description = Guid.NewGuid().ToString(),
+            }
+            ,
+            new Color()
+            {
+                Id = ColorIdForGetting5,
+                Name = ColorNameForGetting5,
+                NormalizedName = ColorNameForGetting5.ToUpper(),
+                NameRu = "колорНейм7",
+                ColorCode = "#123",
+                Description = Guid.NewGuid().ToString(),
+            },
+            new Color()
+            {
+                Id = ColorIdForGetting6,
+                Name = ColorNameForGetting6,
+                NormalizedName = ColorNameForGetting6.ToUpper(),
+                NameRu = "колорНейм8",
                 ColorCode = "#123",
                 Description = Guid.NewGuid().ToString(),
             }
         };
+
+        var users = new[]
+        {
+            new ApplicationUser()
+            {
+                Id = UserIdForGettingSeller.ToString(),
+            },
+            new ApplicationUser()
+            {
+                
+            },
+            new ApplicationUser()
+            {
+                
+            }
+        };
         
+        /*var sellers = new[]
+        {
+            new Seller()
+            {
+                Id = SellerIdForUpdate,
+                Name = "Sample Name for Update",
+                Description = "Sample Description for Update",
+                NormalizedName = SellerNameForGetting.ToUpper(),
+                CreatedDate = DateTime.UtcNow,
+                ApplicationUserId = UserIdForGettingSeller,
+                User = users[0],
+                IsBlocked = false
+            },
+            new Seller()
+            {
+                Id = SellerIdForDelete,
+                Name = "Sample Name for Delete",
+                Description = "Sample Description for Update",
+                NormalizedName = SellerNameForGetting.ToUpper(),
+                CreatedDate = DateTime.UtcNow,
+                User = users[1],
+                IsBlocked = false
+            },
+            new Seller()
+            {
+                Id = SellerIdForGetting,
+                Name = SellerNameForGetting,
+                Description = "Sample Description for Update",
+                NormalizedName = SellerNameForGetting.ToUpper(),
+                CreatedDate = DateTime.UtcNow,
+                User = users[2],
+                IsBlocked = false
+            },
+        };
+        
+        
+        context.Sellers.AddRange(sellers);*/
         context.Colors.AddRange(colors);
         context.SaveChanges();
         
@@ -244,7 +361,7 @@ public class TestContextFactory
         };
         
         context.Categories.AddRange(categories);
-        context.Sellers.AddRange(sellers);
+        
         context.SaveChanges();
         
         return context;

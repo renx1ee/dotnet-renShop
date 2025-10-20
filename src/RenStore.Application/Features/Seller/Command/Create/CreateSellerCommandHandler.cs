@@ -37,6 +37,6 @@ public class CreateSellerCommandHandler
         
         logger.LogInformation($"Handled {nameof(CreateSellerCommandHandler)}");
 
-        return result;
+        return 0;
     }
 }

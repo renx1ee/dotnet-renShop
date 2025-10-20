@@ -8,12 +8,26 @@ public class SellerConfiguration : IEntityTypeConfiguration<Seller>
 {
     public void Configure(EntityTypeBuilder<Seller> builder)
     {
-        builder.HasKey(seller => seller.Id);
+        builder
+            .HasKey(seller => seller.Id);
 
         builder
             .Property(seller => seller.Name)
-            .HasMaxLength(35)
+            .HasMaxLength(50)
             .IsRequired();
+        
+        builder
+            .HasIndex(seller => seller.Name)
+            .IsUnique();
+        
+        builder
+            .Property(seller => seller.NormalizedName)
+            .HasMaxLength(50)
+            .IsRequired();
+        
+        builder
+            .HasIndex(seller => seller.NormalizedName)
+            .IsUnique();
         
         builder
             .Property(seller => seller.Description)
@@ -21,18 +35,15 @@ public class SellerConfiguration : IEntityTypeConfiguration<Seller>
             .IsRequired(false);
         
         builder
-            .Property(seller => seller.ImagePath)
-            .HasMaxLength(200)
-            .IsRequired(false);
+            .Property(seller => seller.CreatedDate)
+            .IsRequired();
         
         builder
-            .Property(seller => seller.ImageFooterPath)
-            .HasMaxLength(200)
-            .IsRequired(false);
+            .Property(seller => seller.IsBlocked)
+            .IsRequired();
         
-        builder
-            .HasMany(seller => seller.Products)
-            .WithOne(product => product.Seller)
-            .HasForeignKey(seller => seller.SellerId);
+        /*builder
+            .Property(seller => seller.ApplicationUserId)
+            .IsRequired();*/
     }
 }

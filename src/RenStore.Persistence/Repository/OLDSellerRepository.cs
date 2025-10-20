@@ -8,12 +8,12 @@ using RenStore.Domain.Entities;
 
 namespace RenStore.Persistence.Repository;
 
-public class SellerRepository : ISellerRepository
+public class OLDSellerRepository : ISellerRepository
 {
     private readonly ApplicationDbContext context;
     private readonly string? connectionString;
     
-    public SellerRepository(
+    public OLDSellerRepository(
         ApplicationDbContext context,
         IConfiguration configuration)
     {
@@ -21,7 +21,7 @@ public class SellerRepository : ISellerRepository
         this.context = context;
     }
     
-    public SellerRepository(
+    public OLDSellerRepository(
         ApplicationDbContext context,
         string connectionString)
     {
@@ -29,7 +29,7 @@ public class SellerRepository : ISellerRepository
         this.context = context;
     }
 
-    public async Task<int> CreateAsync(Seller seller, CancellationToken cancellationToken)
+    public async Task<long> CreateAsync(Seller seller, CancellationToken cancellationToken)
     {
         await context.Sellers.AddAsync(seller, cancellationToken);
         await context.SaveChangesAsync();
@@ -45,7 +45,7 @@ public class SellerRepository : ISellerRepository
         await context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(int id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(long id, CancellationToken cancellationToken)
     {
         var seller = await context.Sellers
             .FirstOrDefaultAsync(s => 
@@ -74,13 +74,13 @@ public class SellerRepository : ISellerRepository
                     ?? null;
     }
 
-    public async Task<Seller> GetByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<Seller> GetByIdAsync(long id, CancellationToken cancellationToken)
     {
         return await this.FindByIdAsync(id, cancellationToken)
             ?? throw new NotFoundException(typeof(Seller), id);
     }
 
-    public async Task<Seller?> FindByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<Seller?> FindByIdAsync(long id, CancellationToken cancellationToken)
     {
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync(cancellationToken);

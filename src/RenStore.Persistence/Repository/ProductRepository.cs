@@ -294,9 +294,9 @@ public class ProductRepository : IProductRepository
 
         return await connection
             .QueryAsync<Product>(
-                sql.ToString(),
-                    cancellationToken)
-                        ?? [];
+                data,
+                cancellationToken)
+                ?? [];
     }
 
     public async Task<IEnumerable<Product>> SearchByNameAsync(

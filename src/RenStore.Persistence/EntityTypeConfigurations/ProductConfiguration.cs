@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿/*using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RenStore.Domain.Entities;
 using RenStore.Domain.Entities.Products;
@@ -91,4 +91,4 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .WithOne(clothesProduct => clothesProduct.Product)
             .HasForeignKey<Product>(product => product.ShoesProductId);
     }
-}
+}*/

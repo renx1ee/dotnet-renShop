@@ -18,7 +18,7 @@ public interface ISellerRepository
     /// <param name="seller">Seller Model for create.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns>Return Seller ID if Seller is created.</returns>
-    Task<int> CreateAsync(Seller seller, CancellationToken cancellationToken);
+    Task<long> CreateAsync(Seller seller, CancellationToken cancellationToken);
     /// <summary>
     /// Seller Update.
     /// </summary>
@@ -34,7 +34,7 @@ public interface ISellerRepository
     /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns></returns>
     /// <exception cref="NotFoundException">Thrown if the Seller is not found.</exception>
-    Task DeleteAsync(int id, CancellationToken cancellationToken);
+    Task DeleteAsync(long id, CancellationToken cancellationToken);
     /// <summary>
     /// Get all Sellers.
     /// </summary>
@@ -47,7 +47,7 @@ public interface ISellerRepository
     /// <param name="id">Seller ID.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns>Return Seller if Seller is found else returns null.</returns>
-    Task<Seller?> FindByIdAsync(int id, CancellationToken cancellationToken);
+    Task<Seller?> FindByIdAsync(long id, CancellationToken cancellationToken);
     /// <summary>
     /// Gets a Seller by Seller ID.
     /// </summary>
@@ -55,7 +55,7 @@ public interface ISellerRepository
     /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns>Return Seller if Seller is found.</returns>
     /// <exception cref="NotFoundException">Thrown if the Seller is not found.</exception>
-    Task<Seller> GetByIdAsync(int id, CancellationToken cancellationToken);
+    Task<Seller> GetByIdAsync(long id, CancellationToken cancellationToken);
     /// <summary>
     /// Finds a Seller by Seller Name.
     /// </summary>

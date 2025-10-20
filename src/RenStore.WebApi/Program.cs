@@ -89,7 +89,7 @@ builder.Services.AddScoped<JwtProvider>();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
-builder.Services.AddScoped<ISellerRepository, SellerRepository>();
+builder.Services.AddScoped<ISellerRepository, OLDSellerRepository>();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ProductService>();
@@ -106,7 +106,7 @@ builder.Services.AddScoped<ShoppingCartService>();
 builder.Services.AddScoped<IProductQuestionRepository, ProductQuestionRepository>();
 builder.Services.AddScoped<IProductAnswerRepository, ProductAnswerRepository>();
 
-builder.Services.AddScoped<IColorRepository, ColorRepository>();
+/*builder.Services.AddScoped<IColorRepository, ColorRepository>();*/
 
 builder.Services.AddSingleton<IProductRatingQueue, ProductRatingQueue>();
 

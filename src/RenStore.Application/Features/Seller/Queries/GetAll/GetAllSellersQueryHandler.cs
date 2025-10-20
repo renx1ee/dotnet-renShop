@@ -23,7 +23,7 @@ public class GetAllSellersQueryHandler
     {
         logger.LogInformation($"Handling {nameof(GetAllSellersQueryHandler)}");
         
-        var items = await sellerRepository.GetAllAsync(cancellationToken);
+        /*var items = await sellerRepository.GetAllAsync(cancellationToken);
         
         var result = items
             .Select(seller => 
@@ -38,6 +38,8 @@ public class GetAllSellersQueryHandler
         
         logger.LogInformation($"Handling {nameof(GetAllSellersQueryHandler)}");
 
-        return result;
+        return result;*/
+
+        return null;
     }
 }

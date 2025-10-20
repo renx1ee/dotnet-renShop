@@ -1,17 +1,23 @@
+using System.Text;
 using Dapper;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using RenStore.Application.Common.Exceptions;
-using RenStore.Application.Repository;
 using RenStore.Domain.Entities;
+using RenStore.Persistence.SortedEnums;
 
 namespace RenStore.Persistence.Repository;
 
-public class ColorRepository : IColorRepository
+public class ColorRepository /* : IColorRepository*/
 {
     private readonly ApplicationDbContext _context;
     private readonly string _connectionString;
+    private readonly Dictionary<ColorSortBy, string> _sortColumnMapping =
+        new()
+        {
+            { ColorSortBy.Id, "color_id" },
+            { ColorSortBy.NormalizedName, "normalized_color_name" }
+        };
     
     public ColorRepository(
         ApplicationDbContext context,
@@ -38,6 +44,10 @@ public class ColorRepository : IColorRepository
 
     public async Task UpdateAsync(Color color, CancellationToken cancellationToken)
     {
+        var existingColor = await this.GetByIdAsync(color.Id, cancellationToken);
+        
+        _context.Colors.Update(color);
+        await this._context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(int id, CancellationToken cancellationToken)
@@ -47,34 +57,57 @@ public class ColorRepository : IColorRepository
         await this._context.SaveChangesAsync(cancellationToken);
     }
     
-    // TODO: make ordering by id or name
-    public async Task<IEnumerable<Color>> FindAllAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Color>> FindAllAsync(
+        CancellationToken cancellationToken,
+        ColorSortBy sortBy = ColorSortBy.Id,
+        uint count = 25,
+        bool descending = false)
     {
-        await using var connection = new NpgsqlConnection(this._connectionString);
-        await connection.OpenAsync(cancellationToken);
+        try
+        {
+            await using var connection = new NpgsqlConnection(this._connectionString);
+            await connection.OpenAsync(cancellationToken);
 
-        const string sql = 
-            @"
-                SELECT
-                    ""color_id"" AS Id,
-                    ""color_name"" AS Name,
-                    ""normalized_color_name"" AS NormalizedName,
-                    ""color_name_ru"" AS NameRu,
-                    ""color_code"" AS ColorCode,
-                    ""color_description"" AS Description
-                FROM
-                    ""colors"";
-            ";
+            count = Math.Min(count, 1000);
+            var direction = descending ? "DESC" : "ASC";
+            string columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "color_id");
         
-        return await connection.QueryAsync<Color>(sql);
+            string sql =
+                $@"
+                    SELECT
+                        ""color_id"" AS Id,
+                        ""color_name"" AS Name,
+                        ""normalized_color_name"" AS NormalizedName,
+                        ""color_name_ru"" AS NameRu,
+                        ""color_code"" AS ColorCode,
+                        ""color_description"" AS Description
+                    FROM
+                        ""colors"" 
+                     ORDER BY {columnName} {direction} LIMIT @Count;
+                ";
+        
+            return await connection
+                .QueryAsync<Color>(
+                    sql, new
+                    {
+                        Count = (int)count
+                    });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
-    public async Task<Color?> FindByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<Color?> FindByIdAsync(
+        int id, 
+        CancellationToken cancellationToken)
     {
         await using var connection = new NpgsqlConnection(_connectionString);
         await connection.OpenAsync(cancellationToken);
 
-        const string sql = 
+        var sql = new StringBuilder( 
             @"
                 SELECT
                     ""color_id"" AS Id,
@@ -87,11 +120,12 @@ public class ColorRepository : IColorRepository
                     ""colors""
                 WHERE
                     ""color_id"" = @Id;
-            ";
+            ");
         
         return await connection
             .QueryFirstOrDefaultAsync<Color>(
-                sql, new { Id = id })
+                sql.ToString(), 
+                new { Id = id })
                     ?? null;
     }
 
@@ -100,14 +134,26 @@ public class ColorRepository : IColorRepository
         return await this.FindByIdAsync(id, cancellationToken)
             ?? throw new NotFoundException(typeof(Color), id);
     }
-
-    public async Task<Color?> FindByNameAsync(string name, CancellationToken cancellationToken)
+    //TODO: 
+    public async Task<IEnumerable<Color?>> FindByNameAsync(
+        string name, 
+        CancellationToken cancellationToken,
+        ColorSortBy sortBy = ColorSortBy.Id,
+        uint count = 25,
+        bool descending = false)
     {
+        if (name == null || name == string.Empty || name.Length == 0)
+            return [];
+        
         await using var connection = new NpgsqlConnection(_connectionString);
         await connection.OpenAsync(cancellationToken);
+
+        count = Math.Min(count, 1000);
+        var direction = descending ? "DESC" : "ASC";
+        string columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "color_id");
         
-        const string sql = 
-            @"
+        string sql = 
+            $@"
                 SELECT
                     ""color_id"" AS Id,
                     ""color_name"" AS Name,
@@ -118,17 +164,33 @@ public class ColorRepository : IColorRepository
                 FROM
                     ""colors""
                 WHERE
-                    ""normalized_color_name"" = UPPER(@Name);
+                    ""normalized_color_name"" 
+                        LIKE @Name
+                ORDER BY {columnName} {direction} 
+                LIMIT @Count;
             ";
         
         return await connection
-            .QueryFirstOrDefaultAsync<Color>(
-                sql, new { Name = name });
+            .QueryAsync<Color>(
+                sql, new
+                {
+                    Name = $"%{name.ToUpper()}%",
+                    Count = (int)count
+                });
     }
 
-    public async Task<Color> GetByNameAsync(string name, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Color?>> GetByNameAsync(
+        string name, 
+        CancellationToken cancellationToken,
+        ColorSortBy sortBy = ColorSortBy.Id,
+        uint count = 25,
+        bool descending = false)
     {
-        return await this.FindByNameAsync(name, cancellationToken)
-            ?? throw new NotFoundException(typeof(Color), name);
+        var result = await this.FindByNameAsync(name, cancellationToken, sortBy, count, descending);
+        
+        if (result is null || !result.Any())
+            throw new NotFoundException(typeof(Color), name);
+        
+        return result;
     }
 }

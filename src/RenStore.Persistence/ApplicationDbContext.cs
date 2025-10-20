@@ -13,13 +13,13 @@ public class ApplicationDbContext : DbContext
     {
         modelBuilder.ApplyConfiguration(new ColorConfiguration());
         
-        modelBuilder.ApplyConfiguration(new ProductConfiguration());
+        /*modelBuilder.ApplyConfiguration(new ProductConfiguration());*/
         modelBuilder.ApplyConfiguration(new ProductDetailConfiguration());
         modelBuilder.ApplyConfiguration(new ClothesProductConfiguration());
         modelBuilder.ApplyConfiguration(new ShoesProductConfiguration());
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         modelBuilder.ApplyConfiguration(new OrderConfiguration());
-        modelBuilder.ApplyConfiguration(new SellerConfiguration());
+        /*modelBuilder.ApplyConfiguration(new SellerConfiguration());*/
         modelBuilder.ApplyConfiguration(new ReviewConfiguration());
         modelBuilder.ApplyConfiguration(new ShoppingCartItemConfiguration());
 

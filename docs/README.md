@@ -38,7 +38,7 @@ dotnet ef migrations add initial -c ApplicationDbContext --project ./RenStore.Pe
 
 #### Migration update
 ```
-dotnet ef database update -c ApplicationDbContext --project ./RenStore.Persistence -s "E:\Projects\C#\ASP.NET Core\ShopDeveloped\RenStore.WebApi" --verbose
+dotnet ef database update -c ApplicationDbContext --project ./RenStore.Persistence -s "/Users/re/Documents/Projects/C#/RenStore/src/RenStore.WebApi" --verbose
 ```
 ```
 dotnet ef database update -c ApplicationDbContext --project ./RenStore.Persistence -s "/home/renx1ee/Documents/Projects/C#/ASP.Net Core/ShopDeveloped/RenStore.WebApi"
