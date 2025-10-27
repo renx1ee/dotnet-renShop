@@ -1,4 +1,4 @@
-using Asp.Versioning;
+/*using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RenStore.Application.Dto.Review;
@@ -158,4 +158,4 @@ public class ReviewController(IMapper mapper) : BaseController
         // TODO: доделать снятие лайка с отзыва
         return Ok();
     }
-}
+}*/

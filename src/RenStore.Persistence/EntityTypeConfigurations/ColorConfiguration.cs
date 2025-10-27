@@ -4,9 +4,9 @@ using RenStore.Domain.Entities;
 
 namespace RenStore.Persistence.EntityTypeConfigurations;
 
-public class ColorConfiguration : IEntityTypeConfiguration<Color>
+public class ColorConfiguration : IEntityTypeConfiguration<ColorEntity>
 {
-    public void Configure(EntityTypeBuilder<Color> builder)
+    public void Configure(EntityTypeBuilder<ColorEntity> builder)
     {
         builder.ToTable("colors");
         
@@ -18,7 +18,6 @@ public class ColorConfiguration : IEntityTypeConfiguration<Color>
             .Property(c => c.Id)
             .HasColumnName("color_id");
         
-        // TODO: unique and indexes
         builder
             .Property(c => c.Name)
             .HasColumnName("color_name")

@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RenStore.Application\RenStore.Application.csproj" />
+    <ProjectReference Include="..\RenStore.Microservice.Payment\RenStore.Microservice.Payment.csproj" />
   </ItemGroup>
 
   <ItemGroup>

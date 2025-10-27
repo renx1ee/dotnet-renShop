@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+﻿/*using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -253,4 +253,4 @@ public class ProductController(IMapper mapper) : BaseController
     {
         return Ok();
     }
-}
+}*/

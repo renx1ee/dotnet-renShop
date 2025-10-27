@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿/*using Microsoft.Extensions.Logging;
 using RenStore.Application.Repository;
 
 namespace RenStore.Application.Services;
@@ -61,4 +61,4 @@ public class ProductService
     {
         Console.WriteLine("Диструктор завершен!");
     }
-}
+}*/

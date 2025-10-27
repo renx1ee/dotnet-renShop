@@ -166,14 +166,14 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
                     b.Property<double?>("Balance")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("City")
+                    b.Property<string>("CityEntity")
                         .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
 
-                    b.Property<string>("Country")
+                    b.Property<string>("CountryEntity")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
@@ -283,7 +283,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Address")
+                    b.Property<string>("AddressEntity")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
@@ -296,12 +296,12 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("City")
+                    b.Property<string>("CityEntity")
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("character varying(25)");
 
-                    b.Property<string>("Country")
+                    b.Property<string>("CountryEntity")
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("character varying(25)");
@@ -623,7 +623,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("RenStore.Domain.Entities.Seller", b =>
+            modelBuilder.Entity("RenStore.Domain.Entities.SellerEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -749,7 +749,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RenStore.Domain.Entities.Seller", "Seller")
+                    b.HasOne("RenStore.Domain.Entities.SellerEntity", "SellerEntity")
                         .WithMany("Products")
                         .HasForeignKey("SellerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -757,7 +757,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
 
                     b.Navigation("Category");
 
-                    b.Navigation("Seller");
+                    b.Navigation("SellerEntity");
                 });
 
             modelBuilder.Entity("RenStore.Domain.Entities.ProductDetail", b =>
@@ -855,7 +855,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
                     b.Navigation("ShoesProduct");
                 });
 
-            modelBuilder.Entity("RenStore.Domain.Entities.Seller", b =>
+            modelBuilder.Entity("RenStore.Domain.Entities.SellerEntity", b =>
                 {
                     b.Navigation("Products");
                 });

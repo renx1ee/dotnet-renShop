@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using RenStore.Domain.Entities;
-using RenStore.Domain.Entities.Products;
-using RenStore.Persistence.EntityTypeConfigurations;
 
 namespace RenStore.Identity.DuendeServer.WebAPI.Data;
 
@@ -27,14 +25,6 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser, ApplicationRole,
             entity.ToTable(name: "RoleClaim"));
         
         /*modelBuilder.ApplyConfiguration(new ProductConfiguration());*/
-        modelBuilder.ApplyConfiguration(new ProductDetailConfiguration());
-        modelBuilder.ApplyConfiguration(new ClothesProductConfiguration());
-        modelBuilder.ApplyConfiguration(new ShoesProductConfiguration());
-        modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-        modelBuilder.ApplyConfiguration(new OrderConfiguration());
-        /*modelBuilder.ApplyConfiguration(new SellerConfiguration());*/
-        modelBuilder.ApplyConfiguration(new ReviewConfiguration());
-        modelBuilder.ApplyConfiguration(new ShoppingCartItemConfiguration());
         
         base.OnModelCreating(modelBuilder);
     }
@@ -45,15 +35,4 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser, ApplicationRole,
     }
     
     public DbSet<ApplicationUser> AspNetUsers { get; set; }
-    public DbSet<Product> Products { get; set; }
-    public DbSet<ProductDetail> ProductDetails { get; set; }
-    public DbSet<ClothesProduct> ClothesProducts { get; set; }
-    public DbSet<ShoesProduct> ShoesProducts { get; set; }
-    public DbSet<Category> Categories { get; set; }
-    public DbSet<Order> Orders { get; set; }
-    public DbSet<Seller> Sellers { get; set; }
-    public DbSet<Review> Reviews { get; set; }
-    public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
-    public DbSet<ProductQuestion> ProductQuestions { get; set; }
-    public DbSet<ProductAnswer> ProductAnswers { get; set; }
 }

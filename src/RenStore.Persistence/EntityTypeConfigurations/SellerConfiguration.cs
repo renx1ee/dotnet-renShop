@@ -4,16 +4,23 @@ using RenStore.Domain.Entities;
 
 namespace RenStore.Persistence.EntityTypeConfigurations;
 
-public class SellerConfiguration : IEntityTypeConfiguration<Seller>
+public class SellerConfiguration : IEntityTypeConfiguration<SellerEntity>
 {
-    public void Configure(EntityTypeBuilder<Seller> builder)
+    public void Configure(EntityTypeBuilder<SellerEntity> builder)
     {
+        builder.ToTable("sellers");
+        
         builder
             .HasKey(seller => seller.Id);
+        
+        builder
+            .Property(seller => seller.Id)
+            .HasColumnName("seller_id");
 
         builder
             .Property(seller => seller.Name)
             .HasMaxLength(50)
+            .HasColumnName("seller_name")
             .IsRequired();
         
         builder
@@ -23,6 +30,7 @@ public class SellerConfiguration : IEntityTypeConfiguration<Seller>
         builder
             .Property(seller => seller.NormalizedName)
             .HasMaxLength(50)
+            .HasColumnName("normalized_seller_name")
             .IsRequired();
         
         builder
@@ -32,18 +40,22 @@ public class SellerConfiguration : IEntityTypeConfiguration<Seller>
         builder
             .Property(seller => seller.Description)
             .HasMaxLength(500)
+            .HasColumnName("seller_description")
             .IsRequired(false);
         
         builder
             .Property(seller => seller.CreatedDate)
+            .HasColumnName("created_date")
             .IsRequired();
         
         builder
             .Property(seller => seller.IsBlocked)
+            .HasColumnName("is_blocked")
             .IsRequired();
         
-        /*builder
+        builder
             .Property(seller => seller.ApplicationUserId)
-            .IsRequired();*/
+            .HasColumnName("user_id")
+            .IsRequired();
     }
 }

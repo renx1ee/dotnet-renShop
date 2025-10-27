@@ -1,4 +1,4 @@
-using Asp.Versioning;
+/*using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RenStore.Application.Dto.Category;
@@ -107,4 +107,4 @@ public class CategoryController(IMapper mapper) : BaseController
         
         return Ok(result);
     }
-}
+}*/

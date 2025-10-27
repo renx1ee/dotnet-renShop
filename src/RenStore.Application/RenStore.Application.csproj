@@ -34,8 +34,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\ProductAnswer\Queries\GetAllByProductId\" />
-    <Folder Include="Features\ProductAnswer\Queries\GetAllByUserId\" />
+    <Folder Include="Common\Mappings\" />
+    <Folder Include="Features\Category\Commands\Delete\" />
+    <Folder Include="Features\Category\Commands\Update\" />
+    <Folder Include="Features\Category\Queries\" />
   </ItemGroup>
 
 </Project>

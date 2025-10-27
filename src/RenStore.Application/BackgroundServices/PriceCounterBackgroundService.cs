@@ -1,4 +1,4 @@
-﻿using System.Runtime.CompilerServices;
+﻿/*using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -57,4 +57,4 @@ public class PriceCounterBackgroundService : BackgroundService
             yield return await productRatingQueue.DequeueAsync(cancellationToken);
         }
     }
-}
+}*/

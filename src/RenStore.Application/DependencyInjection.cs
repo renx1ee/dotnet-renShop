@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿/*using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using FluentValidation;
 using RenStore.Persistence.Features.Review.Commands.Create;
@@ -24,7 +24,7 @@ public static class DependencyInjection
         services.AddAutoMapper(typeof(UpdateCategoryMappingProfile));
         services.AddAutoMapper(typeof(GetCategoryByIdMappingProfile));
         services.AddAutoMapper(typeof(GetCategoryByNameMappingProfile));
-        // Seller
+        // SellerEntity
         services.AddAutoMapper(typeof(UpdateSellerMappingProfile));
         services.AddAutoMapper(typeof(CreateSellerMappingProfile));
         services.AddAutoMapper(typeof(GetAllSellersMappingProfile));
@@ -89,7 +89,7 @@ public static class DependencyInjection
                 typeof(GetCategoryByIdQueryHandler).Assembly,
                 typeof(GetCategoryByNameQueryHandler).Assembly
                 ));
-        // Seller
+        // SellerEntity
         services.AddMediatR(x =>
             x.RegisterServicesFromAssemblies(
                 typeof(CreateSellerCommand).Assembly,
@@ -197,4 +197,4 @@ public static class DependencyInjection
         
         return services;
     }
-}
+}*/

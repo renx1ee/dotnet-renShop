@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿/*
+using Microsoft.Extensions.Logging;
 using RenStore.Application.Repository;
 using RenStore.Domain.Entities;
 
@@ -63,7 +64,7 @@ public class ShoppingCartService
         {
             ShoppingCartId = Guid.Parse(cartId)
         };
-    }#1#
+    }#2#
 
     public async Task<ShoppingCart> GetCartAsync(Guid shoppingCartId)
     {
@@ -100,5 +101,6 @@ public class ShoppingCartService
         return cart;
     }
 
-    */
+    #1#
 }
+*/

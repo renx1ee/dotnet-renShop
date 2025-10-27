@@ -1,4 +1,4 @@
-using Asp.Versioning;
+/*using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RenStore.Application.Dto.Order;
@@ -120,4 +120,4 @@ public class OrderController(IMapper mapper, JwtProvider jwtProvider) : BaseCont
         
         return Ok(result);
     }
-}
+}*/

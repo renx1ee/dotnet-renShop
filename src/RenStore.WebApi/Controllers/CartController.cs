@@ -1,4 +1,4 @@
-using Asp.Versioning;
+/*using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RenStore.Application.Dto.ShoppingCart;
@@ -130,4 +130,4 @@ public class CartController(IMapper mapper, JwtProvider jwtProvider) : BaseContr
         
         return Ok(result);
     }
-}
+}*/

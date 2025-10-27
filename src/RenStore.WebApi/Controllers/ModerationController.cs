@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+﻿/*using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using RenStore.Application.Dto.Review;
 using RenStore.Application.Features.Review.Commands.Moderate;
@@ -38,4 +38,4 @@ public class ModerationController : BaseController
         
         return Ok(reviews);
     }
-}
+}*/

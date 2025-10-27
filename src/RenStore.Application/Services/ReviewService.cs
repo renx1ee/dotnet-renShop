@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿/*using Microsoft.Extensions.Logging;
 using RenStore.Application.Repository;
 using RenStore.Domain.Enums;
 
@@ -72,4 +72,4 @@ public class ReviewService
         
         logger.LogError($"Moderation review method is stopped.");
     }
-}
+}*/

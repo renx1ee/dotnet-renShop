@@ -2,7 +2,7 @@ using RenStore.Domain.Entities;
 
 namespace RenStore.Application.Repository;
 /// <summary>
-/// Repository for working with entity Seller.
+/// Repository for working with entity SellerEntity.
 /// Provides basic CRUD operations and methods for working with data.
 /// </summary>
 /// <remarks>
@@ -13,62 +13,62 @@ namespace RenStore.Application.Repository;
 public interface ISellerRepository 
 {
     /// <summary>
-    /// Create a new Seller.
+    /// Create a new SellerEntity.
     /// </summary>
-    /// <param name="seller">Seller Model for create.</param>
+    /// <param name="sellerEntity">SellerEntity Model for create.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>Return Seller ID if Seller is created.</returns>
-    Task<long> CreateAsync(Seller seller, CancellationToken cancellationToken);
+    /// <returns>Return SellerEntity ID if SellerEntity is created.</returns>
+    Task<long> CreateAsync(SellerEntity sellerEntity, CancellationToken cancellationToken);
     /// <summary>
-    /// Seller Update.
+    /// SellerEntity Update.
     /// </summary>
-    /// <param name="seller">Seller Model for update.</param>
+    /// <param name="sellerEntity">SellerEntity Model for update.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns></returns>
-    /// <exception cref="NotFoundException">Thrown if the Seller is not found.</exception>
-    Task UpdateAsync(Seller seller, CancellationToken cancellationToken);
+    /// <exception cref="NotFoundException">Thrown if the SellerEntity is not found.</exception>
+    Task UpdateAsync(SellerEntity sellerEntity, CancellationToken cancellationToken);
     /// <summary>
-    /// Deletes a Seller by Seller ID.
+    /// Deletes a SellerEntity by SellerEntity ID.
     /// </summary>
-    /// <param name="id">Seller ID.</param>
+    /// <param name="id">SellerEntity ID.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns></returns>
-    /// <exception cref="NotFoundException">Thrown if the Seller is not found.</exception>
+    /// <exception cref="NotFoundException">Thrown if the SellerEntity is not found.</exception>
     Task DeleteAsync(long id, CancellationToken cancellationToken);
     /// <summary>
     /// Get all Sellers.
     /// </summary>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>Return a IEnumerable collection of Seller.</returns>
-    Task<IEnumerable<Seller>> GetAllAsync(CancellationToken cancellationToken);
+    /// <returns>Return a IEnumerable collection of SellerEntity.</returns>
+    Task<IEnumerable<SellerEntity>> GetAllAsync(CancellationToken cancellationToken);
     /// <summary>
-    /// Finds a Seller by Seller ID.
+    /// Finds a SellerEntity by SellerEntity ID.
     /// </summary>
-    /// <param name="id">Seller ID.</param>
+    /// <param name="id">SellerEntity ID.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>Return Seller if Seller is found else returns null.</returns>
-    Task<Seller?> FindByIdAsync(long id, CancellationToken cancellationToken);
+    /// <returns>Return SellerEntity if SellerEntity is found else returns null.</returns>
+    Task<SellerEntity?> FindByIdAsync(long id, CancellationToken cancellationToken);
     /// <summary>
-    /// Gets a Seller by Seller ID.
+    /// Gets a SellerEntity by SellerEntity ID.
     /// </summary>
-    /// <param name="id">Seller ID.</param>
+    /// <param name="id">SellerEntity ID.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>Return Seller if Seller is found.</returns>
-    /// <exception cref="NotFoundException">Thrown if the Seller is not found.</exception>
-    Task<Seller> GetByIdAsync(long id, CancellationToken cancellationToken);
+    /// <returns>Return SellerEntity if SellerEntity is found.</returns>
+    /// <exception cref="NotFoundException">Thrown if the SellerEntity is not found.</exception>
+    Task<SellerEntity> GetByIdAsync(long id, CancellationToken cancellationToken);
     /// <summary>
-    /// Finds a Seller by Seller Name.
+    /// Finds a SellerEntity by SellerEntity Name.
     /// </summary>
-    /// <param name="name">Seller Name.</param>
+    /// <param name="name">SellerEntity Name.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>Return Seller if Seller is found else returns null.</returns>
-    Task<Seller?> FindByNameAsync(string name, CancellationToken cancellationToken);
+    /// <returns>Return SellerEntity if SellerEntity is found else returns null.</returns>
+    Task<SellerEntity?> FindByNameAsync(string name, CancellationToken cancellationToken);
     /// <summary>
-    /// Gets a Seller by Seller Name.
+    /// Gets a SellerEntity by SellerEntity Name.
     /// </summary>
-    /// <param name="name">Seller Name.</param>
+    /// <param name="name">SellerEntity Name.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>Return Seller if Seller is found.</returns>
-    /// <exception cref="NotFoundException">Thrown if the Seller is not found.</exception>
-    Task<Seller> GetByNameAsync(string name, CancellationToken cancellationToken);
+    /// <returns>Return SellerEntity if SellerEntity is found.</returns>
+    /// <exception cref="NotFoundException">Thrown if the SellerEntity is not found.</exception>
+    Task<SellerEntity> GetByNameAsync(string name, CancellationToken cancellationToken);
 }
