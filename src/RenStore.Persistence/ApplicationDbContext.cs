@@ -21,4 +21,5 @@ public class ApplicationDbContext : DbContext
     
     public DbSet<ColorEntity> Colors { get; set; }
     public DbSet<AddressEntity> Addresses { get; set; }
+    public DbSet<CountryEntity> Countries { get; set; }
 }
