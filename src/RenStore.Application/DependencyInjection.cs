@@ -19,7 +19,7 @@ public static class DependencyInjection
         services.AddAutoMapper(typeof(UpdateProductMappingProfile));
         services.AddAutoMapper(typeof(GetProductMappingProfile));
         services.AddAutoMapper(typeof(GetProductByArticleMappingProfile));
-        // Category
+        // CategoryEntity
         services.AddAutoMapper(typeof(CreateCategoryMappingModel));
         services.AddAutoMapper(typeof(UpdateCategoryMappingProfile));
         services.AddAutoMapper(typeof(GetCategoryByIdMappingProfile));
@@ -73,7 +73,7 @@ public static class DependencyInjection
                 typeof(GetProductBySellerIdQueryHandler).Assembly,
                 typeof(GetProductByNoveltyQueryHandler).Assembly
                 ));
-        // Category
+        // CategoryEntity
         services.AddMediatR(x =>
             x.RegisterServicesFromAssemblies(
                 typeof(CreateCategoryCommand).Assembly,

@@ -10,6 +10,7 @@ namespace RenStore.Persistence.Repository.Postgresql;
 
 public class ColorRepository /* : IColorRepository*/
 {
+    // TODO: OFFSET
     private readonly ApplicationDbContext _context;
     private readonly string _connectionString;
     private readonly Dictionary<ColorSortBy, string> _sortColumnMapping =
@@ -109,7 +110,7 @@ public class ColorRepository /* : IColorRepository*/
             await using var connection = new NpgsqlConnection(_connectionString);
             await connection.OpenAsync(cancellationToken);
 
-            var sql = new StringBuilder( 
+            string sql =  
                 @"
                 SELECT
                     ""color_id"" AS Id,
@@ -122,12 +123,11 @@ public class ColorRepository /* : IColorRepository*/
                     ""colors""
                 WHERE
                     ""color_id"" = @Id;
-            ");
+            ";
         
             return await connection
                .QueryFirstOrDefaultAsync<ColorEntity>(
-                   sql.ToString(), 
-                   new { Id = id })
+                   sql, new { Id = id })
                        ?? null;
         }
         catch (PostgresException e)
@@ -149,8 +149,8 @@ public class ColorRepository /* : IColorRepository*/
         uint count = 25,
         bool descending = false)
     {
-        if (name == null || name == string.Empty || name.Length == 0)
-            return [];
+        if(string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException(nameof(name));
 
         try
         {

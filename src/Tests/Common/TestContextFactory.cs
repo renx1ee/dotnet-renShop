@@ -133,10 +133,12 @@ public class TestContextFactory
         context.Colors.RemoveRange(context.Colors);
         context.Sellers.RemoveRange(context.Sellers);
         context.AspNetUsers.RemoveRange(context.AspNetUsers);
+        context.Countries.RemoveRange(context.Countries);
 
         AddColorsTestData(context);
         AddUsersTestData(context);
         AddSellersTestData(context);
+        AddCountriesTestData(context);
         context.SaveChanges();
         
         context.ChangeTracker.Clear();
@@ -345,5 +347,92 @@ public class TestContextFactory
             },
         };
         context.Sellers.AddRange(sellers);
+    }
+
+    private static void AddCountriesTestData(ApplicationDbContext context)
+    {
+        var countries = new[]
+        {
+            // For delete
+            new CountryEntity()
+            {
+                Id = Constants.CountryIdForDelete,
+                Name = Constants.CountryNameForDelete,
+                NormalizedName = Constants.CountryNameForDelete.ToUpper(),
+                NameRu = Constants.CountryNameRuForDelete,
+                NormalizedNameRu = Constants.CountryNameRuForDelete.ToUpper(),
+                Code =  "del"
+            },
+            // For update
+            new CountryEntity()
+            {
+                Id = Constants.CountryIdForUpdate,
+                Name = Constants.CountryNameForUpdate,
+                NormalizedName = Constants.CountryNameForUpdate.ToUpper(),
+                NameRu = Constants.CountryNameRuForUpdate,
+                NormalizedNameRu = Constants.CountryNameRuForUpdate.ToUpper(),
+                Code =  "upd"
+            },
+            new CountryEntity()
+            {
+                Id = Constants.CountryIdForGetting1,
+                Name = Constants.CountryNameForGetting1,
+                NormalizedName = Constants.CountryNameForGetting1.ToUpper(),
+                NameRu = Constants.CountryNameRuForGetting1,
+                NormalizedNameRu = Constants.CountryNameRuForGetting1.ToUpper(),
+                Code =  "get1"
+            },
+            new CountryEntity()
+            {
+                Id = Constants.CountryIdForGetting2,
+                Name = Constants.CountryNameForGetting2,
+                NormalizedName = Constants.CountryNameForGetting2.ToUpper(),
+                NameRu = Constants.CountryNameRuForGetting2,
+                NormalizedNameRu = Constants.CountryNameRuForGetting2.ToUpper(),
+                Code =  "get2"
+            },
+            new CountryEntity()
+            {
+                Id = Constants.CountryIdForGetting3,
+                Name = Constants.CountryNameForGetting3,
+                NormalizedName = Constants.CountryNameForGetting3.ToUpper(),
+                NameRu = Constants.CountryNameRuForGetting3,
+                NormalizedNameRu = Constants.CountryNameRuForGetting3.ToUpper(),
+                Code =  "get3"
+            },
+            new CountryEntity()
+            {
+                Id = Constants.CountryIdForGetting4,
+                Name = Constants.CountryNameForGetting4,
+                NormalizedName = Constants.CountryNameForGetting4.ToUpper(),
+                NameRu = Constants.CountryNameRuForGetting4,
+                NormalizedNameRu = Constants.CountryNameRuForGetting4.ToUpper(),
+                Code =  "get4",
+                OtherName = Constants.CountryOtherNameForGetting4,
+                NormalizedOtherName = Constants.CountryOtherNameForGetting4.ToUpper(),
+            },
+            new CountryEntity()
+            {
+                Id = Constants.CountryIdForGetting5,
+                Name = Constants.CountryNameForGetting5,
+                NormalizedName = Constants.CountryNameForGetting5.ToUpper(),
+                NameRu = Constants.CountryNameRuForGetting5,
+                NormalizedNameRu = Constants.CountryNameRuForGetting5.ToUpper(),
+                Code =  "get5",
+            },
+            new CountryEntity()
+            {
+                Id = Constants.CountryIdForGetting6,
+                Name = Constants.CountryNameForGetting6,
+                NormalizedName = Constants.CountryNameForGetting6.ToUpper(),
+                NameRu = Constants.CountryNameRuForGetting6,
+                NormalizedNameRu = Constants.CountryNameRuForGetting6.ToUpper(),
+                Code =  "get6",
+                OtherName = Constants.CountryOtherNameForGetting6,
+                NormalizedOtherName = Constants.CountryOtherNameForGetting6.ToUpper(),
+            }
+        };
+        
+        context.Countries.AddRange(countries);
     }
 }

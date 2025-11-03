@@ -250,7 +250,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("RenStore.Domain.Entities.Category", b =>
+            modelBuilder.Entity("RenStore.Domain.Entities.CategoryEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -469,7 +469,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
                     b.HasIndex("ProductId")
                         .IsUnique();
 
-                    b.ToTable("ProductDetails");
+                    b.ToTable("ProductDetailsEntity");
                 });
 
             modelBuilder.Entity("RenStore.Domain.Entities.Products.ClothesProduct", b =>
@@ -743,7 +743,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
 
             modelBuilder.Entity("RenStore.Domain.Entities.Product", b =>
                 {
-                    b.HasOne("RenStore.Domain.Entities.Category", "Category")
+                    b.HasOne("RenStore.Domain.Entities.CategoryEntity", "CategoryEntity")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -755,7 +755,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
+                    b.Navigation("CategoryEntity");
 
                     b.Navigation("SellerEntity");
                 });
@@ -838,7 +838,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
                     b.Navigation("ShoppingCartItems");
                 });
 
-            modelBuilder.Entity("RenStore.Domain.Entities.Category", b =>
+            modelBuilder.Entity("RenStore.Domain.Entities.CategoryEntity", b =>
                 {
                     b.Navigation("Products");
                 });

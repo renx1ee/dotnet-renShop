@@ -46,7 +46,6 @@ public class ColorRepositoryTests : IDisposable
         Assert.Equal(color.Description, savedColor.Description);
     }
     // TODO: сделать duplicate exception
-    // TODO: добавить try catch в методы
     [Fact]
     public async Task CreateColorAsync_FailOnDuplicateName_Test()
     {
@@ -87,7 +86,7 @@ public class ColorRepositoryTests : IDisposable
         
         Assert.Null(duplicateSavedColor);
     }
-    // TODO:
+    
     [Fact]
     public async Task UpdateColorAsync_Success_Test()
     {
@@ -114,7 +113,7 @@ public class ColorRepositoryTests : IDisposable
         Assert.Equal(updatedNormalizedName, updatedColor.NormalizedName);
         Assert.Equal(description, updatedColor.Description);
     }
-    // TODO:
+    
     [Fact]
     public async Task UpdateColorAsync_FailOnWrongId_Test()
     {

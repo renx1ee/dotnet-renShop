@@ -49,6 +49,7 @@ public class CountryRepository
         CountryEntity country, 
         CancellationToken cancellationToken)
     {
+        var countryExists = await this.GetByIdAsync(country.Id, cancellationToken);
         _context.Countries.Update(country);
         await _context.SaveChangesAsync(cancellationToken);
     }
@@ -65,7 +66,8 @@ public class CountryRepository
     public async Task<IEnumerable<CountryEntity?>> FindAllAsync(
         CancellationToken cancellationToken,
         CountrySortBy sortBy = CountrySortBy.Id,
-        uint count = 25,
+        uint pageCount = 25,
+        uint page = 1,
         bool descending = false)
     {
         try
@@ -73,7 +75,8 @@ public class CountryRepository
             await using var connection = new NpgsqlConnection(this._connectionString);
             await connection.OpenAsync(cancellationToken);
 
-            count = Math.Min(count, 1000);
+            pageCount = Math.Min(pageCount, 1000);
+            uint offset = (page - 1) * pageCount;
             string columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "country_id");
             var direction = descending ? "DESC" : "ASC";
 
@@ -83,19 +86,26 @@ public class CountryRepository
                         ""country_id"" AS Id,
                         ""country_name"" AS Name,
                         ""normalized_country_name"" AS NormalizedName,
-                        ""country_code"" AS Code
+                        ""other_name"" AS OtherName,
+                        ""normalized_other_name"" AS NormalizedOtherName,
+                        ""country_name_ru"" AS NameRu,
+                        ""normalized_country_name_ru"" AS NormalizedNameRu,
+                        ""country_code"" AS Code,
+                        ""country_phone_code"" AS Code
                     FROM
                         ""countries""
                     ORDER BY 
                         {columnName} {direction}
-                    LIMIT @Count;
+                    LIMIT @Count
+                    OFFSET @Offset;
                 ";
 
             return await connection
                 .QueryAsync<CountryEntity?>(
                     sql, new
                     {
-                        Count = (int)count,
+                        Count = (int)pageCount,
+                        Offset = (int)offset
                     });
         }
         catch (PostgresException e)
@@ -119,7 +129,12 @@ public class CountryRepository
                         ""country_id"" AS Id,
                         ""country_name"" AS Name,
                         ""normalized_country_name"" AS NormalizedName,
-                        ""country_code"" AS Code
+                        ""other_name"" AS OtherName,
+                        ""normalized_other_name"" AS NormalizedOtherName,
+                        ""country_name_ru"" AS NameRu,
+                        ""normalized_country_name_ru"" AS NormalizedNameRu,
+                        ""country_code"" AS Code,
+                        ""country_phone_code"" AS Code
                     FROM
                         ""countries""
                     WHERE
@@ -148,15 +163,20 @@ public class CountryRepository
         string name,
         CancellationToken cancellationToken,
         CountrySortBy sortBy = CountrySortBy.Name,
-        uint count = 25,
+        uint pageCount = 25,
+        uint page = 1,
         bool descending = false)
     {
+        if(string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException(nameof(name));
+        
         try
         {
             await using var connection = new NpgsqlConnection(this._connectionString);
             await connection.OpenAsync(cancellationToken);
             
-            count = Math.Min(count, 1000);
+            pageCount = Math.Min(pageCount, 1000);
+            uint offset = (page - 1) * pageCount;
             string columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "country_id");
             var direction = descending ? "DESC" : "ASC";
 
@@ -166,15 +186,27 @@ public class CountryRepository
                         ""country_id"" AS Id,
                         ""country_name"" AS Name,
                         ""normalized_country_name"" AS NormalizedName,
-                        ""country_code"" AS Code
+                        ""other_name"" AS OtherName,
+                        ""normalized_other_name"" AS NormalizedOtherName,
+                        ""country_name_ru"" AS NameRu,
+                        ""normalized_country_name_ru"" AS NormalizedNameRu,
+                        ""country_code"" AS Code,
+                        ""country_phone_code"" AS Code
                     FROM
                         ""countries""
                     WHERE
                         ""normalized_country_name"" 
                             LIKE @Name
+                    OR 
+                        ""normalized_other_name""
+                            LIKE @Name
+                    OR 
+                        ""normalized_country_name_ru""
+                            LIKE @Name
                     ORDER BY 
                         {columnName} {direction}
-                    LIMIT @Count;
+                    LIMIT @Count
+                    OFFSET @Offset;
                 ";
             
             return await connection
@@ -182,7 +214,8 @@ public class CountryRepository
                     sql, new
                     {
                         Name = $"%{name.ToUpper()}%",
-                        Count = (int)count
+                        Count = (int)pageCount,
+                        Offset = (int)offset
                     });
         }
         catch (PostgresException e)
@@ -195,10 +228,15 @@ public class CountryRepository
         string name,
         CancellationToken cancellationToken,
         CountrySortBy sortBy = CountrySortBy.Name,
-        uint count = 25,
+        uint pageCount = 25,
+        uint page = 1,
         bool descending = false)
     {
-        return await this.FindByNameAsync(name, cancellationToken, sortBy, count, descending)
-            ?? throw new NotFoundException(typeof(CountryEntity), name);
+        
+        var result = await this.FindByNameAsync(name, cancellationToken, sortBy, pageCount, page, descending);
+        if (result is null || !result.Any())
+            throw new NotFoundException(typeof(CountryEntity), name);
+
+        return result;
     }
 }

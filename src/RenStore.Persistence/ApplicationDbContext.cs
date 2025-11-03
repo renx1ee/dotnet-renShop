@@ -12,6 +12,9 @@ public class ApplicationDbContext : DbContext
     {
         modelBuilder.ApplyConfiguration(new ColorConfiguration());
         modelBuilder.ApplyConfiguration(new SellerConfiguration());
+        modelBuilder.ApplyConfiguration(new CountryConfiguration());
+        modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new SubCategoryConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }
@@ -22,4 +25,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<ColorEntity> Colors { get; set; }
     public DbSet<AddressEntity> Addresses { get; set; }
     public DbSet<CountryEntity> Countries { get; set; }
+    public DbSet<CategoryEntity> Categories { get; set; }
+    public DbSet<SubCategoryEntity> SubCategories { get; set; }
+    public DbSet<CityEntity> Cities { get; set; }
 }

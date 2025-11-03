@@ -174,6 +174,7 @@ public class SellerRepositoryTests : IDisposable
             .FindAllAsync(CancellationToken.None);
         // Assert
         Assert.NotNull(sellers);
+        Assert.Equal(6, sellers.Count());
     }
     
     [Fact]
@@ -487,7 +488,7 @@ public class SellerRepositoryTests : IDisposable
                     userId: wrongUserId,
                     CancellationToken.None));
     }
-    
+    //TODO: зачем повторяется
     [Fact]
     public async Task FindByNameSellersAsync_WithDefaultParameters_Success_Test()
     {

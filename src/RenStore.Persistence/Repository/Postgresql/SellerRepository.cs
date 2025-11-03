@@ -10,6 +10,7 @@ namespace RenStore.Persistence.Repository.Postgresql;
 
 public class SellerRepository 
 {
+    // TODO: OFFSET
     private readonly ApplicationDbContext _context;
     private readonly string _connectionString;
     private readonly Dictionary<SellerSortBy, string> _sortColumnMapping = 
@@ -166,6 +167,9 @@ public class SellerRepository
         bool descending = false,
         bool? isBlocked = null)
     {
+        if(string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException(nameof(name));
+        
         try
         {
             await using var connection = new NpgsqlConnection(_connectionString);
