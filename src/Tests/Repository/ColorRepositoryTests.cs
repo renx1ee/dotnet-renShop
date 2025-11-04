@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using RenStore.Application.Common.Exceptions;
 using RenStore.Domain.Entities;
 using RenStore.Persistence;
-using RenStore.Persistence.Repository;
 using RenStore.Persistence.Repository.Postgresql;
 using RenStore.Persistence.SortedEnums;
 using Tests.Common;
@@ -425,11 +424,12 @@ public class ColorRepositoryTests : IDisposable
         _context = TestContextFactory.CreateReadyContext();
         _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
         // Arrange
-        // Act
-        var result = await _colorRepository
-            .FindByNameAsync(null, CancellationToken.None);
-        // Assert
-        Assert.Equal([], result);
+        // Act & Assert
+        await Assert.ThrowsAsync<ArgumentException>(async() =>
+            await _colorRepository
+                .FindByNameAsync(
+                    string.Empty,
+                    CancellationToken.None));
     }
     
     [Fact]
@@ -438,11 +438,12 @@ public class ColorRepositoryTests : IDisposable
         _context = TestContextFactory.CreateReadyContext();
         _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
         // Arrange
-        // Act
-        var result = await _colorRepository
-            .FindByNameAsync(string.Empty, CancellationToken.None);
-        // Assert
-        Assert.Equal([], result);
+        // Act & Assert
+        await Assert.ThrowsAsync<ArgumentException>(async() =>
+            await _colorRepository
+                .FindByNameAsync(
+                    string.Empty,
+                    CancellationToken.None));
     }
     
     [Fact]
@@ -484,12 +485,11 @@ public class ColorRepositoryTests : IDisposable
         _context = TestContextFactory.CreateReadyContext();
         _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
         // Arrange
-        // Act
-        // Assert
-        await Assert.ThrowsAsync<NotFoundException>(async () =>
+        // Act & Assert
+        await Assert.ThrowsAsync<ArgumentException>(async() =>
             await _colorRepository
-                .GetByNameAsync(
-                    name: null,
+                .FindByNameAsync(
+                    string.Empty,
                     CancellationToken.None));
     }
     
@@ -499,12 +499,11 @@ public class ColorRepositoryTests : IDisposable
         _context = TestContextFactory.CreateReadyContext();
         _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
         // Arrange
-        // Act
-        // Assert
-        await Assert.ThrowsAsync<NotFoundException>(async () =>
+        // Act & Assert
+        await Assert.ThrowsAsync<ArgumentException>(async() =>
             await _colorRepository
-                .GetByNameAsync(
-                    name: string.Empty,
+                .FindByNameAsync(
+                    string.Empty,
                     CancellationToken.None));
     }
     

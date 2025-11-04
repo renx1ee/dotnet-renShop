@@ -1,0 +1,665 @@
+using Microsoft.EntityFrameworkCore;
+using RenStore.Application.Common.Exceptions;
+using RenStore.Domain.Entities;
+using RenStore.Persistence;
+using RenStore.Persistence.Repository.Postgresql;
+using RenStore.Persistence.SortedEnums;
+using Tests.Common;
+
+namespace Tests.Repository;
+
+public class CategoryRepositoryTests
+{
+    private ApplicationDbContext _context;
+    private CategoryRepository _categoryRepository;
+
+    #region Create Update Delete
+
+    [Fact]
+    public async Task CreateCategoryAsync_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        int categoryId = 15356;
+        var category = new CategoryEntity()
+        {
+            Id = categoryId,
+            Name = "Test",
+            NormalizedName = "TEST",
+            NameRu = "Тест",
+            NormalizedNameRu = "ТЕСТ",
+            Description = Guid.NewGuid().ToString(),
+            IsActive = true,
+            CreatedDate = DateTime.Now
+        };
+        // Act
+        await _categoryRepository.CreateAsync(category, CancellationToken.None);
+        // Assert
+        var result = await _context.Categories
+            .FirstOrDefaultAsync(c => 
+                c.Id == categoryId);
+        Assert.NotNull(result);
+        Assert.Equal(categoryId, result.Id);
+        Assert.Equal(category.Name, result.Name);
+        Assert.Equal(category.NormalizedName, result.NormalizedName);
+        Assert.Equal(category.NameRu, result.NameRu);
+        Assert.Equal(category.NormalizedNameRu, result.NormalizedNameRu);
+        Assert.Equal(category.Description, result.Description);
+        Assert.Equal(category.IsActive, result.IsActive);
+        Assert.Equal(category.CreatedDate, result.CreatedDate);
+    }
+    
+    [Fact]
+    public async Task CreateCategoryAsync_FailOnDuplicateName_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        int categoryId = 15356;
+        var category = new CategoryEntity()
+        {
+            Id = categoryId,
+            Name = Constants.CategoryNameForGetting1,
+            NormalizedName = Constants.CategoryNameForGetting1.ToUpper(),
+            NameRu = "Тест",
+            NormalizedNameRu = "ТЕСТ",
+            Description = Guid.NewGuid().ToString(),
+            IsActive = true,
+            CreatedDate = DateTime.Now
+        };
+        // Act & Assert
+        await Assert.ThrowsAsync<DbUpdateException>(async () => 
+            await _categoryRepository
+                .CreateAsync(
+                    category: category, 
+                    CancellationToken.None));
+    }
+    
+    [Fact]
+    public async Task CreateCategoryAsync_FailOnDuplicateNameRu_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        int categoryId = 15356;
+        var category = new CategoryEntity()
+        {
+            Id = categoryId,
+            Name = "wfkwej",
+            NormalizedName = "lkwwfwawf".ToUpper(),
+            NameRu = Constants.CategoryNameRuForGetting1,
+            NormalizedNameRu = Constants.CategoryNameRuForGetting1.ToUpper(),
+            Description = Guid.NewGuid().ToString(),
+            IsActive = true,
+            CreatedDate = DateTime.Now
+        };
+        // Act & Assert
+        await Assert.ThrowsAsync<DbUpdateException>(async () => 
+            await _categoryRepository
+                .CreateAsync(
+                    category: category, 
+                    CancellationToken.None));
+        
+    }
+    
+    [Fact]
+    public async Task UpdateCategoryAsync_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        string categoryName = "Test";
+        string categoryNameRu = "Test";
+        string normalizedCategoryNameRu = "Test";
+        string normalizedCategoryName = "Test";
+        string categoryDescription = Guid.NewGuid().ToString();
+        
+        var existsCategory = await _context.Categories
+            .FirstOrDefaultAsync(c => 
+                c.Id == Constants.CategoryIdForUpdate);
+        
+        existsCategory.Name = categoryName;
+        existsCategory.NameRu = categoryNameRu;
+        existsCategory.NormalizedName = normalizedCategoryName;
+        existsCategory.NormalizedNameRu = normalizedCategoryNameRu;
+        existsCategory.Description = categoryDescription;
+        // Act 
+        await _categoryRepository.UpdateAsync(existsCategory, CancellationToken.None);
+        
+        // Assert
+        var result = await _context.Categories
+            .FirstOrDefaultAsync(c => 
+                c.Id == Constants.CategoryIdForUpdate);
+        Assert.NotNull(result);
+        Assert.Equal(Constants.CategoryIdForUpdate, result.Id);
+        Assert.Equal(categoryName, result.Name);
+        Assert.Equal(categoryNameRu, result.NameRu);
+        Assert.Equal(normalizedCategoryNameRu, result.NormalizedNameRu);
+        Assert.Equal(normalizedCategoryName, result.NormalizedName);
+        Assert.Equal(categoryDescription, result.Description);
+    }
+    
+    [Fact]
+    public async Task UpdateCategoryAsync_FailOnDuplicateName_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        string categoryDescription = Guid.NewGuid().ToString();
+        
+        var existsCategory = await _context.Categories
+            .FirstOrDefaultAsync(c => 
+                c.Id == Constants.CategoryIdForUpdate);
+        
+        existsCategory.Name = Constants.CategoryNameForGetting1;
+        existsCategory.NameRu = Constants.CategoryNameRuForGetting1;
+        existsCategory.NormalizedName = Constants.CategoryNameForGetting1.ToUpper();
+        existsCategory.NormalizedNameRu = Constants.CategoryNameRuForGetting1.ToUpper();
+        existsCategory.Description = categoryDescription;
+        // Act & Assert
+        await Assert.ThrowsAsync<DbUpdateException>(async () => 
+            await _categoryRepository
+                .UpdateAsync(
+                    category: existsCategory, 
+                    CancellationToken.None));
+    }
+    
+    [Fact]
+    public async Task UpdateCategoryAsync_FailOnWrongId_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        int wrongId = 1535656;
+        var category = new CategoryEntity()
+        {
+            Id = wrongId,
+        };
+        // Act & Assert
+        await Assert.ThrowsAsync<NotFoundException>(async () => 
+            await _categoryRepository
+                .UpdateAsync(
+                    category: category, 
+                    CancellationToken.None));
+    }
+    
+    [Fact]
+    public async Task DeleteCategoryAsync_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        var existsCategory = await _context.Categories
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c => 
+                c.Id == Constants.CategoryIdForDelete);
+        Assert.NotNull(existsCategory);
+        // Act
+        await _categoryRepository.DeleteAsync(Constants.CategoryIdForDelete, CancellationToken.None);
+        // Assert
+        var result = await _context.Categories
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c => 
+                c.Id == Constants.CategoryIdForDelete);
+        Assert.Null(result);
+    }
+    
+    [Fact]
+    public async Task DeleteCategoryAsync_FailOnWrongId_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        int wrongId = 15356;
+        // Act & Assert
+        await Assert.ThrowsAsync<NotFoundException>(async () => 
+            await _categoryRepository
+                .DeleteAsync(
+                    id: wrongId, 
+                    CancellationToken.None));
+    }
+    
+    #endregion
+    #region All
+    [Fact]
+    public async Task FindAllCategoriesAsync_WithDefaultParameters_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var categories = await _categoryRepository.FindAllAsync(CancellationToken.None);
+        // Assert
+        Assert.NotNull(categories);
+        Assert.Equal(Constants.OverallCategoriesCount, categories.Count());
+    }
+
+    [Fact]
+    public async Task FindAllCountriesAsync_WithCountLimit_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var categories = await _categoryRepository.FindAllAsync(
+            cancellationToken: CancellationToken.None, 
+            pageCount: 3);
+        // Assert
+        Assert.NotNull(categories);
+        Assert.Equal(3, categories.Count());
+    }
+    
+    [Fact]
+    public async Task FindAllCountriesAsync_SortById_DescendingFalse_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var result = await _categoryRepository.FindAllAsync(
+            cancellationToken: CancellationToken.None, 
+            descending: false,
+            sortBy: CategorySortBy.Id);
+        var categories = result.ToList();
+        // Assert
+        Assert.NotNull(categories);
+        Assert.Equal(Constants.OverallCategoriesCount, categories.Count());
+        Assert.Equal(Constants.CategoryIdForUpdate, categories[0].Id);
+        Assert.Equal(Constants.CategoryIdForDelete, categories[1].Id);
+        Assert.Equal(Constants.CategoryIdForGetting1, categories[2].Id);
+        Assert.Equal(Constants.CategoryIdForGetting2, categories[3].Id);
+        Assert.Equal(Constants.CategoryIdForGetting3, categories[4].Id);
+        Assert.Equal(Constants.CategoryIdForGetting4, categories[5].Id);
+        Assert.Equal(Constants.CategoryIdForGetting5, categories[6].Id);
+        Assert.Equal(Constants.CategoryIdForGetting6, categories[7].Id);
+    }
+    
+    [Fact]
+    public async Task FindAllCountriesAsync_SortById_DescendingTrue_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var result = await _categoryRepository.FindAllAsync(
+            cancellationToken: CancellationToken.None, 
+            descending: true,
+            sortBy: CategorySortBy.Id);
+        var categories = result.ToList();
+        // Assert
+        Assert.NotNull(categories);
+        Assert.Equal(Constants.OverallCategoriesCount, categories.Count());
+        Assert.Equal(Constants.CategoryIdForGetting7, categories[0].Id);
+        Assert.Equal(Constants.CategoryIdForGetting6, categories[1].Id);
+        Assert.Equal(Constants.CategoryIdForGetting5, categories[2].Id);
+        Assert.Equal(Constants.CategoryIdForGetting4, categories[3].Id);
+        Assert.Equal(Constants.CategoryIdForGetting3, categories[4].Id);
+        Assert.Equal(Constants.CategoryIdForGetting2, categories[5].Id);
+        Assert.Equal(Constants.CategoryIdForGetting1, categories[6].Id);
+        Assert.Equal(Constants.CategoryIdForDelete, categories[7].Id);
+        Assert.Equal(Constants.CategoryIdForUpdate, categories[8].Id);
+    }
+    
+    [Fact]
+    public async Task FindAllCountriesAsync_SortByName_DescendingFalse_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var result = await _categoryRepository.FindAllAsync(
+            cancellationToken: CancellationToken.None, 
+            descending: false,
+            sortBy: CategorySortBy.Name);
+        var categories = result.ToList();
+        // Assert
+        Assert.NotNull(categories);
+        Assert.Equal(Constants.OverallCategoriesCount, categories.Count());
+        Assert.Equal(Constants.CategoryIdForGetting5, categories[0].Id);
+        Assert.Equal(Constants.CategoryIdForUpdate , categories[1].Id);
+        Assert.Equal(Constants.CategoryIdForGetting1, categories[2].Id);
+        Assert.Equal(Constants.CategoryIdForGetting7, categories[3].Id);
+        Assert.Equal(Constants.CategoryIdForGetting6, categories[4].Id);
+        Assert.Equal(Constants.CategoryIdForGetting3, categories[5].Id);
+        Assert.Equal(Constants.CategoryIdForGetting2, categories[6].Id);
+        Assert.Equal(Constants.CategoryIdForDelete, categories[7].Id);
+        Assert.Equal(Constants.CategoryIdForGetting4, categories[8].Id);
+    }
+    
+    [Fact]
+    public async Task FindAllCountriesAsync_SortByName_DescendingTrue_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var result = await _categoryRepository.FindAllAsync(
+            cancellationToken: CancellationToken.None, 
+            descending: true,
+            sortBy: CategorySortBy.Name);
+        var categories = result.ToList();
+        // Assert
+        Assert.NotNull(categories);
+        Assert.Equal(Constants.OverallCategoriesCount, categories.Count());
+        Assert.Equal(Constants.CategoryIdForGetting4, categories[0].Id);
+        Assert.Equal(Constants.CategoryIdForDelete, categories[1].Id);
+        Assert.Equal(Constants.CategoryIdForGetting2, categories[2].Id);
+        Assert.Equal(Constants.CategoryIdForGetting3, categories[3].Id);
+        Assert.Equal(Constants.CategoryIdForGetting6, categories[4].Id);
+        Assert.Equal(Constants.CategoryIdForGetting7, categories[5].Id);
+        Assert.Equal(Constants.CategoryIdForGetting1, categories[6].Id);
+        Assert.Equal(Constants.CategoryIdForUpdate, categories[7].Id);
+        Assert.Equal(Constants.CategoryIdForGetting5, categories[8].Id);
+    }
+    
+    [Fact]
+    public async Task FindAllCountriesAsync_SortByNameRu_DescendingFalse_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var result = await _categoryRepository.FindAllAsync(
+            cancellationToken: CancellationToken.None, 
+            descending: false,
+            sortBy: CategorySortBy.NameRu);
+        var categories = result.ToList();
+        // Assert
+        Assert.NotNull(categories);
+        Assert.Equal(Constants.OverallCategoriesCount, categories.Count());
+        Assert.Equal(Constants.CategoryIdForGetting3, categories[0].Id);
+        Assert.Equal(Constants.CategoryIdForGetting7 , categories[1].Id);
+        Assert.Equal(Constants.CategoryIdForGetting6 , categories[2].Id);
+        Assert.Equal(Constants.CategoryIdForGetting5, categories[3].Id);
+        Assert.Equal(Constants.CategoryIdForGetting2, categories[4].Id);
+        Assert.Equal(Constants.CategoryIdForDelete, categories[5].Id);
+        Assert.Equal(Constants.CategoryIdForUpdate, categories[6].Id);
+        Assert.Equal(Constants.CategoryIdForGetting4, categories[7].Id);
+        Assert.Equal(Constants.CategoryIdForGetting1, categories[8].Id);
+    }
+    
+    [Fact]
+    public async Task FindAllCountriesAsync_SortByNameRu_DescendingTrue_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var result = await _categoryRepository.FindAllAsync(
+            cancellationToken: CancellationToken.None, 
+            descending: true,
+            sortBy: CategorySortBy.NameRu);
+        var categories = result.ToList();
+        // Assert
+        Assert.NotNull(categories);
+        Assert.Equal(Constants.OverallCategoriesCount, categories.Count());
+        Assert.Equal(Constants.CategoryIdForGetting1, categories[0].Id);
+        Assert.Equal(Constants.CategoryIdForGetting4 , categories[1].Id);
+        Assert.Equal(Constants.CategoryIdForUpdate, categories[2].Id);
+        Assert.Equal(Constants.CategoryIdForDelete, categories[3].Id);
+        Assert.Equal(Constants.CategoryIdForGetting2, categories[4].Id);
+        Assert.Equal(Constants.CategoryIdForGetting5, categories[5].Id);
+        Assert.Equal(Constants.CategoryIdForGetting6, categories[6].Id);
+        Assert.Equal(Constants.CategoryIdForGetting7, categories[7].Id);
+        Assert.Equal(Constants.CategoryIdForGetting3, categories[8].Id);
+    }
+    #endregion
+    #region By Id
+    [Fact]
+    public async Task FindCategoryByIdAsync_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var category = await _categoryRepository
+            .FindByIdAsync(
+                Constants.CategoryIdForGetting1, 
+                CancellationToken.None);
+        // Assert
+        Assert.NotNull(category);
+        Assert.Equal(Constants.CategoryIdForGetting1, category.Id);
+    }
+
+    [Fact]
+    public async Task FindCategoryByIdAsync_FailOnWrongId_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        int wrongId = 1435;
+        // Act
+        var category = await _categoryRepository
+            .FindByIdAsync(
+                wrongId, 
+                CancellationToken.None);
+        // Assert
+        Assert.Null(category);
+    }
+    
+    [Fact]
+    public async Task GetCategoryByIdAsync_Success_Test() 
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var category = await _categoryRepository
+            .GetByIdAsync(
+                Constants.CategoryIdForGetting1, 
+                CancellationToken.None);
+        // Assert
+        Assert.NotNull(category);
+        Assert.Equal(Constants.CategoryIdForGetting1, category.Id);
+    }
+    
+    [Fact]
+    public async Task GetCategoryByIdAsync_FailOnWrongId_Test() 
+    { 
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        int wrongId = 143425;
+        // Act
+        // Assert
+        await Assert.ThrowsAsync<NotFoundException>(async () =>
+            await _categoryRepository
+                .GetByIdAsync(
+                    id: wrongId,
+                    CancellationToken.None));
+    }
+    #endregion
+    #region By Name
+    [Fact]
+    public async Task FindCategoriesByNameAsync_WithDefaultParameters_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var countries = await _categoryRepository
+            .FindByNameAsync(
+                Constants.CategoryNameForGetting7, 
+                CancellationToken.None);
+        var result = countries.ToList();
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count());
+        Assert.Equal(Constants.CategoryIdForGetting6, result[0].Id);
+        Assert.Equal(Constants.CategoryIdForGetting7, result[1].Id);
+    }
+
+    [Fact]
+    public async Task FindCategoryByNameAsync_FailOnWrongName_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        string wrongName = Guid.NewGuid().ToString();
+        // Act
+        var countries = await _categoryRepository
+            .FindByNameAsync(
+                name: wrongName, 
+                CancellationToken.None);
+        // Assert
+        var result = countries.ToList();
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public async Task GetCategoryByNameAsync_WithDefaultParameters_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var countries = await _categoryRepository
+            .GetByNameAsync(
+                Constants.CategoryNameForGetting7, 
+                CancellationToken.None);
+        var result = countries.ToList();
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count());
+        Assert.Equal(Constants.CategoryIdForGetting6, result[0].Id);
+        Assert.Equal(Constants.CategoryIdForGetting7, result[1].Id);
+    }
+
+    [Fact]
+    public async Task GetCategoryByNameAsync_FailOnWrongName_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        string wrongName = Guid.NewGuid().ToString();
+        // Act
+        // Assert
+        await Assert.ThrowsAsync<NotFoundException>(async () => 
+            await _categoryRepository
+                .GetByNameAsync(
+                    name: wrongName, 
+                    CancellationToken.None));
+    }
+    
+    [Fact]
+    public async Task FindCategoryByNameAsync_CountLimit_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var countries = await _categoryRepository
+            .FindByNameAsync(
+                pageCount: 2,
+                name: Constants.CategoryNameForGetting7, 
+                cancellationToken: CancellationToken.None);
+        var result = countries.ToList();
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count());
+        Assert.Equal(Constants.CategoryIdForGetting6, result[0].Id);
+        Assert.Equal(Constants.CategoryIdForGetting7, result[1].Id);
+    }
+    
+    [Fact]
+    public async Task FindCategoryByNameAsync_SortByName_DescendingFalse_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var countries = await _categoryRepository.FindByNameAsync(
+            name: Constants.CategoryNameForGetting7,
+            cancellationToken: CancellationToken.None, 
+            descending: false,
+            sortBy: CategorySortBy.Name);
+        var result = countries.ToList();
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count());
+        Assert.Equal(Constants.CategoryIdForGetting7, result[0].Id);
+        Assert.Equal(Constants.CategoryIdForGetting6, result[1].Id);
+    }
+
+    [Fact]
+    public async Task FindCategoryByNameAsync_SortByName_DescendingTrue_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var countries = await _categoryRepository.FindByNameAsync(
+            name: Constants.CategoryNameForGetting7,
+            cancellationToken: CancellationToken.None, 
+            descending: true,
+            sortBy: CategorySortBy.Name);
+        var result = countries.ToList();
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count());
+        Assert.Equal(Constants.CategoryIdForGetting6, result[0].Id);
+        Assert.Equal(Constants.CategoryIdForGetting7, result[1].Id);
+    }
+
+    [Fact]
+    public async Task FindCategoryByNameAsync_SortById_DescendingFalse_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var countries = await _categoryRepository.FindByNameAsync(
+            name: Constants.CategoryNameForGetting7,
+            cancellationToken: CancellationToken.None, 
+            descending: false,
+            sortBy: CategorySortBy.Id);
+        var result = countries.ToList();
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count());
+        Assert.Equal(Constants.CategoryIdForGetting6, result[0].Id);
+        Assert.Equal(Constants.CategoryIdForGetting7, result[1].Id);
+    }
+
+    [Fact]
+    public async Task FindCategoryByNameAsync_SortById_DescendingTrue_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var countries = await _categoryRepository.FindByNameAsync(
+            name: Constants.CategoryNameForGetting7,
+            cancellationToken: CancellationToken.None, 
+            descending: true,
+            sortBy: CategorySortBy.Id);
+        var result = countries.ToList();
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count());
+        Assert.Equal(Constants.CategoryIdForGetting7, result[0].Id);
+        Assert.Equal(Constants.CategoryIdForGetting6, result[1].Id);
+    }
+    
+    [Fact]
+    public async Task FindCategoryByNameRuAsync_WithDefaultParameters_Success_Test()
+    {
+        _context = TestContextFactory.CreateReadyContext();
+        _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
+        // Arrange
+        // Act
+        var countries = await _categoryRepository
+            .FindByNameAsync(
+                Constants.CategoryNameRuForGetting7, 
+                CancellationToken.None);
+        var result = countries.ToList();
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(3, result.Count());
+        Assert.Equal(Constants.CategoryIdForGetting5, result[0].Id);
+        Assert.Equal(Constants.CategoryIdForGetting6, result[1].Id);
+        Assert.Equal(Constants.CategoryIdForGetting7, result[2].Id);
+    }
+    #endregion
+}

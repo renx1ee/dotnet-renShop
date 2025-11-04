@@ -134,11 +134,15 @@ public class TestContextFactory
         context.Sellers.RemoveRange(context.Sellers);
         context.AspNetUsers.RemoveRange(context.AspNetUsers);
         context.Countries.RemoveRange(context.Countries);
+        context.SubCategories.RemoveRange(context.SubCategories);
+        context.Categories.RemoveRange(context.Categories);
 
         AddColorsTestData(context);
         AddUsersTestData(context);
         AddSellersTestData(context);
         AddCountriesTestData(context);
+        AddCategoriesTestData(context);
+        AddSubCategoriesTestData(context);
         context.SaveChanges();
         
         context.ChangeTracker.Clear();
@@ -340,7 +344,7 @@ public class TestContextFactory
                 Name = SellerNameForGetting4,
                 Description = "Sample Description for Update",
                 NormalizedName = SellerNameForGetting4.ToUpper(),
-                CreatedDate = DateTime.UtcNow,
+                CreatedDate = DateTime.UtcNow.AddHours(1),
                 ApplicationUser = _userForGetting4,
                 ApplicationUserId = UserIdForGettingSeller4,
                 IsBlocked = true
@@ -434,5 +438,228 @@ public class TestContextFactory
         };
         
         context.Countries.AddRange(countries);
+    }
+
+    private static void AddCategoriesTestData(ApplicationDbContext context)
+    {
+        var items = new []
+        {
+            new CategoryEntity()
+            {
+                Id = Constants.CategoryIdForUpdate,
+                Name = Constants.CategoryNameForUpdate,
+                NormalizedName = Constants.CategoryNameForUpdate.ToUpper(),
+                NameRu = Constants.CategoryNameRuForUpdate,
+                NormalizedNameRu = Constants.CategoryNameRuForUpdate.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now
+            },
+            new CategoryEntity()
+            {
+                Id = Constants.CategoryIdForDelete,
+                Name = Constants.CategoryNameForDelete,
+                NormalizedName = Constants.CategoryNameForDelete.ToUpper(),
+                NameRu = Constants.CategoryNameRuForDelete,
+                NormalizedNameRu = Constants.CategoryNameRuForDelete.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now
+            },
+            new CategoryEntity()
+            {
+                Id = Constants.CategoryIdForGetting1,
+                Name = Constants.CategoryNameForGetting1,
+                NormalizedName = Constants.CategoryNameForGetting1.ToUpper(),
+                NameRu = Constants.CategoryNameRuForGetting1,
+                NormalizedNameRu = Constants.CategoryNameRuForGetting1.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now
+            },
+            new CategoryEntity()
+            {
+                Id = Constants.CategoryIdForGetting2,
+                Name = Constants.CategoryNameForGetting2,
+                NormalizedName = Constants.CategoryNameForGetting2.ToUpper(),
+                NameRu = Constants.CategoryNameRuForGetting2,
+                NormalizedNameRu = Constants.CategoryNameRuForGetting2.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now
+            },
+            new CategoryEntity()
+            {
+                Id = Constants.CategoryIdForGetting3,
+                Name = Constants.CategoryNameForGetting3,
+                NormalizedName = Constants.CategoryNameForGetting3.ToUpper(),
+                NameRu = Constants.CategoryNameRuForGetting3,
+                NormalizedNameRu = Constants.CategoryNameRuForGetting3.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now
+            },
+            new CategoryEntity()
+            {
+                Id = Constants.CategoryIdForGetting4,
+                Name = Constants.CategoryNameForGetting4,
+                NormalizedName = Constants.CategoryNameForGetting4.ToUpper(),
+                NameRu = Constants.CategoryNameRuForGetting4,
+                NormalizedNameRu = Constants.CategoryNameRuForGetting4.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now
+            },
+            new CategoryEntity()
+            {
+                Id = Constants.CategoryIdForGetting5,
+                Name = Constants.CategoryNameForGetting5,
+                NormalizedName = Constants.CategoryNameForGetting5.ToUpper(),
+                NameRu = Constants.CategoryNameRuForGetting5,
+                NormalizedNameRu = Constants.CategoryNameRuForGetting5.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now
+            },
+            new CategoryEntity()
+            {
+                Id = Constants.CategoryIdForGetting6,
+                Name = Constants.CategoryNameForGetting6,
+                NormalizedName = Constants.CategoryNameForGetting6.ToUpper(),
+                NameRu = Constants.CategoryNameRuForGetting6,
+                NormalizedNameRu = Constants.CategoryNameRuForGetting6.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now
+            },
+            new CategoryEntity()
+            {
+                Id = Constants.CategoryIdForGetting7,
+                Name = Constants.CategoryNameForGetting7,
+                NormalizedName = Constants.CategoryNameForGetting7.ToUpper(),
+                NameRu = Constants.CategoryNameRuForGetting7,
+                NormalizedNameRu = Constants.CategoryNameRuForGetting7.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now
+            },
+        };
+        context.Categories.AddRange(items);
+    }
+
+    private static void AddSubCategoriesTestData(ApplicationDbContext context)
+    {
+        var subCategories = new[]
+        {
+            new SubCategoryEntity()
+            {
+                Id = Constants.SubCategoryIdForUpdate,
+                Name = Constants.SubCategoryNameForUpdate,
+                NormalizedName = Constants.SubCategoryNameForUpdate.ToUpper(),
+                NameRu = Constants.SubCategoryNameRuForUpdate,
+                NormalizedNameRu = Constants.SubCategoryNameRuForUpdate.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now,
+                CategoryId = Constants.CategoryIdForUpdate,
+            },
+            new SubCategoryEntity()
+            {
+                Id = Constants.SubCategoryIdForDelete,
+                Name = Constants.SubCategoryNameForDelete,
+                NormalizedName = Constants.SubCategoryNameForDelete.ToUpper(),
+                NameRu = Constants.SubCategoryNameRuForDelete,
+                NormalizedNameRu = Constants.SubCategoryNameRuForDelete.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now,
+                CategoryId = Constants.CategoryIdForDelete,
+            },
+            new SubCategoryEntity()
+            {
+                Id = Constants.SubCategoryIdForGetting1,
+                Name = Constants.SubCategoryNameForGetting1,
+                NormalizedName = Constants.SubCategoryNameForGetting1.ToUpper(),
+                NameRu = Constants.SubCategoryNameRuForGetting1,
+                NormalizedNameRu = Constants.SubCategoryNameRuForGetting1.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now,
+                CategoryId = Constants.CategoryIdForGetting1,
+            },
+            new SubCategoryEntity()
+            {
+                Id = Constants.SubCategoryIdForGetting2,
+                Name = Constants.SubCategoryNameForGetting2,
+                NormalizedName = Constants.SubCategoryNameForGetting2.ToUpper(),
+                NameRu = Constants.SubCategoryNameRuForGetting2,
+                NormalizedNameRu = Constants.SubCategoryNameRuForGetting2.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now,
+                CategoryId = Constants.CategoryIdForGetting2,
+            },
+            new SubCategoryEntity()
+            {
+                Id = Constants.SubCategoryIdForGetting3,
+                Name = Constants.SubCategoryNameForGetting3,
+                NormalizedName = Constants.SubCategoryNameForGetting3.ToUpper(),
+                NameRu = Constants.SubCategoryNameRuForGetting3,
+                NormalizedNameRu = Constants.SubCategoryNameRuForGetting3.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now,
+                CategoryId = Constants.CategoryIdForGetting3,
+            },
+            new SubCategoryEntity()
+            {
+                Id = Constants.SubCategoryIdForGetting4,
+                Name = Constants.SubCategoryNameForGetting4,
+                NormalizedName = Constants.SubCategoryNameForGetting4.ToUpper(),
+                NameRu = Constants.SubCategoryNameRuForGetting4,
+                NormalizedNameRu = Constants.SubCategoryNameRuForGetting4.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now,
+                CategoryId = Constants.CategoryIdForGetting4,
+            },
+            new SubCategoryEntity()
+            {
+                Id = Constants.SubCategoryIdForGetting5,
+                Name = Constants.SubCategoryNameForGetting5,
+                NormalizedName = Constants.SubCategoryNameForGetting5.ToUpper(),
+                NameRu = Constants.SubCategoryNameRuForGetting5,
+                NormalizedNameRu = Constants.SubCategoryNameRuForGetting5.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now,
+                CategoryId = Constants.CategoryIdForGetting5,
+            },
+            new SubCategoryEntity()
+            {
+                Id = Constants.SubCategoryIdForGetting6,
+                Name = Constants.SubCategoryNameForGetting6,
+                NormalizedName = Constants.SubCategoryNameForGetting6.ToUpper(),
+                NameRu = Constants.SubCategoryNameRuForGetting6,
+                NormalizedNameRu = Constants.SubCategoryNameRuForGetting6.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now,
+                CategoryId = Constants.CategoryIdForGetting6,
+            },
+            new SubCategoryEntity()
+            {
+                Id = Constants.SubCategoryIdForGetting7,
+                Name = Constants.SubCategoryNameForGetting7,
+                NormalizedName = Constants.SubCategoryNameForGetting7.ToUpper(),
+                NameRu = Constants.SubCategoryNameRuForGetting7,
+                NormalizedNameRu = Constants.SubCategoryNameRuForGetting7.ToUpper(),
+                Description = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDate = DateTime.Now,
+                CategoryId = Constants.CategoryIdForGetting7,
+            },
+        };
+        context.SubCategories.AddRange(subCategories);
     }
 }

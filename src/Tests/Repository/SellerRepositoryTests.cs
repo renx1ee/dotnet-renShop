@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using RenStore.Application.Common.Exceptions;
 using RenStore.Domain.Entities;
 using RenStore.Persistence;
-using RenStore.Persistence.Repository;
 using RenStore.Persistence.Repository.Postgresql;
 using RenStore.Persistence.SortedEnums;
 using Tests.Common;
@@ -749,7 +748,6 @@ public class SellerRepositoryTests : IDisposable
                     CancellationToken.None));
     }
     #endregion
-    
     public void Dispose()
     {
         /*_context.Dispose();

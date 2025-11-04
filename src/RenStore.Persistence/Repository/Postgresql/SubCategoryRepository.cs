@@ -129,9 +129,9 @@ public class SubCategoryRepository
                         ""created_date"" AS CreatedDate,
                         ""category_id"" As CategoryId
                     FROM
-                        ""categories""
+                        ""sub_categories""
                     WHERE
-                        ""category_id"" = @Id;
+                        ""sub_category_id"" = @Id;
                 ";
         
             return await connection

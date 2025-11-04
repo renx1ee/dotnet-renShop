@@ -45,5 +45,69 @@ public static class Constants
     public static readonly string CountryOtherNameForGetting4 = "Italy";
     public static readonly string CountryOtherNameForGetting6 = "Ita";
     
+    // Categories
+    public static readonly int OverallCategoriesCount = 9;
     
+    public static readonly int CategoryIdForUpdate = 1;
+    public static readonly int CategoryIdForDelete = 2;
+    public static readonly int CategoryIdForGetting1 = 3;
+    public static readonly int CategoryIdForGetting2 = 4;
+    public static readonly int CategoryIdForGetting3 = 5;
+    public static readonly int CategoryIdForGetting4 = 6;
+    public static readonly int CategoryIdForGetting5 = 7;
+    public static readonly int CategoryIdForGetting6 = 8;
+    public static readonly int CategoryIdForGetting7 = 9;
+    
+    public static readonly string CategoryNameForUpdate =  "Clothes";
+    public static readonly string CategoryNameForDelete = "Shoes";
+    public static readonly string CategoryNameForGetting1 = "Electronics & Gadgets";
+    public static readonly string CategoryNameForGetting2 = "Kitchen";
+    public static readonly string CategoryNameForGetting3 = "Health";
+    public static readonly string CategoryNameForGetting4 = "Sport";
+    public static readonly string CategoryNameForGetting5 = "Books";
+    public static readonly string CategoryNameForGetting6 = "Games";
+    public static readonly string CategoryNameForGetting7 = "Gam";
+    
+    public static readonly string CategoryNameRuForUpdate =  "Одежда";
+    public static readonly string CategoryNameRuForDelete = "Обувь";
+    public static readonly string CategoryNameRuForGetting1 = "Электроника и гадджеты";
+    public static readonly string CategoryNameRuForGetting2 = "Кухня";
+    public static readonly string CategoryNameRuForGetting3 = "Здоровье";
+    public static readonly string CategoryNameRuForGetting4 = "Спорт";
+    public static readonly string CategoryNameRuForGetting5 = "Книги";
+    public static readonly string CategoryNameRuForGetting6 = "Игры";
+    public static readonly string CategoryNameRuForGetting7 = "Иг";
+    
+    // SubCategories
+    public static readonly int OverallSubCategoriesCount = 9;
+    
+    public static readonly int SubCategoryIdForUpdate = 1;
+    public static readonly int SubCategoryIdForDelete = 2;
+    public static readonly int SubCategoryIdForGetting1 = 3;
+    public static readonly int SubCategoryIdForGetting2 = 4;
+    public static readonly int SubCategoryIdForGetting3 = 5;
+    public static readonly int SubCategoryIdForGetting4 = 6;
+    public static readonly int SubCategoryIdForGetting5 = 7;
+    public static readonly int SubCategoryIdForGetting6 = 8;
+    public static readonly int SubCategoryIdForGetting7 = 9;
+    
+    public static readonly string SubCategoryNameForUpdate =  "SubCategoryA";
+    public static readonly string SubCategoryNameForDelete = "SubCategoryB";
+    public static readonly string SubCategoryNameForGetting1 = "SubCategoryC";
+    public static readonly string SubCategoryNameForGetting2 = "SubCategoryD";
+    public static readonly string SubCategoryNameForGetting3 = "SubCategoryE";
+    public static readonly string SubCategoryNameForGetting4 = "SubCategoryF";
+    public static readonly string SubCategoryNameForGetting5 = "SubCategoryG";
+    public static readonly string SubCategoryNameForGetting6 = "SubCategoryH";
+    public static readonly string SubCategoryNameForGetting7 = "SubCategoryI";
+    
+    public static readonly string SubCategoryNameRuForUpdate =  "СубКатегорияА";
+    public static readonly string SubCategoryNameRuForDelete = "СубКатегорияБ";
+    public static readonly string SubCategoryNameRuForGetting1 = "СубКатегорияВ";
+    public static readonly string SubCategoryNameRuForGetting2 = "СубКатегорияГ";
+    public static readonly string SubCategoryNameRuForGetting3 = "СубКатегорияД";
+    public static readonly string SubCategoryNameRuForGetting4 = "СубКатегорияЕ";
+    public static readonly string SubCategoryNameRuForGetting5 = "СубКатегорияЖ";
+    public static readonly string SubCategoryNameRuForGetting6 = "СубКатегорияЗ";
+    public static readonly string SubCategoryNameRuForGetting7 = "СубКатегорияИ";
 }

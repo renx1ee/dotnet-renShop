@@ -10,8 +10,8 @@ public class CategoryEntity
     public string Description { get; set; } = string.Empty;
     public bool IsActive { get; set; } = true;
     public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
-    public IEnumerable<ProductEntity> Products { get; set; } = [];
-    public IEnumerable<SubCategoryEntity> SubCategories { get; set; } = [];
+    /*public IEnumerable<ProductEntity> Products { get; set; } = [];*/
+    public IEnumerable<SubCategoryEntity> SubCategories { get; set; }
 }
 
 public class SubCategoryEntity
