@@ -190,7 +190,7 @@ public class SubCategoryRepository
                         ""normalized_sub_category_name"" 
                             LIKE @Name
                     OR 
-                        ""normalized_category_name_ru"" 
+                        ""normalized_sub_category_name_ru"" 
                             LIKE @Name
                     ORDER BY {columnName} {direction} 
                     LIMIT @Count

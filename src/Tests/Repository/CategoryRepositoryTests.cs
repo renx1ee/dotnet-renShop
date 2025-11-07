@@ -236,7 +236,7 @@ public class CategoryRepositoryTests
     }
 
     [Fact]
-    public async Task FindAllCountriesAsync_WithCountLimit_Success_Test()
+    public async Task FindAllCategoriesAsync_WithCountLimit_Success_Test()
     {
         _context = TestContextFactory.CreateReadyContext();
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
@@ -251,7 +251,7 @@ public class CategoryRepositoryTests
     }
     
     [Fact]
-    public async Task FindAllCountriesAsync_SortById_DescendingFalse_Success_Test()
+    public async Task FindAllCategoriesAsync_SortById_DescendingFalse_Success_Test()
     {
         _context = TestContextFactory.CreateReadyContext();
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
@@ -276,7 +276,7 @@ public class CategoryRepositoryTests
     }
     
     [Fact]
-    public async Task FindAllCountriesAsync_SortById_DescendingTrue_Success_Test()
+    public async Task FindAllCategoriesAsync_SortById_DescendingTrue_Success_Test()
     {
         _context = TestContextFactory.CreateReadyContext();
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
@@ -302,7 +302,7 @@ public class CategoryRepositoryTests
     }
     
     [Fact]
-    public async Task FindAllCountriesAsync_SortByName_DescendingFalse_Success_Test()
+    public async Task FindAllCategoriesAsync_SortByName_DescendingFalse_Success_Test()
     {
         _context = TestContextFactory.CreateReadyContext();
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
@@ -328,7 +328,7 @@ public class CategoryRepositoryTests
     }
     
     [Fact]
-    public async Task FindAllCountriesAsync_SortByName_DescendingTrue_Success_Test()
+    public async Task FindAllCategoriesAsync_SortByName_DescendingTrue_Success_Test()
     {
         _context = TestContextFactory.CreateReadyContext();
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
@@ -354,7 +354,7 @@ public class CategoryRepositoryTests
     }
     
     [Fact]
-    public async Task FindAllCountriesAsync_SortByNameRu_DescendingFalse_Success_Test()
+    public async Task FindAllCategoriesAsync_SortByNameRu_DescendingFalse_Success_Test()
     {
         _context = TestContextFactory.CreateReadyContext();
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
@@ -380,7 +380,7 @@ public class CategoryRepositoryTests
     }
     
     [Fact]
-    public async Task FindAllCountriesAsync_SortByNameRu_DescendingTrue_Success_Test()
+    public async Task FindAllCategoriesAsync_SortByNameRu_DescendingTrue_Success_Test()
     {
         _context = TestContextFactory.CreateReadyContext();
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
@@ -478,11 +478,11 @@ public class CategoryRepositoryTests
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
         // Arrange
         // Act
-        var countries = await _categoryRepository
+        var categories = await _categoryRepository
             .FindByNameAsync(
                 Constants.CategoryNameForGetting7, 
                 CancellationToken.None);
-        var result = countries.ToList();
+        var result = categories.ToList();
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Count());
@@ -498,12 +498,12 @@ public class CategoryRepositoryTests
         // Arrange
         string wrongName = Guid.NewGuid().ToString();
         // Act
-        var countries = await _categoryRepository
+        var categories = await _categoryRepository
             .FindByNameAsync(
                 name: wrongName, 
                 CancellationToken.None);
         // Assert
-        var result = countries.ToList();
+        var result = categories.ToList();
         Assert.Empty(result);
     }
 
@@ -514,11 +514,11 @@ public class CategoryRepositoryTests
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
         // Arrange
         // Act
-        var countries = await _categoryRepository
+        var categories = await _categoryRepository
             .GetByNameAsync(
                 Constants.CategoryNameForGetting7, 
                 CancellationToken.None);
-        var result = countries.ToList();
+        var result = categories.ToList();
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Count());
@@ -549,12 +549,12 @@ public class CategoryRepositoryTests
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
         // Arrange
         // Act
-        var countries = await _categoryRepository
+        var categories = await _categoryRepository
             .FindByNameAsync(
                 pageCount: 2,
                 name: Constants.CategoryNameForGetting7, 
                 cancellationToken: CancellationToken.None);
-        var result = countries.ToList();
+        var result = categories.ToList();
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Count());
@@ -569,12 +569,12 @@ public class CategoryRepositoryTests
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
         // Arrange
         // Act
-        var countries = await _categoryRepository.FindByNameAsync(
+        var categories = await _categoryRepository.FindByNameAsync(
             name: Constants.CategoryNameForGetting7,
             cancellationToken: CancellationToken.None, 
             descending: false,
             sortBy: CategorySortBy.Name);
-        var result = countries.ToList();
+        var result = categories.ToList();
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Count());
@@ -589,12 +589,12 @@ public class CategoryRepositoryTests
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
         // Arrange
         // Act
-        var countries = await _categoryRepository.FindByNameAsync(
+        var categories = await _categoryRepository.FindByNameAsync(
             name: Constants.CategoryNameForGetting7,
             cancellationToken: CancellationToken.None, 
             descending: true,
             sortBy: CategorySortBy.Name);
-        var result = countries.ToList();
+        var result = categories.ToList();
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Count());
@@ -609,12 +609,12 @@ public class CategoryRepositoryTests
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
         // Arrange
         // Act
-        var countries = await _categoryRepository.FindByNameAsync(
+        var categories = await _categoryRepository.FindByNameAsync(
             name: Constants.CategoryNameForGetting7,
             cancellationToken: CancellationToken.None, 
             descending: false,
             sortBy: CategorySortBy.Id);
-        var result = countries.ToList();
+        var result = categories.ToList();
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Count());
@@ -629,12 +629,12 @@ public class CategoryRepositoryTests
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
         // Arrange
         // Act
-        var countries = await _categoryRepository.FindByNameAsync(
+        var categories = await _categoryRepository.FindByNameAsync(
             name: Constants.CategoryNameForGetting7,
             cancellationToken: CancellationToken.None, 
             descending: true,
             sortBy: CategorySortBy.Id);
-        var result = countries.ToList();
+        var result = categories.ToList();
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Count());
@@ -649,11 +649,11 @@ public class CategoryRepositoryTests
         _categoryRepository = new CategoryRepository(_context, TestContextFactory.ConnectionString);
         // Arrange
         // Act
-        var countries = await _categoryRepository
+        var categories = await _categoryRepository
             .FindByNameAsync(
                 Constants.CategoryNameRuForGetting7, 
                 CancellationToken.None);
-        var result = countries.ToList();
+        var result = categories.ToList();
         // Assert
         Assert.NotNull(result);
         Assert.Equal(3, result.Count());

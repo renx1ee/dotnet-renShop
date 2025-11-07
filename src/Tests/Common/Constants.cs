@@ -45,6 +45,39 @@ public static class Constants
     public static readonly string CountryOtherNameForGetting4 = "Italy";
     public static readonly string CountryOtherNameForGetting6 = "Ita";
     
+    // Cities
+    public static readonly int OverallCitiesCount = 8;
+    
+    public static readonly int CityIdForUpdate = 1;
+    public static readonly int CityIdForDelete = 2;
+    public static readonly int CityIdForGetting1 = 3;
+    public static readonly int CityIdForGetting2 = 4;
+    public static readonly int CityIdForGetting3 = 5;
+    public static readonly int CityIdForGetting4 = 6;
+    public static readonly int CityIdForGetting5 = 7;
+    public static readonly int CityIdForGetting6 = 8;
+    
+    public static readonly string CityNameForDelete = "Brussels";
+    public static readonly string CityNameForUpdate = "Sydney";           // Australia
+    public static readonly string CityNameForGetting1 = "Toronto";        // Canada
+    public static readonly string CityNameForGetting2 = "Copenhagen";     // Denmark
+    public static readonly string CityNameForGetting3 = "Berlin";         // Germany
+    public static readonly string CityNameForGetting4 = "MilanA";           // Italy
+    public static readonly string CityNameForGetting5 = "MilanB";         // ItalyA
+    public static readonly string CityNameForGetting6 = "MilanC";         // ItalyB
+    
+    public static readonly string CityNameRuForUpdate =  "Австралия";
+    public static readonly string CityNameRuForDelete = "Бельгия";
+    public static readonly string CityNameRuForGetting1 = "Канада";
+    public static readonly string CityNameRuForGetting2 = "Денмарк";
+    public static readonly string CityNameRuForGetting3 = "Германия";
+    public static readonly string CityNameRuForGetting4 = "Италия";
+    public static readonly string CityNameRuForGetting5 = "ИталияА";
+    public static readonly string CityNameRuForGetting6 = "ИталияБ";
+    
+    public static readonly string CityOtherNameForGetting4 = "Italy";
+    public static readonly string CityOtherNameForGetting6 = "Ita";
+    
     // Categories
     public static readonly int OverallCategoriesCount = 9;
     

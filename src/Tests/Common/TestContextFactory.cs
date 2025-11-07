@@ -143,6 +143,7 @@ public class TestContextFactory
         AddCountriesTestData(context);
         AddCategoriesTestData(context);
         AddSubCategoriesTestData(context);
+        AddCitiesTestData(context);
         context.SaveChanges();
         
         context.ChangeTracker.Clear();
@@ -661,5 +662,88 @@ public class TestContextFactory
             },
         };
         context.SubCategories.AddRange(subCategories);
+    }
+
+    private static void AddCitiesTestData(ApplicationDbContext context)
+    {
+        var cities = new[]
+        {
+            // For Update
+            new CityEntity()
+            {
+                Id = Constants.CityIdForUpdate,
+                Name = Constants.CityNameForUpdate,
+                NormalizedName = Constants.CityNameForUpdate.ToUpper(),
+                NameRu = Constants.CityNameRuForUpdate,
+                NormalizedNameRu = Constants.CityNameRuForUpdate.ToUpper(),
+                CountryId = Constants.CountryIdForUpdate
+            },
+            // For Update
+            new CityEntity()
+            {
+                Id = Constants.CityIdForDelete,
+                Name = Constants.CityNameForDelete,
+                NormalizedName = Constants.CityNameForDelete.ToUpper(),
+                NameRu = Constants.CityNameRuForDelete,
+                NormalizedNameRu = Constants.CityNameRuForDelete.ToUpper(),
+                CountryId = Constants.CountryIdForDelete
+            },
+            new CityEntity()
+            {
+                Id = Constants.CityIdForGetting1,
+                Name = Constants.CityNameForGetting1,
+                NormalizedName = Constants.CityNameForGetting1.ToUpper(),
+                NameRu = Constants.CityNameRuForGetting1,
+                NormalizedNameRu = Constants.CityNameRuForGetting1.ToUpper(),
+                CountryId = Constants.CountryIdForGetting1
+            },
+            new CityEntity()
+            {
+                Id = Constants.CityIdForGetting2,
+                Name = Constants.CityNameForGetting2,
+                NormalizedName = Constants.CityNameForGetting2.ToUpper(),
+                NameRu = Constants.CityNameRuForGetting2,
+                NormalizedNameRu = Constants.CityNameRuForGetting2.ToUpper(),
+                CountryId = Constants.CountryIdForGetting2
+            },
+            new CityEntity()
+            {
+                Id = Constants.CityIdForGetting3,
+                Name = Constants.CityNameForGetting3,
+                NormalizedName = Constants.CityNameForGetting3.ToUpper(),
+                NameRu = Constants.CityNameRuForGetting3,
+                NormalizedNameRu = Constants.CityNameRuForGetting3.ToUpper(),
+                CountryId = Constants.CountryIdForGetting3
+            },
+            new CityEntity()
+            {
+                Id = Constants.CityIdForGetting4,
+                Name = Constants.CityNameForGetting4,
+                NormalizedName = Constants.CityNameForGetting4.ToUpper(),
+                NameRu = Constants.CityNameRuForGetting4,
+                NormalizedNameRu = Constants.CityNameRuForGetting4.ToUpper(),
+                CountryId = Constants.CountryIdForGetting4
+            },
+            new CityEntity()
+            {
+                Id = Constants.CityIdForGetting5,
+                Name = Constants.CityNameForGetting5,
+                NormalizedName = Constants.CityNameForGetting5.ToUpper(),
+                NameRu = Constants.CityNameRuForGetting5,
+                NormalizedNameRu = Constants.CityNameRuForGetting5.ToUpper(),
+                CountryId = Constants.CountryIdForGetting5
+            },
+            new CityEntity()
+            {
+                Id = Constants.CityIdForGetting6,
+                Name = Constants.CityNameForGetting6,
+                NormalizedName = Constants.CityNameForGetting6.ToUpper(),
+                NameRu = Constants.CityNameRuForGetting6,
+                NormalizedNameRu = Constants.CityNameRuForGetting6.ToUpper(),
+                CountryId = Constants.CountryIdForGetting6
+            }
+        };
+        
+        context.Cities.AddRange(cities);
     }
 }

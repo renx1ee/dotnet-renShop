@@ -13,6 +13,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ColorConfiguration());
         modelBuilder.ApplyConfiguration(new SellerConfiguration());
         modelBuilder.ApplyConfiguration(new CountryConfiguration());
+        modelBuilder.ApplyConfiguration(new CityConfiguration());
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         modelBuilder.ApplyConfiguration(new SubCategoryConfiguration());
 
