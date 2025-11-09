@@ -4,13 +4,13 @@ using Microsoft.Extensions.Configuration;
 using Npgsql;
 using RenStore.Application.Common.Exceptions;
 using RenStore.Domain.Entities;
-using RenStore.Persistence.SortedEnums;
+using RenStore.Domain.Enums.Sorting;
+using RenStore.Domain.Repository;
 
 namespace RenStore.Persistence.Repository.Postgresql;
 
-public class SellerRepository 
+public class SellerRepository : ISellerRepository
 {
-    // TODO: OFFSET
     private readonly ApplicationDbContext _context;
     private readonly string _connectionString;
     private readonly Dictionary<SellerSortBy, string> _sortColumnMapping = 
@@ -59,19 +59,11 @@ public class SellerRepository
         await this._context.SaveChangesAsync(cancellationToken);
     }
     
-    /// <summary>
-    /// Retrieves sellers with optional sorting, filtering by block status, and limiting the number of results.
-    /// </summary>
-    /// <param name="cancellationToken">Token to cancel the operation.</param>
-    /// <param name="sortedBy">Field to sort by (default: SellerId).</param>
-    /// <param name="count">Maximum number of records to return (default: 25, max: 1000).</param>
-    /// <param name="descending">Sort direction (true for descending, false for ascending).</param>
-    /// <param name="isBlocked">Filter by block status (true for blocked, false for not blocked, null for all).</param>
-    /// <returns>A collection of sellers.</returns>
     public async Task<IEnumerable<SellerEntity>> FindAllAsync(
         CancellationToken cancellationToken,
-        SellerSortBy sortedBy = SellerSortBy.Id,
-        uint count = 25, 
+        SellerSortBy sortBy = SellerSortBy.Id,
+        uint pageCount = 25, 
+        uint page = 1,
         bool descending = false,
         bool? isBlocked = null)
     {
@@ -80,8 +72,9 @@ public class SellerRepository
             await using var connection = new NpgsqlConnection(_connectionString);
             await connection.OpenAsync(cancellationToken);
 
-            count = Math.Min(count, 1000);
-            var columnName = _sortColumnMapping.GetValueOrDefault(sortedBy, "seller_id");
+            pageCount = Math.Min(pageCount, 1000);
+            uint offset = (page - 1) * pageCount;
+            var columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "seller_id");
             string direction = descending ? "DESC" : "ASC";
         
             var sql = new StringBuilder(
@@ -99,7 +92,8 @@ public class SellerRepository
             ");
             
             var parameters = new DynamicParameters();
-            parameters.Add("Count", (int)count);
+            parameters.Add("Count", (int)pageCount);
+            parameters.Add("Offset", (int)offset);
 
             if (isBlocked.HasValue)
             {
@@ -107,7 +101,7 @@ public class SellerRepository
                 parameters.Add("IsBlocked", isBlocked.Value);
             }
         
-            sql.Append($" ORDER BY \"{columnName}\" {direction} LIMIT @Count;");
+            sql.Append($" ORDER BY \"{columnName}\" {direction} LIMIT @Count OFFSET @Offset;");
         
             return await connection
                 .QueryAsync<SellerEntity>(
@@ -162,8 +156,9 @@ public class SellerRepository
     public async Task<IEnumerable<SellerEntity>> FindByNameAsync(
         string name, 
         CancellationToken cancellationToken,
-        SellerSortBy sortedBy = SellerSortBy.Id,
-        uint count = 25, 
+        SellerSortBy sortBy = SellerSortBy.Id,
+        uint pageCount = 25, 
+        uint page = 1,
         bool descending = false,
         bool? isBlocked = null)
     {
@@ -175,8 +170,9 @@ public class SellerRepository
             await using var connection = new NpgsqlConnection(_connectionString);
             await connection.OpenAsync(cancellationToken);
 
-            count = Math.Min(count, 1000);
-            var columnName = _sortColumnMapping.GetValueOrDefault(sortedBy, "seller_id");
+            pageCount = Math.Min(pageCount, 1000);
+            uint offset = (page - 1) * pageCount;
+            var columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "seller_id");
             var direction = descending ? "DESC" : "ASC";
 
             var sql = new StringBuilder(
@@ -197,7 +193,8 @@ public class SellerRepository
         
             var parameters = new DynamicParameters();
             parameters.Add("Name", $"%{name.ToUpper()}%");
-            parameters.Add("Count", (int)count);
+            parameters.Add("Count", (int)pageCount);
+            parameters.Add("Offset", (int)offset);
 
             if (isBlocked.HasValue)
             {
@@ -205,7 +202,7 @@ public class SellerRepository
                 sql.Append(@" AND ""is_blocked"" = @IsBlocked");
             }
             
-            sql.Append($" ORDER BY {columnName} {direction} LIMIT @Count;");
+            sql.Append($" ORDER BY {columnName} {direction} LIMIT @Count OFFSET @Offset;");
         
             return await connection
                .QueryAsync<SellerEntity>(
@@ -219,9 +216,15 @@ public class SellerRepository
         }
     }
     
-    public async Task<IEnumerable<SellerEntity>> GetByNameAsync(string name, CancellationToken cancellationToken)
+    public async Task<IEnumerable<SellerEntity>> GetByNameAsync(string name, 
+        CancellationToken cancellationToken,
+        SellerSortBy sortBy = SellerSortBy.Id,
+        uint pageCount = 25, 
+        uint page = 1,
+        bool descending = false,
+        bool? isBlocked = null)
     {
-        return await this.FindByNameAsync(name, cancellationToken)
+        return await this.FindByNameAsync(name, cancellationToken, sortBy, pageCount, page, descending, isBlocked)
             ?? throw new NotFoundException(typeof(SellerEntity), name);
     }
     
@@ -266,6 +269,7 @@ public class SellerRepository
         return await this.FindByUserIdAsync(userId, cancellationToken)
             ?? throw new NotFoundException(typeof(SellerEntity), userId);
     }   
+    /*
     // TODO:
     public async Task<SellerEntity?> FindByCreatedDateRangeAsync(CancellationToken cancellationToken)
     {
@@ -276,4 +280,5 @@ public class SellerRepository
     {
         return null;
     }
+    */
 }

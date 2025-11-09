@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using RenStore.Application.Common.Exceptions;
 using RenStore.Domain.Entities;
+using RenStore.Domain.Enums.Sorting;
 using RenStore.Persistence;
 using RenStore.Persistence.Repository.Postgresql;
-using RenStore.Persistence.SortedEnums;
 using Tests.Common;
 
 namespace Tests.Repository;
@@ -185,7 +185,7 @@ public class SellerRepositoryTests : IDisposable
         // Act
         var sellers = await _sellerRepository
             .FindAllAsync(
-                count: 2,
+                pageCount: 2,
                 cancellationToken: CancellationToken.None);
         // Assert
         Assert.NotNull(sellers);
@@ -201,7 +201,7 @@ public class SellerRepositoryTests : IDisposable
         // Act
         var sellers = await _sellerRepository
             .FindAllAsync(
-                sortedBy: SellerSortBy.Name,
+                sortBy: SellerSortBy.Name,
                 descending: false,
                 cancellationToken: CancellationToken.None);
         
@@ -227,7 +227,7 @@ public class SellerRepositoryTests : IDisposable
         // Act
         var sellers = await _sellerRepository
             .FindAllAsync(
-                sortedBy: SellerSortBy.Name,
+                sortBy: SellerSortBy.Name,
                 descending: true,
                 cancellationToken: CancellationToken.None);
         
@@ -252,7 +252,7 @@ public class SellerRepositoryTests : IDisposable
         // Act
         var sellers = await _sellerRepository
             .FindAllAsync(
-                sortedBy: SellerSortBy.Id,
+                sortBy: SellerSortBy.Id,
                 descending: false,
                 cancellationToken: CancellationToken.None);
         
@@ -277,7 +277,7 @@ public class SellerRepositoryTests : IDisposable
         // Act
         var sellers = await _sellerRepository
             .FindAllAsync(
-                sortedBy: SellerSortBy.Id,
+                sortBy: SellerSortBy.Id,
                 descending: true,
                 cancellationToken: CancellationToken.None);
         
@@ -511,7 +511,7 @@ public class SellerRepositoryTests : IDisposable
         // Act
         var sellers = await _sellerRepository
             .FindByNameAsync(TestContextFactory.SellerNameForGetting4,
-                count: 2,
+                pageCount: 2,
                 cancellationToken: CancellationToken.None);
         // Assert
         Assert.NotNull(sellers);
@@ -527,7 +527,7 @@ public class SellerRepositoryTests : IDisposable
         // Act
         var sellers = await _sellerRepository
             .FindByNameAsync(TestContextFactory.SellerNameForGetting4,
-                sortedBy: SellerSortBy.Name,
+                sortBy: SellerSortBy.Name,
                 descending: false,
                 cancellationToken: CancellationToken.None);
         
@@ -550,7 +550,7 @@ public class SellerRepositoryTests : IDisposable
         // Act
         var sellers = await _sellerRepository
             .FindByNameAsync(TestContextFactory.SellerNameForGetting4,
-                sortedBy: SellerSortBy.Name,
+                sortBy: SellerSortBy.Name,
                 descending: true,
                 cancellationToken: CancellationToken.None);
         
@@ -571,7 +571,7 @@ public class SellerRepositoryTests : IDisposable
         // Act
         var sellers = await _sellerRepository
             .FindByNameAsync(TestContextFactory.SellerNameForGetting4,
-                sortedBy: SellerSortBy.Id,
+                sortBy: SellerSortBy.Id,
                 descending: false,
                 cancellationToken: CancellationToken.None);
         
@@ -592,7 +592,7 @@ public class SellerRepositoryTests : IDisposable
         // Act
         var sellers = await _sellerRepository
             .FindByNameAsync(TestContextFactory.SellerNameForGetting4,
-                sortedBy: SellerSortBy.Id,
+                sortBy: SellerSortBy.Id,
                 descending: true,
                 cancellationToken: CancellationToken.None);
         
@@ -615,7 +615,7 @@ public class SellerRepositoryTests : IDisposable
             .FindByNameAsync(
                 name: TestContextFactory.SellerNameForGetting4, 
                 cancellationToken: CancellationToken.None,
-                sortedBy: SellerSortBy.CreatedDate,
+                sortBy: SellerSortBy.CreatedDate,
                 descending: false);
         
         var result = sellers.ToList();
@@ -635,7 +635,7 @@ public class SellerRepositoryTests : IDisposable
         var sellers = await _sellerRepository
             .FindByNameAsync(name: TestContextFactory.SellerNameForGetting4, 
                 cancellationToken: CancellationToken.None,
-                sortedBy: SellerSortBy.CreatedDate,
+                sortBy: SellerSortBy.CreatedDate,
                 descending: true);
         
         var result = sellers.ToList();

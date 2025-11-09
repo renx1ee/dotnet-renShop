@@ -29,4 +29,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<CategoryEntity> Categories { get; set; }
     public DbSet<SubCategoryEntity> SubCategories { get; set; }
     public DbSet<CityEntity> Cities { get; set; }
+    public DbSet<ProductEntity> Products { get; set; }
+    public DbSet<ProductVariantEntity> ProductVariant { get; set; }
+    public DbSet<ProductDetailsEntity> ProductDetails { get; set; }
+    public DbSet<ProductClothEntity> ProductCloth { get; set; }
+    public DbSet<ProductClothSize> ProductClothSizes { get; set; }
+    public DbSet<ProductAttribute> ProductAttributes { get; set; }
 }

@@ -4,13 +4,13 @@ using Microsoft.Extensions.Configuration;
 using Npgsql;
 using RenStore.Application.Common.Exceptions;
 using RenStore.Domain.Entities;
-using RenStore.Persistence.SortedEnums;
+using RenStore.Domain.Enums.Sorting;
+using RenStore.Domain.Repository;
 
 namespace RenStore.Persistence.Repository.Postgresql;
 
-public class ColorRepository /* : IColorRepository*/
+public class ColorRepository : IColorRepository
 {
-    // TODO: OFFSET
     private readonly ApplicationDbContext _context;
     private readonly string _connectionString;
     private readonly Dictionary<ColorSortBy, string> _sortColumnMapping =
@@ -61,7 +61,8 @@ public class ColorRepository /* : IColorRepository*/
     public async Task<IEnumerable<ColorEntity>> FindAllAsync(
         CancellationToken cancellationToken,
         ColorSortBy sortBy = ColorSortBy.Id,
-        uint count = 25,
+        uint pageCount = 25,
+        uint page = 1,
         bool descending = false)
     {
         try
@@ -69,7 +70,8 @@ public class ColorRepository /* : IColorRepository*/
             await using var connection = new NpgsqlConnection(this._connectionString);
             await connection.OpenAsync(cancellationToken);
 
-            count = Math.Min(count, 1000);
+            pageCount = Math.Min(pageCount, 1000);
+            uint offset = (page - 1) * pageCount;
             var direction = descending ? "DESC" : "ASC";
             string columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "color_id");
         
@@ -85,14 +87,16 @@ public class ColorRepository /* : IColorRepository*/
                     FROM
                         ""colors"" 
                     ORDER BY {columnName} {direction} 
-                    LIMIT @Count;
+                    LIMIT @Count
+                    OFFSET @Offset;
                 ";
         
             return await connection
                 .QueryAsync<ColorEntity>(
                     sql, new
                     {
-                        Count = (int)count
+                        Count = (int)pageCount,
+                        Offset = (int)offset
                     });
         }
         catch (PostgresException e)
@@ -146,7 +150,8 @@ public class ColorRepository /* : IColorRepository*/
         string name, 
         CancellationToken cancellationToken,
         ColorSortBy sortBy = ColorSortBy.Id,
-        uint count = 25,
+        uint pageCount = 25,
+        uint page = 1,
         bool descending = false)
     {
         if(string.IsNullOrWhiteSpace(name))
@@ -157,7 +162,8 @@ public class ColorRepository /* : IColorRepository*/
             await using var connection = new NpgsqlConnection(_connectionString);
             await connection.OpenAsync(cancellationToken);
 
-            count = Math.Min(count, 1000);
+            pageCount = Math.Min(pageCount, 1000);
+            uint offset = (page - 1) * pageCount;
             var direction = descending ? "DESC" : "ASC";
             string columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "color_id");
         
@@ -176,7 +182,8 @@ public class ColorRepository /* : IColorRepository*/
                     ""normalized_color_name"" 
                         LIKE @Name
                 ORDER BY {columnName} {direction} 
-                LIMIT @Count;
+                LIMIT @Count
+                OFFSET @Offset;
             ";
         
             return await connection
@@ -184,7 +191,8 @@ public class ColorRepository /* : IColorRepository*/
                     sql, new
                     {
                         Name = $"%{name.ToUpper()}%",
-                        Count = (int)count
+                        Count = (int)pageCount,
+                        Offset = (int)offset
                     });
         }
         catch (PostgresException e)
@@ -197,10 +205,11 @@ public class ColorRepository /* : IColorRepository*/
         string name, 
         CancellationToken cancellationToken,
         ColorSortBy sortBy = ColorSortBy.Id,
-        uint count = 25,
+        uint pageCount = 25,
+        uint page = 1,
         bool descending = false)
     {
-        var result = await this.FindByNameAsync(name, cancellationToken, sortBy, count, descending);
+        var result = await this.FindByNameAsync(name, cancellationToken, sortBy, pageCount, page, descending);
         
         if (result is null || !result.Any())
             throw new NotFoundException(typeof(ColorEntity), name);

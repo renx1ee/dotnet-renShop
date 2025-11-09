@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using RenStore.Application.Common.Exceptions;
 using RenStore.Domain.Entities;
+using RenStore.Domain.Enums.Sorting;
 using RenStore.Persistence;
 using RenStore.Persistence.Repository.Postgresql;
-using RenStore.Persistence.SortedEnums;
 using Tests.Common;
 
 namespace Tests.Repository;
@@ -733,4 +733,6 @@ public class SubCategoryRepositoryTests
         Assert.Equal(Constants.SubCategoryIdForGetting7, result[8].Id);
     }
     #endregion
+    #region By Category ID
+    #endregion 
 }

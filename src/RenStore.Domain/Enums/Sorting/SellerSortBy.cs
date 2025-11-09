@@ -1,4 +1,4 @@
-namespace RenStore.Persistence.SortedEnums;
+namespace RenStore.Domain.Enums.Sorting;
 
 public enum SellerSortBy
 {

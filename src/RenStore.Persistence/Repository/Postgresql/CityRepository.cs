@@ -3,13 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Npgsql;
 using RenStore.Application.Common.Exceptions;
 using RenStore.Domain.Entities;
-using RenStore.Persistence.SortedEnums;
+using RenStore.Domain.Enums.Sorting;
+using RenStore.Domain.Repository;
 
 namespace RenStore.Persistence.Repository.Postgresql;
 
-public class CityRepository
+public class CityRepository : ICityRepository
 {
-    // TODO: OFFSET
     private readonly ApplicationDbContext _context;
     private readonly string _connectionString;
 
@@ -157,7 +157,7 @@ public class CityRepository
     public async Task<IEnumerable<CityEntity?>> FindByNameAsync(
         string name,
         CancellationToken cancellationToken,
-        CitySortBy sortBy = CitySortBy.Name,
+        CitySortBy sortBy = CitySortBy.Id,
         uint pageCount = 25,
         uint page = 1,
         bool descending = false)
@@ -210,7 +210,7 @@ public class CityRepository
     public async Task<IEnumerable<CityEntity?>> GetByNameAsync(
         string name,
         CancellationToken cancellationToken,
-        CitySortBy sortBy = CitySortBy.Name,
+        CitySortBy sortBy = CitySortBy.Id,
         uint pageCount = 25,
         uint page = 1,
         bool descending = false)

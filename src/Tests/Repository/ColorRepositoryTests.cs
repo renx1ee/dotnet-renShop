@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using RenStore.Application.Common.Exceptions;
 using RenStore.Domain.Entities;
+using RenStore.Domain.Enums.Sorting;
 using RenStore.Persistence;
 using RenStore.Persistence.Repository.Postgresql;
-using RenStore.Persistence.SortedEnums;
 using Tests.Common;
 
 namespace Tests.Repository;
@@ -193,7 +193,7 @@ public class ColorRepositoryTests : IDisposable
         // Act
         var result = await _colorRepository
             .FindAllAsync(
-                count: 5, 
+                pageCount: 5, 
                 cancellationToken: CancellationToken.None);
         // Assert
         Assert.NotNull(result);
@@ -394,7 +394,7 @@ public class ColorRepositoryTests : IDisposable
         // Act
         var colors = await _colorRepository
             .FindByNameAsync(
-                count: 2,
+                pageCount: 2,
                 name: TestContextFactory.ColorNameForGetting5, 
                 cancellationToken: CancellationToken.None);
         

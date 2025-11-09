@@ -4,11 +4,12 @@ using Microsoft.Extensions.Configuration;
 using Npgsql;
 using RenStore.Application.Common.Exceptions;
 using RenStore.Domain.Entities;
-using RenStore.Persistence.SortedEnums;
+using RenStore.Domain.Enums.Sorting;
+using RenStore.Domain.Repository;
 
 namespace RenStore.Persistence.Repository.Postgresql;
 
-public class CategoryRepository
+public class CategoryRepository : ICategoryRepository
 {
     private readonly ApplicationDbContext _context;
     private readonly string _connectionString;
