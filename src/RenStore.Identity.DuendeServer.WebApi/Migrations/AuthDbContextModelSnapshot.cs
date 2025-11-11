@@ -469,7 +469,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
                     b.HasIndex("ProductId")
                         .IsUnique();
 
-                    b.ToTable("ProductDetailsEntity");
+                    b.ToTable("ProductDetailEntity");
                 });
 
             modelBuilder.Entity("RenStore.Domain.Entities.Products.ClothesProduct", b =>

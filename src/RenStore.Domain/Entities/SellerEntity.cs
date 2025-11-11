@@ -10,8 +10,8 @@ public class SellerEntity
     public bool IsBlocked { get; set; } = false;
     public string ApplicationUserId { get; set; } = string.Empty;
     public ApplicationUser? ApplicationUser { get; set; }
-    /*public IList<Product> Products { get; set; } = [];
-    public IList<ProductAnswer> ProductAnswers { get; set; } = [];
+    public IList<ProductEntity> Products { get; set; }
+    /*public IList<ProductAnswer> ProductAnswers { get; set; } = [];
     public IList<SellerImage> SellerImages { get; set; } = [];
     public long SellerFooterImageId { get; set; }
     public SellerFooterImage? SellerFooterImage { get; set; }*/

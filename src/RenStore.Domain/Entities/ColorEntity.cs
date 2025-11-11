@@ -8,5 +8,5 @@ public class ColorEntity
     public string NameRu { get; set; } = string.Empty;
     public string ColorCode { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    /*public IList<ProductVariantEntity> ProductVariants { get; set; } = [];*/
+    public IList<ProductVariantEntity> ProductVariants { get; set; }
 }

@@ -15,8 +15,15 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new CountryConfiguration());
         modelBuilder.ApplyConfiguration(new CityConfiguration());
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-        modelBuilder.ApplyConfiguration(new SubCategoryConfiguration());
-
+        
+        modelBuilder.ApplyConfiguration(new ProductConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductVariantConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductDetailConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductClothConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductClothSizeConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductAttributeConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductPriceHistoryConfiguration());
+        
         base.OnModelCreating(modelBuilder);
     }
     
@@ -30,9 +37,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<SubCategoryEntity> SubCategories { get; set; }
     public DbSet<CityEntity> Cities { get; set; }
     public DbSet<ProductEntity> Products { get; set; }
-    public DbSet<ProductVariantEntity> ProductVariant { get; set; }
-    public DbSet<ProductDetailsEntity> ProductDetails { get; set; }
+    public DbSet<ProductVariantEntity> ProductVariants { get; set; }
+    public DbSet<ProductDetailEntity> ProductDetails { get; set; }
     public DbSet<ProductClothEntity> ProductCloth { get; set; }
-    public DbSet<ProductClothSize> ProductClothSizes { get; set; }
-    public DbSet<ProductAttribute> ProductAttributes { get; set; }
+    public DbSet<ProductClothSizeEntity> ProductClothSizes { get; set; }
+    public DbSet<ProductAttributeEntity> ProductAttributes { get; set; }
 }

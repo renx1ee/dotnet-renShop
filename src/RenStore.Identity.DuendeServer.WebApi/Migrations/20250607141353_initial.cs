@@ -293,7 +293,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductDetailsEntity",
+                name: "ProductDetailEntity",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -459,7 +459,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductDetails_ProductId",
-                table: "ProductDetailsEntity",
+                table: "ProductDetailEntity",
                 column: "ProductId",
                 unique: true);
 
@@ -525,7 +525,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "ProductDetailsEntity");
+                name: "ProductDetailEntity");
 
             migrationBuilder.DropTable(
                 name: "Reviews");
