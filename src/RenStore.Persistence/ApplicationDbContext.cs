@@ -42,4 +42,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<ProductClothEntity> ProductCloth { get; set; }
     public DbSet<ProductClothSizeEntity> ProductClothSizes { get; set; }
     public DbSet<ProductAttributeEntity> ProductAttributes { get; set; }
+    public DbSet<ProductPriceHistoryEntity> PriceHistories { get; set; }
 }

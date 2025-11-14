@@ -43,12 +43,6 @@ public class ProductDetailConfiguration : IEntityTypeConfiguration<ProductDetail
             .IsRequired(false);
         
         builder
-            .Property(x => x.DecorativeElements)
-            .HasColumnName("decorative_elements")
-            .HasMaxLength(500)
-            .IsRequired();
-        
-        builder
             .Property(x => x.Composition)
             .HasColumnName("composition")
             .HasMaxLength(250)
