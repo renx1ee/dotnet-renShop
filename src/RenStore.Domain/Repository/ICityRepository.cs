@@ -4,7 +4,7 @@ using RenStore.Domain.Enums.Sorting;
 namespace RenStore.Domain.Repository;
 /// <summary>
 /// Repository for working with <see cref="CityEntity"/>.
-/// Provide basic CRUD operations and data retrieval methods with sorting and paginations.
+/// Provide basic CRUD operations and data retrieval methods with sorting and pagination.
 /// </summary>
 public interface ICityRepository
 {
@@ -59,7 +59,7 @@ public interface ICityRepository
     /// <param name="id">The city identifier.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns>The city entity.</returns>
-    /// <exception cref="NotFoundException">Thrown when city is not found.</exception>
+    /// <exception cref="NotFoundException">Thrown when city is not found.</exception>  
     Task<CityEntity?> GetByIdAsync(int id, CancellationToken cancellationToken);
     /// <summary>
     /// Searching categories by name with sorting and pagination.
@@ -97,4 +97,3 @@ public interface ICityRepository
         uint page = 1,
         bool descending = false);
 }
-

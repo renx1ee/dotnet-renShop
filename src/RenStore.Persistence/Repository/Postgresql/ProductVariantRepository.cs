@@ -59,11 +59,11 @@ public class ProductVariantRepository : IProductVariantRepository
     }
     
     public async Task DeleteAsync(
-        ProductVariantEntity productVariant,
+        Guid id,
         CancellationToken cancellationToken)
     {
-        var existingProduct = await this.GetByIdAsync(productVariant.Id, cancellationToken);
-        this._context.ProductVariants.Remove(productVariant);
+        var existingProduct = await this.GetByIdAsync(id, cancellationToken);
+        this._context.ProductVariants.Remove(existingProduct);
         await _context.SaveChangesAsync(cancellationToken);
     }
 

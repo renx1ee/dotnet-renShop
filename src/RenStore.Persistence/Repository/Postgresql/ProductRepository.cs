@@ -56,11 +56,11 @@ public class ProductRepository : IProductRepository
     }
     
     public async Task DeleteAsync(
-        ProductEntity product,
+        Guid id,
         CancellationToken cancellationToken)
     {
-        var existingProduct = await this.GetByIdAsync(product.Id, cancellationToken);
-        this._context.Products.Remove(product);
+        var existingProduct = await this.GetByIdAsync(id, cancellationToken);
+        this._context.Products.Remove(existingProduct);
         await _context.SaveChangesAsync(cancellationToken);
     }
 

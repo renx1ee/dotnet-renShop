@@ -2,29 +2,69 @@ using RenStore.Domain.Entities;
 using RenStore.Domain.Enums.Sorting;
 
 namespace RenStore.Domain.Repository;
-
+/// <summary>
+/// Repository with working with <see cref="ProductEntity"/>.
+/// Provide basic CRUD operations and data retrieval methods with sorting and pagination.
+/// </summary>
 public interface IProductRepository
 {
+    /// <summary>
+    /// Create a new product in the database.
+    /// </summary>
+    /// <param name="product">The product for create.</param>
+    /// <param name="cancellationToken">CancellationToken.</param>
+    /// <returns>ID of created entity.</returns>
     Task<Guid> CreateAsync(
         ProductEntity product,
         CancellationToken cancellationToken);
-
+    /// <summary>
+    /// Update an existing product in the database.
+    /// </summary>
+    /// <param name="product">The product with updated values.</param>
+    /// <param name="cancellationToken">Cancellation Token.</param>
+    /// <returns>Task representing the asynchronous operation.</returns>
+    /// <exception cref="NotFoundException">Thrown when product is not found.</exception>
     Task UpdateAsync(
         ProductEntity product,
         CancellationToken cancellationToken);
-
+    /// <summary>
+    /// Delete a product from database by ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of product.</param>
+    /// <param name="cancellationToken">Cancellation Token.</param>
+    /// <returns>Task representing the asynchronous operation.</returns>
+    /// <exception cref="NotFoundException">Thrown when product is not found.</exception>
     Task DeleteAsync(
-        ProductEntity product,
+        Guid id,
         CancellationToken cancellationToken);
-
+    /// <summary>
+    /// Retrieves all products with sorting and pagination.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation Token.</param>
+    /// <param name="sortBy">Fields to sort by. Defaults to <see cref="ProductSortBy.Id"/>.</param>
+    /// <param name="pageCount">Number of items per page. Defaults to 25.</param>
+    /// <param name="page">Page number (1-based). Defaults to 1.</param>
+    /// <param name="descending">Sort in descending order if true. Defaults to false.</param>
+    /// <returns>A collection of matching the products entities.</returns>
     Task<IEnumerable<ProductEntity>> FindAllAsync(
         CancellationToken cancellationToken,
         uint pageCount = 25,
         uint page = 1,
         bool descending = false,
         ProductSortBy sortBy = ProductSortBy.Id);
-
+    /// <summary>
+    /// Finds a product by ID.
+    /// </summary>
+    /// <param name="id">The product unique identifier.</param>
+    /// <param name="cancellationToken">Cancellation Token.</param>
+    /// <returns>The product entity if found; overwise <c>null</c>.</returns>
     Task<ProductEntity?> FindByIdAsync(Guid id, CancellationToken cancellationToken);
-
+    /// <summary>
+    /// Gets a product by ID.
+    /// </summary>
+    /// <param name="id">The product unique identifier.</param>
+    /// <param name="cancellationToken">Cancellation Token.</param>
+    /// <returns>The product entity if found; overwise <c>null</c>.</returns>
+    /// <exception cref="NotFoundException">Thrown when product is not found.</exception>
     Task<ProductEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 }
