@@ -54,6 +54,12 @@ public class SellerConfiguration : IEntityTypeConfiguration<SellerEntity>
             .IsRequired();
         
         builder
+            .Property(v => v.Url)
+            .HasColumnName("url")
+            .HasMaxLength(500)
+            .IsRequired();
+        
+        builder
             .Property(seller => seller.ApplicationUserId)
             .HasColumnName("user_id")
             .IsRequired();

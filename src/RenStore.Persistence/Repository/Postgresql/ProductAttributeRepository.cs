@@ -15,7 +15,7 @@ public class ProductAttributeRepository : IProductAttributeRepository
 
     private readonly Dictionary<ProductAttributeSortBy, string> _sortColumnMapping = new()
     {
-        { ProductAttributeSortBy.Id, "product_attribute_id" }
+        { ProductAttributeSortBy.Id, "attribute_id" }
     };
 
     public ProductAttributeRepository(
@@ -81,7 +81,7 @@ public class ProductAttributeRepository : IProductAttributeRepository
             pageCount = Math.Min(pageCount, 1000);
             uint offset = (page - 1) * pageCount;
             string direction = descending ? "DESC" : "ASC";
-            var columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "product_attribute_id");
+            var columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "attribute_id");
 
             string sql =
                 $@"

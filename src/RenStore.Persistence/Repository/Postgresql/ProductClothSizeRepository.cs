@@ -15,7 +15,7 @@ public class ProductClothSizeRepository : IProductClothSizeRepository
 
     private readonly Dictionary<ProductClothSizeSortBy, string> _sortColumnMapping = new()
     {
-        { ProductClothSizeSortBy.Id, "product_cloth_size_id" }
+        { ProductClothSizeSortBy.Id, "cloth_size_id" }
     };
 
     public ProductClothSizeRepository(
@@ -87,7 +87,7 @@ public class ProductClothSizeRepository : IProductClothSizeRepository
                 $@"
                     SELECT 
                         ""cloth_size_id"" AS Id,
-                        ""clothes_size"" AS ClothesSize,
+                        ""cloth_size"" AS ClothSize,
                         ""amount"" AS Amount,
                         ""product_cloth_id"" AS ProductClothId
                     FROM
@@ -122,13 +122,13 @@ public class ProductClothSizeRepository : IProductClothSizeRepository
                 @"
                     SELECT 
                         ""cloth_size_id"" AS Id,
-                        ""clothes_size"" AS ClothesSize,
+                        ""cloth_size"" AS ClothSize,
                         ""amount"" AS Amount,
                         ""product_cloth_id"" AS ProductClothId
                     FROM
                         ""product_cloth_sizes""
                     WHERE 
-                        ""product_cloth_id"" = @Id;
+                        ""cloth_size_id"" = @Id;
                 ";
 
             return await connection

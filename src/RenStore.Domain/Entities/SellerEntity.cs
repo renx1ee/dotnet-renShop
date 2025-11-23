@@ -8,11 +8,12 @@ public class SellerEntity
     public string Description { get; set; } = string.Empty;
     public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
     public bool IsBlocked { get; set; } = false;
+    public string Url { get; set; } = string.Empty;
     public string ApplicationUserId { get; set; } = string.Empty;
     public ApplicationUser? ApplicationUser { get; set; }
     public IList<ProductEntity> Products { get; set; }
     /*public IList<ProductAnswer> ProductAnswers { get; set; } = [];
-    public IList<SellerImage> SellerImages { get; set; } = [];
+    public IList<SellerImageDto> SellerImages { get; set; } = [];
     public long SellerFooterImageId { get; set; }
     public SellerFooterImage? SellerFooterImage { get; set; }*/
 }

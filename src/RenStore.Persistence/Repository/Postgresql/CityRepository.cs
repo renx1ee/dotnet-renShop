@@ -89,7 +89,7 @@ public class CityRepository : ICityRepository
                         ""normalized_city_name"" AS NormalizedName,
                         ""city_name_ru"" AS NameRu,
                         ""normalized_city_name_ru"" AS NormalizedNameRu,
-                        ""country_id"" AS CountryId
+                        ""country_id"" AS CountryOfManufactureId
                     FROM
                         ""cities""
                     ORDER BY 
@@ -129,7 +129,7 @@ public class CityRepository : ICityRepository
                         ""normalized_city_name"" AS NormalizedName,
                         ""city_name_ru"" AS NameRu,
                         ""normalized_city_name_ru"" AS NormalizedNameRu,
-                        ""country_id"" AS CountryId
+                        ""country_id"" AS CountryOfManufactureId
                     FROM
                         ""cities""
                     WHERE
@@ -180,7 +180,7 @@ public class CityRepository : ICityRepository
                         ""normalized_city_name"" AS NormalizedName,
                         ""city_name_ru"" AS NameRu,
                         ""normalized_city_name_ru"" AS NormalizedNameRu,
-                        ""country_id"" AS CountryId
+                        ""country_id"" AS CountryOfManufactureId
                     FROM
                         ""cities""
                     WHERE

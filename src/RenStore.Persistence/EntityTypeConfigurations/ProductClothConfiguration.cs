@@ -16,7 +16,7 @@ public class ProductClothConfiguration : IEntityTypeConfiguration<ProductClothEn
         
         builder
             .Property(x => x.Id)
-            .HasColumnName("product_clothes_id");
+            .HasColumnName("product_cloth_id");
         
         builder
             .Property(c => c.Gender)
@@ -45,9 +45,12 @@ public class ProductClothConfiguration : IEntityTypeConfiguration<ProductClothEn
             .HasConstraintName("product_id");
 
         builder
+            .Property(c => c.ProductId)
+            .HasColumnName("product_id");
+
+        builder
             .HasMany(c => c.ClothSizes)
             .WithOne(s => s.ProductCloth)
-            .HasForeignKey(s => s.ProductClothId)
-            .HasConstraintName("product_clothes_id");
+            .HasForeignKey(s => s.ProductClothId);
     }
 }

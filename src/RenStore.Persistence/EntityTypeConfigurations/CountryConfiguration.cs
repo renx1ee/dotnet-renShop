@@ -88,7 +88,7 @@ public class CountryConfiguration : IEntityTypeConfiguration<CountryEntity>
 
         builder
             .HasMany(x => x.ProductDetails)
-            .WithOne(x => x.Country)
-            .HasForeignKey(x => x.CountryId);
+            .WithOne(x => x.CountryOfManufacture)
+            .HasForeignKey(x => x.CountryOfManufactureId);
     }
 }

@@ -491,7 +491,7 @@ namespace RenStore.Identity.DuendeServer.WebAPI.Migrations
                     b.Property<int>("Season")
                         .HasColumnType("integer");
 
-                    b.PrimitiveCollection<int[]>("Sizes")
+                    b.PrimitiveCollection<int[]>("ClothSize")
                         .IsRequired()
                         .HasColumnType("integer[]");
 

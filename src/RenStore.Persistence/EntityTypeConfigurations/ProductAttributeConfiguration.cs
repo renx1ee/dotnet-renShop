@@ -34,5 +34,9 @@ public class ProductAttributeConfiguration
             .WithMany(x => x.ProductAttributes)
             .HasForeignKey(x => x.ProductVariantId)
             .HasConstraintName("product_variant_id");
+
+        builder
+            .Property(x => x.ProductVariantId)
+            .HasColumnName("product_variant_id");
     }
 }

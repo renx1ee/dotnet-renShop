@@ -37,21 +37,23 @@ public interface IProductRepository
     Task DeleteAsync(
         Guid id,
         CancellationToken cancellationToken);
+
     /// <summary>
     /// Retrieves all products with sorting and pagination.
     /// </summary>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <param name="sortBy">Fields to sort by. Defaults to <see cref="ProductSortBy.Id"/>.</param>
     /// <param name="pageCount">Number of items per page. Defaults to 25.</param>
     /// <param name="page">Page number (1-based). Defaults to 1.</param>
     /// <param name="descending">Sort in descending order if true. Defaults to false.</param>
+    /// <param name="sortBy">Fields to sort by. Defaults to <see cref="ProductSortBy.Id"/>.</param>
+    /// <param name="isBlocked"></param>
     /// <returns>A collection of matching the products entities.</returns>
-    Task<IEnumerable<ProductEntity>> FindAllAsync(
-        CancellationToken cancellationToken,
-        uint pageCount = 25,
-        uint page = 1,
+    Task<IEnumerable<ProductEntity>> FindAllAsync(CancellationToken cancellationToken,
+        uint pageCount = 25U,
+        uint page = 1U,
         bool descending = false,
-        ProductSortBy sortBy = ProductSortBy.Id);
+        ProductSortBy sortBy = ProductSortBy.Id, 
+        bool? isBlocked = null);
     /// <summary>
     /// Finds a product by ID.
     /// </summary>

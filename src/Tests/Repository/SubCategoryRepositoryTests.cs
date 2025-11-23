@@ -18,8 +18,8 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task CreateSubCategoryAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int subCategoryId = 1535636;
         var subCategory = new SubCategoryEntity()
@@ -31,8 +31,8 @@ public class SubCategoryRepositoryTests
             NormalizedNameRu = "ТЕСТ",
             Description = Guid.NewGuid().ToString(),
             IsActive = true,
-            CreatedDate = DateTime.Now,
-            CategoryId = Constants.CategoryIdForGetting1
+            CreatedDate = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            CategoryId = TestDataConstants.CategoryIdForGetting1
         };
         // Act
         await _subCategoryRepository.CreateAsync(subCategory, CancellationToken.None);
@@ -55,21 +55,21 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task CreateSubCategoryAsync_FailOnDuplicateName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int categoryId = 15356;
         var category = new SubCategoryEntity()
         {
             Id = categoryId,
-            Name = Constants.SubCategoryNameForGetting1,
-            NormalizedName = Constants.SubCategoryNameForGetting1.ToUpper(),
+            Name = TestDataConstants.SubCategoryNameForGetting1,
+            NormalizedName = TestDataConstants.SubCategoryNameForGetting1.ToUpper(),
             NameRu = "Тест",
             NormalizedNameRu = "ТЕСТ",
             Description = Guid.NewGuid().ToString(),
             IsActive = true,
-            CreatedDate = DateTime.Now,
-            CategoryId = Constants.CategoryIdForGetting1
+            CreatedDate = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            CategoryId = TestDataConstants.CategoryIdForGetting1
         };
         // Act & Assert
         await Assert.ThrowsAsync<DbUpdateException>(async () => 
@@ -82,20 +82,20 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task CreateSubCategoryAsync_FailOnWrongCategoryId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int categoryId = 15356;
         var category = new SubCategoryEntity()
         {
             Id = categoryId,
-            Name = Constants.SubCategoryNameForGetting1,
-            NormalizedName = Constants.SubCategoryNameForGetting1.ToUpper(),
+            Name = TestDataConstants.SubCategoryNameForGetting1,
+            NormalizedName = TestDataConstants.SubCategoryNameForGetting1.ToUpper(),
             NameRu = "Тест",
             NormalizedNameRu = "ТЕСТ",
             Description = Guid.NewGuid().ToString(),
             IsActive = true,
-            CreatedDate = DateTime.Now,
+            CreatedDate = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
             CategoryId = 634737
         };
         // Act & Assert
@@ -109,8 +109,8 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task CreateSubCategoryAsync_FailOnDuplicateNameRu_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int categoryId = 15356;
         var category = new SubCategoryEntity()
@@ -118,11 +118,11 @@ public class SubCategoryRepositoryTests
             Id = categoryId,
             Name = "wfkwej",
             NormalizedName = "lkwwfwawf".ToUpper(),
-            NameRu = Constants.SubCategoryNameRuForGetting1,
-            NormalizedNameRu = Constants.SubCategoryNameRuForGetting1.ToUpper(),
+            NameRu = TestDataConstants.SubCategoryNameRuForGetting1,
+            NormalizedNameRu = TestDataConstants.SubCategoryNameRuForGetting1.ToUpper(),
             Description = Guid.NewGuid().ToString(),
             IsActive = true,
-            CreatedDate = DateTime.Now
+            CreatedDate = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
         };
         // Act & Assert
         await Assert.ThrowsAsync<DbUpdateException>(async () => 
@@ -136,8 +136,8 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task UpdateSubCategoryAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string subCategoryName = "Test";
         string subCategoryNameRu = "Test";
@@ -148,7 +148,7 @@ public class SubCategoryRepositoryTests
         var existsSubCategory = await _context.SubCategories
             .AsNoTracking()
             .FirstOrDefaultAsync(c => 
-                c.Id == Constants.SubCategoryIdForUpdate);
+                c.Id == TestDataConstants.SubCategoryIdForUpdate);
         
         existsSubCategory.Name = subCategoryName;
         existsSubCategory.NameRu = subCategoryNameRu;
@@ -162,9 +162,9 @@ public class SubCategoryRepositoryTests
         var result = await _context.SubCategories
             .AsNoTracking()
             .FirstOrDefaultAsync(c => 
-                c.Id == Constants.SubCategoryIdForUpdate);
+                c.Id == TestDataConstants.SubCategoryIdForUpdate);
         Assert.NotNull(result);
-        Assert.Equal(Constants.SubCategoryIdForUpdate, result.Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForUpdate, result.Id);
         Assert.Equal(subCategoryName, result.Name);
         Assert.Equal(subCategoryNameRu, result.NameRu);
         Assert.Equal(normalizedSubCategoryNameRu, result.NormalizedNameRu);
@@ -175,20 +175,20 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task UpdateSubCategoryAsync_FailOnDuplicateName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string subCategoryDescription = Guid.NewGuid().ToString();
         
         var existsSubCategory = await _context.SubCategories
             .AsNoTracking()
             .FirstOrDefaultAsync(c => 
-                c.Id == Constants.SubCategoryIdForUpdate);
+                c.Id == TestDataConstants.SubCategoryIdForUpdate);
         
-        existsSubCategory.Name = Constants.SubCategoryNameForGetting1;
-        existsSubCategory.NameRu = Constants.SubCategoryNameRuForGetting1;
-        existsSubCategory.NormalizedName = Constants.SubCategoryNameForGetting1.ToUpper();
-        existsSubCategory.NormalizedNameRu = Constants.SubCategoryNameRuForGetting1.ToUpper();
+        existsSubCategory.Name = TestDataConstants.SubCategoryNameForGetting1;
+        existsSubCategory.NameRu = TestDataConstants.SubCategoryNameRuForGetting1;
+        existsSubCategory.NormalizedName = TestDataConstants.SubCategoryNameForGetting1.ToUpper();
+        existsSubCategory.NormalizedNameRu = TestDataConstants.SubCategoryNameRuForGetting1.ToUpper();
         existsSubCategory.Description = subCategoryDescription;
         // Act & Assert
         await Assert.ThrowsAsync<DbUpdateException>(async () => 
@@ -201,8 +201,8 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task UpdateSubCategoryAsync_FailOnWrongId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int wrongId = 1535656;
         var subCategory = new SubCategoryEntity()
@@ -220,29 +220,29 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task DeleteSubCategoryAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         var existsSubCategory = await _context.SubCategories
             .AsNoTracking()
             .FirstOrDefaultAsync(c => 
-                c.Id == Constants.SubCategoryIdForDelete);
+                c.Id == TestDataConstants.SubCategoryIdForDelete);
         Assert.NotNull(existsSubCategory);
         // Act
-        await _subCategoryRepository.DeleteAsync(Constants.SubCategoryIdForDelete, CancellationToken.None);
+        await _subCategoryRepository.DeleteAsync(TestDataConstants.SubCategoryIdForDelete, CancellationToken.None);
         // Assert
         var result = await _context.SubCategories
             .AsNoTracking()
             .FirstOrDefaultAsync(c => 
-                c.Id == Constants.SubCategoryIdForDelete);
+                c.Id == TestDataConstants.SubCategoryIdForDelete);
         Assert.Null(result);
     }
     
     [Fact]
     public async Task DeleteSubCategoryAsync_FailOnWrongId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int wrongId = 15356;
         // Act & Assert
@@ -258,21 +258,21 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task FindAllSubCategoriesAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var subCategories = await _subCategoryRepository.FindAllAsync(CancellationToken.None);
         // Assert
         Assert.NotNull(subCategories);
-        Assert.Equal(Constants.OverallSubCategoriesCount, subCategories.Count());
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, subCategories.Count());
     }
 
     [Fact]
     public async Task FindAllSubCategoriesAsync_WithCountLimit_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var subCategories = await _subCategoryRepository
@@ -287,8 +287,8 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task FindAllSubCategoriesAsync_SortById_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _subCategoryRepository.FindAllAsync(
@@ -298,22 +298,22 @@ public class SubCategoryRepositoryTests
         var subCategories = result.ToList();
         // Assert
         Assert.NotNull(subCategories);
-        Assert.Equal(Constants.OverallSubCategoriesCount, subCategories.Count());
-        Assert.Equal(Constants.SubCategoryIdForUpdate, subCategories[0].Id);
-        Assert.Equal(Constants.SubCategoryIdForDelete, subCategories[1].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting1, subCategories[2].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting2, subCategories[3].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting3, subCategories[4].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting4, subCategories[5].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting5, subCategories[6].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting6, subCategories[7].Id);
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, subCategories.Count());
+        Assert.Equal(TestDataConstants.SubCategoryIdForUpdate, subCategories[0].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForDelete, subCategories[1].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting1, subCategories[2].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting2, subCategories[3].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting3, subCategories[4].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting4, subCategories[5].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting5, subCategories[6].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting6, subCategories[7].Id);
     }
     
     [Fact]
     public async Task FindAllSubCategoriesAsync_SortById_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _subCategoryRepository.FindAllAsync(
@@ -323,23 +323,23 @@ public class SubCategoryRepositoryTests
         var subCategories = result.ToList();
         // Assert
         Assert.NotNull(subCategories);
-        Assert.Equal(Constants.OverallSubCategoriesCount, subCategories.Count());
-        Assert.Equal(Constants.SubCategoryIdForGetting7, subCategories[0].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting6, subCategories[1].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting5, subCategories[2].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting4, subCategories[3].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting3, subCategories[4].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting2, subCategories[5].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting1, subCategories[6].Id);
-        Assert.Equal(Constants.SubCategoryIdForDelete, subCategories[7].Id);
-        Assert.Equal(Constants.SubCategoryIdForUpdate, subCategories[8].Id);
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, subCategories.Count());
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting7, subCategories[0].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting6, subCategories[1].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting5, subCategories[2].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting4, subCategories[3].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting3, subCategories[4].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting2, subCategories[5].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting1, subCategories[6].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForDelete, subCategories[7].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForUpdate, subCategories[8].Id);
     }
     
     [Fact]
     public async Task FindAllSubCategoriesAsync_SortByName_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _subCategoryRepository.FindAllAsync(
@@ -349,23 +349,23 @@ public class SubCategoryRepositoryTests
         var subCategories = result.ToList();
         // Assert
         Assert.NotNull(subCategories);
-        Assert.Equal(Constants.OverallSubCategoriesCount, subCategories.Count());
-        Assert.Equal(Constants.SubCategoryIdForUpdate, subCategories[0].Id);
-        Assert.Equal(Constants.SubCategoryIdForDelete , subCategories[1].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting1, subCategories[2].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting2, subCategories[3].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting3, subCategories[4].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting4, subCategories[5].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting5, subCategories[6].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting6, subCategories[7].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting7, subCategories[8].Id);
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, subCategories.Count());
+        Assert.Equal(TestDataConstants.SubCategoryIdForUpdate, subCategories[0].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForDelete , subCategories[1].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting1, subCategories[2].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting2, subCategories[3].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting3, subCategories[4].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting4, subCategories[5].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting5, subCategories[6].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting6, subCategories[7].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting7, subCategories[8].Id);
     }
     
     [Fact]
     public async Task FindAllSubCategoriesAsync_SortByName_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _subCategoryRepository.FindAllAsync(
@@ -375,23 +375,23 @@ public class SubCategoryRepositoryTests
         var subCategories = result.ToList();
         // Assert
         Assert.NotNull(subCategories);
-        Assert.Equal(Constants.OverallSubCategoriesCount, subCategories.Count());
-        Assert.Equal(Constants.SubCategoryIdForGetting7, subCategories[0].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting6 , subCategories[1].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting5, subCategories[2].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting4, subCategories[3].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting3, subCategories[4].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting2, subCategories[5].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting1, subCategories[6].Id);
-        Assert.Equal(Constants.SubCategoryIdForDelete, subCategories[7].Id);
-        Assert.Equal(Constants.SubCategoryIdForUpdate, subCategories[8].Id);
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, subCategories.Count());
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting7, subCategories[0].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting6 , subCategories[1].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting5, subCategories[2].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting4, subCategories[3].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting3, subCategories[4].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting2, subCategories[5].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting1, subCategories[6].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForDelete, subCategories[7].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForUpdate, subCategories[8].Id);
     }
     
     [Fact]
     public async Task FindAllSubCategoriesAsync_SortByNameRu_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _subCategoryRepository.FindAllAsync(
@@ -401,23 +401,23 @@ public class SubCategoryRepositoryTests
         var subCategories = result.ToList();
         // Assert
         Assert.NotNull(subCategories);
-        Assert.Equal(Constants.OverallSubCategoriesCount, subCategories.Count());
-        Assert.Equal(Constants.SubCategoryIdForUpdate, subCategories[0].Id);
-        Assert.Equal(Constants.SubCategoryIdForDelete , subCategories[1].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting1, subCategories[2].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting2, subCategories[3].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting3, subCategories[4].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting4, subCategories[5].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting5, subCategories[6].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting6, subCategories[7].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting7, subCategories[8].Id);
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, subCategories.Count());
+        Assert.Equal(TestDataConstants.SubCategoryIdForUpdate, subCategories[0].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForDelete , subCategories[1].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting1, subCategories[2].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting2, subCategories[3].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting3, subCategories[4].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting4, subCategories[5].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting5, subCategories[6].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting6, subCategories[7].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting7, subCategories[8].Id);
     }
     
     [Fact]
     public async Task FindAllSubCategoriesAsync_SortByNameRu_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _subCategoryRepository.FindAllAsync(
@@ -427,40 +427,40 @@ public class SubCategoryRepositoryTests
         var subCategories = result.ToList();
         // Assert
         Assert.NotNull(subCategories);
-        Assert.Equal(Constants.OverallSubCategoriesCount, subCategories.Count());
-        Assert.Equal(Constants.SubCategoryIdForGetting7, subCategories[0].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting6 , subCategories[1].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting5, subCategories[2].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting4, subCategories[3].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting3, subCategories[4].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting2, subCategories[5].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting1, subCategories[6].Id);
-        Assert.Equal(Constants.SubCategoryIdForDelete, subCategories[7].Id);
-        Assert.Equal(Constants.SubCategoryIdForUpdate, subCategories[8].Id);
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, subCategories.Count());
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting7, subCategories[0].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting6 , subCategories[1].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting5, subCategories[2].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting4, subCategories[3].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting3, subCategories[4].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting2, subCategories[5].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting1, subCategories[6].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForDelete, subCategories[7].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForUpdate, subCategories[8].Id);
     }
     #endregion
     #region By Id
     [Fact]
     public async Task FindSubCategoryByIdAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var category = await _subCategoryRepository
             .FindByIdAsync(
-                Constants.SubCategoryIdForGetting1,
+                TestDataConstants.SubCategoryIdForGetting1,
                 CancellationToken.None);
         // Assert
         Assert.NotNull(category);
-        Assert.Equal(Constants.SubCategoryIdForGetting1, category.Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting1, category.Id);
     }
 
     [Fact]
     public async Task FindSubCategoryByIdAsync_FailOnWrongId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int wrongId = 1435;
         // Act
@@ -475,24 +475,24 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task GetSubCategoryByIdAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var category = await _subCategoryRepository
             .GetByIdAsync(
-                Constants.SubCategoryIdForGetting1,
+                TestDataConstants.SubCategoryIdForGetting1,
                 CancellationToken.None);
         // Assert
         Assert.NotNull(category);
-        Assert.Equal(Constants.SubCategoryIdForGetting1, category.Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting1, category.Id);
     }
 
     [Fact]
     public async Task GetSubCategoryByIdAsync_FailOnWrongId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int wrongId = 143425;
         // Act
@@ -508,8 +508,8 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task FindSubCategoriesByNameAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "Categ";
         // Act
@@ -520,14 +520,14 @@ public class SubCategoryRepositoryTests
         var result = subCategories.ToList();
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(Constants.OverallSubCategoriesCount, result.Count());
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, result.Count());
     }
 
     [Fact]
     public async Task FindSubCategoryByNameAsync_FailOnWrongName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string wrongName = Guid.NewGuid().ToString();
         // Act
@@ -543,8 +543,8 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task GetSubCategoryByNameAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "Categ";
         // Act
@@ -555,14 +555,14 @@ public class SubCategoryRepositoryTests
         var result = subCategores.ToList();
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(Constants.OverallSubCategoriesCount, result.Count());
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, result.Count());
     }
 
     [Fact]
     public async Task GetSubCategoryByNameAsync_FailOnWrongName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string wrongName = Guid.NewGuid().ToString();
         // Act
@@ -577,8 +577,8 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task FindSubCategoryByNameAsync_CountLimit_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "Categ";
         // Act
@@ -596,8 +596,8 @@ public class SubCategoryRepositoryTests
     [Fact]
     public async Task FindSubCategoryByNameAsync_SortByName_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "Categ";
         // Act
@@ -609,24 +609,24 @@ public class SubCategoryRepositoryTests
         var result = subCategories.ToList();
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(Constants.OverallSubCategoriesCount, result.Count());
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, result.Count());
         // TODO:
-        Assert.Equal(Constants.SubCategoryIdForUpdate, result[0].Id);
-        Assert.Equal(Constants.SubCategoryIdForDelete , result[1].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting1, result[2].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting2, result[3].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting3, result[4].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting4, result[5].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting5, result[6].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting6, result[7].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting7, result[8].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForUpdate, result[0].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForDelete , result[1].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting1, result[2].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting2, result[3].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting3, result[4].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting4, result[5].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting5, result[6].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting6, result[7].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting7, result[8].Id);
     }
 
     [Fact]
     public async Task FindSubCategoryByNameAsync_SortByName_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "Categ";
         // Act
@@ -638,24 +638,24 @@ public class SubCategoryRepositoryTests
         var result = subCategories.ToList();
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(Constants.OverallSubCategoriesCount, result.Count());
-        Assert.Equal(Constants.OverallSubCategoriesCount, subCategories.Count());
-        Assert.Equal(Constants.SubCategoryIdForGetting7, result[0].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting6 , result[1].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting5, result[2].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting4, result[3].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting3, result[4].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting2, result[5].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting1, result[6].Id);
-        Assert.Equal(Constants.SubCategoryIdForDelete, result[7].Id);
-        Assert.Equal(Constants.SubCategoryIdForUpdate, result[8].Id);
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, result.Count());
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, subCategories.Count());
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting7, result[0].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting6 , result[1].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting5, result[2].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting4, result[3].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting3, result[4].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting2, result[5].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting1, result[6].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForDelete, result[7].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForUpdate, result[8].Id);
     }
 
     [Fact]
     public async Task FindSubCategoryByNameAsync_SortById_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "Categ";
         // Act
@@ -667,22 +667,22 @@ public class SubCategoryRepositoryTests
         var result = subCategories.ToList();
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(Constants.OverallSubCategoriesCount, result.Count());
-        Assert.Equal(Constants.SubCategoryIdForUpdate, result[0].Id);
-        Assert.Equal(Constants.SubCategoryIdForDelete, result[1].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting1, result[2].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting2, result[3].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting3, result[4].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting4, result[5].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting5, result[6].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting6, result[7].Id);
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, result.Count());
+        Assert.Equal(TestDataConstants.SubCategoryIdForUpdate, result[0].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForDelete, result[1].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting1, result[2].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting2, result[3].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting3, result[4].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting4, result[5].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting5, result[6].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting6, result[7].Id);
     }
 
     [Fact]
     public async Task FindSubCategoryByNameAsync_SortById_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "Categ";
         // Act
@@ -694,23 +694,23 @@ public class SubCategoryRepositoryTests
         var result = subCategories.ToList();
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(Constants.OverallSubCategoriesCount, result.Count());
-        Assert.Equal(Constants.SubCategoryIdForGetting7, result[0].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting6, result[1].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting5, result[2].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting4, result[3].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting3, result[4].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting2, result[5].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting1, result[6].Id);
-        Assert.Equal(Constants.SubCategoryIdForDelete, result[7].Id);
-        Assert.Equal(Constants.SubCategoryIdForUpdate, result[8].Id);
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, result.Count());
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting7, result[0].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting6, result[1].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting5, result[2].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting4, result[3].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting3, result[4].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting2, result[5].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting1, result[6].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForDelete, result[7].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForUpdate, result[8].Id);
     }
 
     [Fact]
     public async Task FindSubCategoryByNameRuAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _subCategoryRepository = new SubCategoryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _subCategoryRepository = new SubCategoryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "катег";
         // Act
@@ -721,16 +721,16 @@ public class SubCategoryRepositoryTests
         var result = subCategories.ToList();
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(Constants.OverallSubCategoriesCount, result.Count());
-        Assert.Equal(Constants.SubCategoryIdForUpdate, result[0].Id);
-        Assert.Equal(Constants.SubCategoryIdForDelete , result[1].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting1, result[2].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting2, result[3].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting3, result[4].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting4, result[5].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting5, result[6].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting6, result[7].Id);
-        Assert.Equal(Constants.SubCategoryIdForGetting7, result[8].Id);
+        Assert.Equal(TestDataConstants.OverallSubCategoriesCount, result.Count());
+        Assert.Equal(TestDataConstants.SubCategoryIdForUpdate, result[0].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForDelete , result[1].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting1, result[2].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting2, result[3].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting3, result[4].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting4, result[5].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting5, result[6].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting6, result[7].Id);
+        Assert.Equal(TestDataConstants.SubCategoryIdForGetting7, result[8].Id);
     }
     #endregion
     #region By Category ID

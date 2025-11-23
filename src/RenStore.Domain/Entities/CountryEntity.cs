@@ -12,5 +12,5 @@ public class CountryEntity
     public string Code { get; set; } = string.Empty;
     public string PhoneCode { get; set; } = string.Empty;
     public IList<CityEntity> Cities { get; set; } = [];
-    public IEnumerable<ProductDetailEntity> ProductDetails { get; set; } = [];
+    public IEnumerable<ProductDetailEntity> ProductDetails { get; set; } 
 }

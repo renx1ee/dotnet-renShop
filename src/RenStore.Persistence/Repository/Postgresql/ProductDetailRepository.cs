@@ -94,7 +94,7 @@ public class ProductDetailRepository : IProductDetailRepository
                         ""composition"" AS Composition,
                         ""caring_of_things"" AS CaringOfThings,
                         ""type_of_packing"" AS TypeOfPacking,
-                        ""country_id"" AS CountryId,
+                        ""country_id"" AS CountryOfManufactureId,
                         ""product_variant_id"" AS ProductVariantId
                     FROM
                         ""product_details""
@@ -135,7 +135,7 @@ public class ProductDetailRepository : IProductDetailRepository
                         ""composition"" AS Composition,
                         ""caring_of_things"" AS CaringOfThings,
                         ""type_of_packing"" AS TypeOfPacking,
-                        ""country_id"" AS CountryId,
+                        ""country_id"" AS CountryOfManufactureId,
                         ""product_variant_id"" AS ProductVariantId
                     FROM
                         ""product_details""

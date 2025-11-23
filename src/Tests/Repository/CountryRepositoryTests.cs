@@ -17,8 +17,8 @@ public class CountryRepositoryTests : IDisposable
     [Fact]
     public async Task CreateCountryAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         var country = new CountryEntity()
         {
@@ -46,8 +46,8 @@ public class CountryRepositoryTests : IDisposable
     [Fact]
     public async Task CreateCountryAsync_FailOnDuplicateName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int id = 6326;
         var country = new CountryEntity()
@@ -70,10 +70,10 @@ public class CountryRepositoryTests : IDisposable
     [Fact]
     public async Task UpdateCountryAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
-        int idForUpdate = Constants.CountryIdForUpdate;
+        int idForUpdate = TestDataConstants.CountryIdForUpdate;
         var country = await _context.Countries
             .FirstOrDefaultAsync(c => 
                 c.Id == idForUpdate);
@@ -104,8 +104,8 @@ public class CountryRepositoryTests : IDisposable
     [Fact]
     public async Task UpdateCountryAsync_FailOnWrongId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         var country = new CountryEntity()
         {
@@ -126,10 +126,10 @@ public class CountryRepositoryTests : IDisposable
     [Fact]
     public async Task DeleteCountryAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
-        int idForDelete = Constants.CountryIdForDelete;
+        int idForDelete = TestDataConstants.CountryIdForDelete;
         var country = await _context.Countries
             .AsNoTracking()
             .FirstOrDefaultAsync(c => 
@@ -148,8 +148,8 @@ public class CountryRepositoryTests : IDisposable
     [Fact]
     public async Task DeleteCountryAsync_FailOnWrongId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int idForDelete = 4632352;
         // Act
@@ -164,8 +164,8 @@ public class CountryRepositoryTests : IDisposable
     [Fact]
     public async Task FindAllCountriesAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var countries = await _countryRepository.FindAllAsync(CancellationToken.None);
@@ -177,8 +177,8 @@ public class CountryRepositoryTests : IDisposable
     [Fact]
     public async Task FindAllCountriesAsync_WithCountLimit_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var countries = await _countryRepository.FindAllAsync(
@@ -192,8 +192,8 @@ public class CountryRepositoryTests : IDisposable
     [Fact]
     public async Task FindAllCountriesAsync_SortById_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _countryRepository.FindAllAsync(
@@ -204,21 +204,21 @@ public class CountryRepositoryTests : IDisposable
         // Assert
         Assert.NotNull(countries);
         Assert.Equal(8, countries.Count());
-        Assert.Equal(Constants.CountryIdForUpdate, countries[0].Id);
-        Assert.Equal(Constants.CountryIdForDelete, countries[1].Id);
-        Assert.Equal(Constants.CountryIdForGetting1, countries[2].Id);
-        Assert.Equal(Constants.CountryIdForGetting2, countries[3].Id);
-        Assert.Equal(Constants.CountryIdForGetting3, countries[4].Id);
-        Assert.Equal(Constants.CountryIdForGetting4, countries[5].Id);
-        Assert.Equal(Constants.CountryIdForGetting5, countries[6].Id);
-        Assert.Equal(Constants.CountryIdForGetting6, countries[7].Id);
+        Assert.Equal(TestDataConstants.CountryIdForUpdate, countries[0].Id);
+        Assert.Equal(TestDataConstants.CountryIdForDelete, countries[1].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting1, countries[2].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting2, countries[3].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting3, countries[4].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting4, countries[5].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting5, countries[6].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting6, countries[7].Id);
     }
     
     [Fact]
     public async Task FindAllCountriesAsync_SortById_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _countryRepository.FindAllAsync(
@@ -229,21 +229,21 @@ public class CountryRepositoryTests : IDisposable
         // Assert
         Assert.NotNull(countries);
         Assert.Equal(8, countries.Count());
-        Assert.Equal(Constants.CountryIdForGetting6, countries[0].Id);
-        Assert.Equal(Constants.CountryIdForGetting5, countries[1].Id);
-        Assert.Equal(Constants.CountryIdForGetting4, countries[2].Id);
-        Assert.Equal(Constants.CountryIdForGetting3, countries[3].Id);
-        Assert.Equal(Constants.CountryIdForGetting2, countries[4].Id);
-        Assert.Equal(Constants.CountryIdForGetting1, countries[5].Id);
-        Assert.Equal(Constants.CountryIdForDelete, countries[6].Id);
-        Assert.Equal(Constants.CountryIdForUpdate, countries[7].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting6, countries[0].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting5, countries[1].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting4, countries[2].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting3, countries[3].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting2, countries[4].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting1, countries[5].Id);
+        Assert.Equal(TestDataConstants.CountryIdForDelete, countries[6].Id);
+        Assert.Equal(TestDataConstants.CountryIdForUpdate, countries[7].Id);
     }
     
     [Fact]
     public async Task FindAllCountriesAsync_SortByName_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _countryRepository.FindAllAsync(
@@ -254,21 +254,21 @@ public class CountryRepositoryTests : IDisposable
         // Assert
         Assert.NotNull(countries);
         Assert.Equal(8, countries.Count());
-        Assert.Equal(Constants.CountryIdForUpdate, countries[0].Id);
-        Assert.Equal(Constants.CountryIdForDelete , countries[1].Id);
-        Assert.Equal(Constants.CountryIdForGetting1, countries[2].Id);
-        Assert.Equal(Constants.CountryIdForGetting2, countries[3].Id);
-        Assert.Equal(Constants.CountryIdForGetting3, countries[4].Id);
-        Assert.Equal(Constants.CountryIdForGetting4, countries[5].Id);
-        Assert.Equal(Constants.CountryIdForGetting5, countries[6].Id);
-        Assert.Equal(Constants.CountryIdForGetting6, countries[7].Id);
+        Assert.Equal(TestDataConstants.CountryIdForUpdate, countries[0].Id);
+        Assert.Equal(TestDataConstants.CountryIdForDelete , countries[1].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting1, countries[2].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting2, countries[3].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting3, countries[4].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting4, countries[5].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting5, countries[6].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting6, countries[7].Id);
     }
     
     [Fact]
     public async Task FindAllCountriesAsync_SortByName_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _countryRepository.FindAllAsync(
@@ -279,14 +279,14 @@ public class CountryRepositoryTests : IDisposable
         // Assert
         Assert.NotNull(countries);
         Assert.Equal(8, countries.Count());
-        Assert.Equal(Constants.CountryIdForGetting6, countries[0].Id);
-        Assert.Equal(Constants.CountryIdForGetting5, countries[1].Id);
-        Assert.Equal(Constants.CountryIdForGetting4, countries[2].Id);
-        Assert.Equal(Constants.CountryIdForGetting3, countries[3].Id);
-        Assert.Equal(Constants.CountryIdForGetting2, countries[4].Id);
-        Assert.Equal(Constants.CountryIdForGetting1, countries[5].Id);
-        Assert.Equal(Constants.CountryIdForDelete, countries[6].Id);
-        Assert.Equal(Constants.CountryIdForUpdate, countries[7].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting6, countries[0].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting5, countries[1].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting4, countries[2].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting3, countries[3].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting2, countries[4].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting1, countries[5].Id);
+        Assert.Equal(TestDataConstants.CountryIdForDelete, countries[6].Id);
+        Assert.Equal(TestDataConstants.CountryIdForUpdate, countries[7].Id);
     }
     
     #endregion
@@ -294,24 +294,24 @@ public class CountryRepositoryTests : IDisposable
     [Fact]
     public async Task FindCountryByIdAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var country = await _countryRepository
             .FindByIdAsync(
-                Constants.CountryIdForGetting1, 
+                TestDataConstants.CountryIdForGetting1, 
                 CancellationToken.None);
         // Assert
         Assert.NotNull(country);
-        Assert.Equal(Constants.CountryIdForGetting1, country.Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting1, country.Id);
     }
 
     [Fact]
     public async Task FindCountryByIdAsync_FailOnWrongId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int wrongId = 1435;
         // Act
@@ -326,24 +326,24 @@ public class CountryRepositoryTests : IDisposable
     [Fact]
     public async Task GetCountryByIdAsync_Success_Test() 
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var country = await _countryRepository
             .GetByIdAsync(
-                Constants.CountryIdForGetting1, 
+                TestDataConstants.CountryIdForGetting1, 
                 CancellationToken.None);
         // Assert
         Assert.NotNull(country);
-        Assert.Equal(Constants.CountryIdForGetting1, country.Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting1, country.Id);
     }
     
     [Fact]
     public async Task GetCountryByIdAsync_FailOnWrongId_Test() 
     { 
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int wrongId = 143425;
         // Act
@@ -361,28 +361,28 @@ public class CountryRepositoryTests : IDisposable
     [Fact]
     public async Task FindCountriesByNameAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var countries = await _countryRepository
             .FindByNameAsync(
-                Constants.CountryNameForGetting4, 
+                TestDataConstants.CountryNameForGetting4, 
                 CancellationToken.None);
         var result = countries.ToList();
         // Assert
         Assert.NotNull(result);
         Assert.Equal(3, result.Count());
-        Assert.Equal(Constants.CountryIdForGetting4, result[0].Id);
-        Assert.Equal(Constants.CountryIdForGetting5, result[1].Id);
-        Assert.Equal(Constants.CountryIdForGetting6, result[2].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting4, result[0].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting5, result[1].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting6, result[2].Id);
     }
 
     [Fact]
     public async Task FindCountriesByNameAsync_FailOnWrongName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string wrongName = Guid.NewGuid().ToString();
         // Act
@@ -398,28 +398,28 @@ public class CountryRepositoryTests : IDisposable
     [Fact]
     public async Task GetCountriesByNameAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var countries = await _countryRepository
             .GetByNameAsync(
-                Constants.CountryNameForGetting4, 
+                TestDataConstants.CountryNameForGetting4, 
                 CancellationToken.None);
         var result = countries.ToList();
         // Assert
         Assert.NotNull(result);
         Assert.Equal(3, result.Count());
-        Assert.Equal(Constants.CountryIdForGetting4, result[0].Id);
-        Assert.Equal(Constants.CountryIdForGetting5, result[1].Id);
-        Assert.Equal(Constants.CountryIdForGetting6, result[2].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting4, result[0].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting5, result[1].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting6, result[2].Id);
     }
 
     [Fact]
     public async Task GetCountriesByNameAsync_FailOnWrongName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string wrongName = Guid.NewGuid().ToString();
         // Act
@@ -434,32 +434,32 @@ public class CountryRepositoryTests : IDisposable
     [Fact]
     public async Task FindCountriesByNameAsync_CountLimit_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var countries = await _countryRepository
             .FindByNameAsync(
                 pageCount: 2,
-                name: Constants.CountryNameForGetting4, 
+                name: TestDataConstants.CountryNameForGetting4, 
                 cancellationToken: CancellationToken.None);
         var result = countries.ToList();
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Count());
-        Assert.Equal(Constants.CountryIdForGetting4, result[0].Id);
-        Assert.Equal(Constants.CountryIdForGetting5, result[1].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting4, result[0].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting5, result[1].Id);
     }
     
     [Fact]
     public async Task FindCountriesByNameAsync_SortByName_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _countryRepository.FindByNameAsync(
-            name: Constants.CountryNameForGetting4,
+            name: TestDataConstants.CountryNameForGetting4,
             cancellationToken: CancellationToken.None, 
             descending: false,
             sortBy: CountrySortBy.Name);
@@ -467,20 +467,20 @@ public class CountryRepositoryTests : IDisposable
         // Assert
         Assert.NotNull(countries);
         Assert.Equal(3, countries.Count());
-        Assert.Equal(Constants.CountryIdForGetting4, countries[0].Id);
-        Assert.Equal(Constants.CountryIdForGetting5, countries[1].Id);
-        Assert.Equal(Constants.CountryIdForGetting6, countries[2].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting4, countries[0].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting5, countries[1].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting6, countries[2].Id);
     }
 
     [Fact]
     public async Task FindCountriesByNameAsync_SortByName_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _countryRepository.FindByNameAsync(
-            name: Constants.CountryNameForGetting4,
+            name: TestDataConstants.CountryNameForGetting4,
             cancellationToken: CancellationToken.None, 
             descending: true,
             sortBy: CountrySortBy.Name);
@@ -488,20 +488,20 @@ public class CountryRepositoryTests : IDisposable
         // Assert
         Assert.NotNull(countries);
         Assert.Equal(3, countries.Count());
-        Assert.Equal(Constants.CountryIdForGetting6, countries[0].Id);
-        Assert.Equal(Constants.CountryIdForGetting5, countries[1].Id);
-        Assert.Equal(Constants.CountryIdForGetting4, countries[2].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting6, countries[0].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting5, countries[1].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting4, countries[2].Id);
     }
 
     [Fact]
     public async Task FindCountriesByNameAsync_SortById_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _countryRepository.FindByNameAsync(
-            name: Constants.CountryNameForGetting4,
+            name: TestDataConstants.CountryNameForGetting4,
             cancellationToken: CancellationToken.None, 
             descending: false,
             sortBy: CountrySortBy.Id);
@@ -509,20 +509,20 @@ public class CountryRepositoryTests : IDisposable
         // Assert
         Assert.NotNull(countries);
         Assert.Equal(3, countries.Count());
-        Assert.Equal(Constants.CountryIdForGetting4, countries[0].Id);
-        Assert.Equal(Constants.CountryIdForGetting5, countries[1].Id);
-        Assert.Equal(Constants.CountryIdForGetting6, countries[2].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting4, countries[0].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting5, countries[1].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting6, countries[2].Id);
     }
 
     [Fact]
     public async Task FindCountriesByNameAsync_SortById_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _countryRepository.FindByNameAsync(
-            name: Constants.CountryNameForGetting4,
+            name: TestDataConstants.CountryNameForGetting4,
             cancellationToken: CancellationToken.None, 
             descending: true,
             sortBy: CountrySortBy.Id);
@@ -530,49 +530,49 @@ public class CountryRepositoryTests : IDisposable
         // Assert
         Assert.NotNull(countries);
         Assert.Equal(3, countries.Count());
-        Assert.Equal(Constants.CountryIdForGetting6, countries[0].Id);
-        Assert.Equal(Constants.CountryIdForGetting5, countries[1].Id);
-        Assert.Equal(Constants.CountryIdForGetting4, countries[2].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting6, countries[0].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting5, countries[1].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting4, countries[2].Id);
     }
     
     [Fact]
     public async Task FindCountriesByNameRuAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var countries = await _countryRepository
             .FindByNameAsync(
-                Constants.CountryNameRuForGetting4, 
+                TestDataConstants.CountryNameRuForGetting4, 
                 CancellationToken.None);
         var result = countries.ToList();
         // Assert
         Assert.NotNull(result);
         Assert.Equal(3, result.Count());
-        Assert.Equal(Constants.CountryIdForGetting4, result[0].Id);
-        Assert.Equal(Constants.CountryIdForGetting5, result[1].Id);
-        Assert.Equal(Constants.CountryIdForGetting6, result[2].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting4, result[0].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting5, result[1].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting6, result[2].Id);
     }
     
     [Fact]
     public async Task FindCountriesByOtherNameAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _countryRepository = new CountryRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _countryRepository = new CountryRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var countries = await _countryRepository
             .FindByNameAsync(
-                Constants.CountryOtherNameForGetting6, 
+                TestDataConstants.CountryOtherNameForGetting6, 
                 CancellationToken.None);
         var result = countries.ToList();
         // Assert
         Assert.NotNull(result);
         Assert.Equal(3, result.Count());
-        Assert.Equal(Constants.CountryIdForGetting4, result[0].Id);
-        Assert.Equal(Constants.CountryIdForGetting5, result[1].Id);
-        Assert.Equal(Constants.CountryIdForGetting6, result[2].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting4, result[0].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting5, result[1].Id);
+        Assert.Equal(TestDataConstants.CountryIdForGetting6, result[2].Id);
     }
     #endregion
     

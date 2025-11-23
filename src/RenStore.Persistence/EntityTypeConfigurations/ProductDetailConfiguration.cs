@@ -60,15 +60,23 @@ public class ProductDetailConfiguration : IEntityTypeConfiguration<ProductDetail
             .IsRequired(false);
                 
         builder
-            .HasOne(x => x.Country)
+            .HasOne(x => x.CountryOfManufacture)
             .WithMany(x => x.ProductDetails)
-            .HasForeignKey(x => x.CountryId)
+            .HasForeignKey(x => x.CountryOfManufactureId)
             .HasConstraintName("country_id");
+        
+        builder
+            .Property(x => x.CountryOfManufactureId)
+            .HasColumnName("country_id");
 
         builder
             .HasOne(x => x.ProductVariant)
             .WithOne(x => x.ProductDetails)
             .HasForeignKey<ProductDetailEntity>(x => x.ProductVariantId)
             .HasConstraintName("product_variant_id");
+
+        builder
+            .Property(x => x.ProductVariantId)
+            .HasColumnName("product_variant_id");
     }
 }

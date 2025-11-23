@@ -17,8 +17,8 @@ public class CityRepositoryTests
     [Fact]
     public async Task CreateCityAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         var city = new CityEntity()
         {
@@ -27,7 +27,7 @@ public class CityRepositoryTests
             NormalizedName = "TEST",
             NameRu = "ТЕСЕ",
             NormalizedNameRu = "ТЕСЕ",
-            CountryId = Constants.CountryIdForGetting1
+            CountryId = TestDataConstants.CountryIdForGetting1
         };
         // Act
         await _cityRepository.CreateAsync(city, CancellationToken.None);
@@ -47,12 +47,12 @@ public class CityRepositoryTests
     [Fact]
     public async Task UpdateCityAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         var city = await _context.Cities
             .FirstOrDefaultAsync(c => 
-                c.Id == Constants.CityIdForUpdate);
+                c.Id == TestDataConstants.CityIdForUpdate);
         Assert.NotNull(city);
         string updatedName = Guid.NewGuid().ToString();
         string updatedNormalizedName = updatedName.ToUpper();
@@ -67,7 +67,7 @@ public class CityRepositoryTests
         // Assert
         var result = await _context.Cities
             .FirstOrDefaultAsync(c => 
-                c.Id == Constants.CityIdForUpdate);
+                c.Id == TestDataConstants.CityIdForUpdate);
         Assert.NotNull(result);
         Assert.Equal(city.Id, result.Id);
         Assert.Equal(updatedName, result.Name);
@@ -79,8 +79,8 @@ public class CityRepositoryTests
     [Fact]
     public async Task UpdateCityAsync_FailOnWrongId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         var city = new CityEntity()
         {
@@ -89,7 +89,7 @@ public class CityRepositoryTests
             NormalizedName = "TEST",
             NameRu = "ТЕСЕ",
             NormalizedNameRu = "ТЕСЕ",
-            CountryId = Constants.CountryIdForGetting1
+            CountryId = TestDataConstants.CountryIdForGetting1
         };
         // Act
         // Assert
@@ -102,29 +102,29 @@ public class CityRepositoryTests
     [Fact]
     public async Task DeleteCityAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         var city = await _context.Cities
             .AsNoTracking()
             .FirstOrDefaultAsync(c => 
-                c.Id == Constants.CityIdForDelete);
+                c.Id == TestDataConstants.CityIdForDelete);
         Assert.NotNull(city);
         // Act
-        await _cityRepository.DeleteAsync(Constants.CityIdForDelete, CancellationToken.None);
+        await _cityRepository.DeleteAsync(TestDataConstants.CityIdForDelete, CancellationToken.None);
         // Assert
         var cityExisting = await _context.Cities
             .AsNoTracking()
             .FirstOrDefaultAsync(c => 
-                c.Id == Constants.CityIdForDelete);
+                c.Id == TestDataConstants.CityIdForDelete);
         Assert.Null(cityExisting);
     }
     
     [Fact]
     public async Task DeleteCityAsync_FailOnWrongId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int idForDelete = 4632352;
         // Act
@@ -139,21 +139,21 @@ public class CityRepositoryTests
     [Fact]
     public async Task FindAllCitiesAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var cities = await _cityRepository.FindAllAsync(CancellationToken.None);
         // Assert
         Assert.NotNull(cities);
-        Assert.Equal(Constants.OverallCitiesCount, cities.Count());
+        Assert.Equal(TestDataConstants.OverallCitiesCount, cities.Count());
     }
 
     [Fact]
     public async Task FindAllCitiesAsync_WithCountLimit_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var cities = await _cityRepository.FindAllAsync(
@@ -167,8 +167,8 @@ public class CityRepositoryTests
     [Fact]
     public async Task FindAllCitiesAsync_SortById_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _cityRepository.FindAllAsync(
@@ -178,22 +178,22 @@ public class CityRepositoryTests
         var cities = result.ToList();
         // Assert
         Assert.NotNull(cities);
-        Assert.Equal(Constants.OverallCitiesCount, cities.Count());
-        Assert.Equal(Constants.CityIdForUpdate, cities[0].Id);
-        Assert.Equal(Constants.CityIdForDelete, cities[1].Id);
-        Assert.Equal(Constants.CityIdForGetting1, cities[2].Id);
-        Assert.Equal(Constants.CityIdForGetting2, cities[3].Id);
-        Assert.Equal(Constants.CityIdForGetting3, cities[4].Id);
-        Assert.Equal(Constants.CityIdForGetting4, cities[5].Id);
-        Assert.Equal(Constants.CityIdForGetting5, cities[6].Id);
-        Assert.Equal(Constants.CityIdForGetting6, cities[7].Id);
+        Assert.Equal(TestDataConstants.OverallCitiesCount, cities.Count());
+        Assert.Equal(TestDataConstants.CityIdForUpdate, cities[0].Id);
+        Assert.Equal(TestDataConstants.CityIdForDelete, cities[1].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting1, cities[2].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting2, cities[3].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting3, cities[4].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting4, cities[5].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting5, cities[6].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting6, cities[7].Id);
     }
     
     [Fact]
     public async Task FindAllCitiesAsync_SortById_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-       _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+       _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _cityRepository.FindAllAsync(
@@ -203,22 +203,22 @@ public class CityRepositoryTests
         var cities = result.ToList();
         // Assert
         Assert.NotNull(cities);
-        Assert.Equal(Constants.OverallCitiesCount, cities.Count());
-        Assert.Equal(Constants.CityIdForGetting6, cities[0].Id);
-        Assert.Equal(Constants.CityIdForGetting5, cities[1].Id);
-        Assert.Equal(Constants.CityIdForGetting4, cities[2].Id);
-        Assert.Equal(Constants.CityIdForGetting3, cities[3].Id);
-        Assert.Equal(Constants.CityIdForGetting2, cities[4].Id);
-        Assert.Equal(Constants.CityIdForGetting1, cities[5].Id);
-        Assert.Equal(Constants.CityIdForDelete, cities[6].Id);
-        Assert.Equal(Constants.CityIdForUpdate, cities[7].Id);
+        Assert.Equal(TestDataConstants.OverallCitiesCount, cities.Count());
+        Assert.Equal(TestDataConstants.CityIdForGetting6, cities[0].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting5, cities[1].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting4, cities[2].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting3, cities[3].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting2, cities[4].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting1, cities[5].Id);
+        Assert.Equal(TestDataConstants.CityIdForDelete, cities[6].Id);
+        Assert.Equal(TestDataConstants.CityIdForUpdate, cities[7].Id);
     }
     
     [Fact]
     public async Task FindAllCitiesAsync_SortByName_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _cityRepository.FindAllAsync(
@@ -228,23 +228,23 @@ public class CityRepositoryTests
         var cities = result.ToList();
         // Assert
         Assert.NotNull(cities);
-        Assert.Equal(Constants.OverallCitiesCount, cities.Count());
+        Assert.Equal(TestDataConstants.OverallCitiesCount, cities.Count());
         
-        Assert.Equal(Constants.CityIdForGetting3, cities[0].Id);
-        Assert.Equal(Constants.CityIdForDelete, cities[1].Id);
-        Assert.Equal(Constants.CityIdForGetting2, cities[2].Id);
-        Assert.Equal(Constants.CityIdForGetting4, cities[3].Id);
-        Assert.Equal(Constants.CityIdForGetting5, cities[4].Id);
-        Assert.Equal(Constants.CityIdForGetting6, cities[5].Id);
-        Assert.Equal(Constants.CityIdForUpdate, cities[6].Id);
-        Assert.Equal(Constants.CityIdForGetting1, cities[7].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting3, cities[0].Id);
+        Assert.Equal(TestDataConstants.CityIdForDelete, cities[1].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting2, cities[2].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting4, cities[3].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting5, cities[4].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting6, cities[5].Id);
+        Assert.Equal(TestDataConstants.CityIdForUpdate, cities[6].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting1, cities[7].Id);
     }
     
     [Fact]
     public async Task FindAllCitiesAsync_SortByName_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _cityRepository.FindAllAsync(
@@ -255,14 +255,14 @@ public class CityRepositoryTests
         // Assert
         Assert.NotNull(cities);
         Assert.Equal(8, cities.Count());
-        Assert.Equal(Constants.CityIdForGetting1, cities[0].Id);
-        Assert.Equal(Constants.CityIdForUpdate , cities[1].Id);
-        Assert.Equal(Constants.CityIdForGetting6, cities[2].Id);
-        Assert.Equal(Constants.CityIdForGetting5, cities[3].Id);
-        Assert.Equal(Constants.CityIdForGetting4, cities[4].Id);
-        Assert.Equal(Constants.CityIdForGetting2, cities[5].Id);
-        Assert.Equal(Constants.CityIdForDelete, cities[6].Id);
-        Assert.Equal(Constants.CityIdForGetting3, cities[7].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting1, cities[0].Id);
+        Assert.Equal(TestDataConstants.CityIdForUpdate , cities[1].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting6, cities[2].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting5, cities[3].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting4, cities[4].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting2, cities[5].Id);
+        Assert.Equal(TestDataConstants.CityIdForDelete, cities[6].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting3, cities[7].Id);
     }
     
     #endregion
@@ -270,24 +270,24 @@ public class CityRepositoryTests
     [Fact]
     public async Task FindCityByIdAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var city = await _cityRepository
             .FindByIdAsync(
-                Constants.CityIdForGetting1, 
+                TestDataConstants.CityIdForGetting1, 
                 CancellationToken.None);
         // Assert
         Assert.NotNull(city);
-        Assert.Equal(Constants.CityIdForGetting1, city.Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting1, city.Id);
     }
 
     [Fact]
     public async Task FindCityByIdAsync_FailOnWrongId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int wrongId = 1435;
         // Act
@@ -302,24 +302,24 @@ public class CityRepositoryTests
     [Fact]
     public async Task GetCityByIdAsync_Success_Test() 
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var city = await _cityRepository
             .GetByIdAsync(
-                Constants.CityIdForGetting1, 
+                TestDataConstants.CityIdForGetting1, 
                 CancellationToken.None);
         // Assert
         Assert.NotNull(city);
-        Assert.Equal(Constants.CityIdForGetting1, city.Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting1, city.Id);
     }
     
     [Fact]
     public async Task GetCityByIdAsync_FailOnWrongId_Test() 
     { 
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int wrongId = 143425;
         // Act
@@ -336,8 +336,8 @@ public class CityRepositoryTests
     [Fact]
     public async Task FindCitiesByNameAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);_cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);_cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "mila";
         // Act
@@ -350,16 +350,16 @@ public class CityRepositoryTests
         Assert.NotNull(result);
         Assert.Equal(3, result.Count());
         
-        Assert.Equal(Constants.CityIdForGetting4, result[0].Id);
-        Assert.Equal(Constants.CityIdForGetting5, result[1].Id);
-        Assert.Equal(Constants.CityIdForGetting6, result[2].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting4, result[0].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting5, result[1].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting6, result[2].Id);
     }
 
     [Fact]
     public async Task FindCitiesByNameAsync_FailOnWrongName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string wrongName = Guid.NewGuid().ToString();
         // Act
@@ -375,8 +375,8 @@ public class CityRepositoryTests
     [Fact]
     public async Task GetCitiesByNameAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "mila";
         // Act
@@ -388,16 +388,16 @@ public class CityRepositoryTests
         // Assert
         Assert.NotNull(result);
         Assert.Equal(3, result.Count());
-        Assert.Equal(Constants.CityIdForGetting4, result[0].Id);
-        Assert.Equal(Constants.CityIdForGetting5, result[1].Id);
-        Assert.Equal(Constants.CityIdForGetting6, result[2].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting4, result[0].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting5, result[1].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting6, result[2].Id);
     }
 
     [Fact]
     public async Task GetCitiesByNameAsync_FailOnWrongName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string wrongName = Guid.NewGuid().ToString();
         // Act
@@ -412,8 +412,8 @@ public class CityRepositoryTests
     [Fact]
     public async Task FindCitiesByNameAsync_CountLimit_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "mila";
         // Act
@@ -426,15 +426,15 @@ public class CityRepositoryTests
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Count());
-        Assert.Equal(Constants.CityIdForGetting4, result[0].Id);
-        Assert.Equal(Constants.CityIdForGetting5, result[1].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting4, result[0].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting5, result[1].Id);
     }
     
     [Fact]
     public async Task FindCitiesByNameAsync_SortByName_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "mila";
         // Act
@@ -447,16 +447,16 @@ public class CityRepositoryTests
         // Assert
         Assert.NotNull(cities);
         Assert.Equal(3, cities.Count());
-        Assert.Equal(Constants.CityIdForGetting4, cities[0].Id);
-        Assert.Equal(Constants.CityIdForGetting5, cities[1].Id);
-        Assert.Equal(Constants.CityIdForGetting6, cities[2].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting4, cities[0].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting5, cities[1].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting6, cities[2].Id);
     }
 
     [Fact]
     public async Task FindCitiesByNameAsync_SortByName_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "mila";
         // Act
@@ -469,16 +469,16 @@ public class CityRepositoryTests
         // Assert
         Assert.NotNull(cities);
         Assert.Equal(3, cities.Count());
-        Assert.Equal(Constants.CityIdForGetting6, cities[0].Id);
-        Assert.Equal(Constants.CityIdForGetting5, cities[1].Id);
-        Assert.Equal(Constants.CityIdForGetting4, cities[2].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting6, cities[0].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting5, cities[1].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting4, cities[2].Id);
     }
 
     [Fact]
     public async Task FindCitiesByNameAsync_SortById_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "mila";
         // Act
@@ -491,16 +491,16 @@ public class CityRepositoryTests
         // Assert
         Assert.NotNull(cities);
         Assert.Equal(3, cities.Count());
-        Assert.Equal(Constants.CityIdForGetting4, cities[0].Id);
-        Assert.Equal(Constants.CityIdForGetting5, cities[1].Id);
-        Assert.Equal(Constants.CityIdForGetting6, cities[2].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting4, cities[0].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting5, cities[1].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting6, cities[2].Id);
     }
 
     [Fact]
     public async Task FindCitiesByNameAsync_SortById_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "mila";
         // Act
@@ -513,16 +513,16 @@ public class CityRepositoryTests
         // Assert
         Assert.NotNull(cities);
         Assert.Equal(3, cities.Count());
-        Assert.Equal(Constants.CityIdForGetting6, cities[0].Id);
-        Assert.Equal(Constants.CityIdForGetting5, cities[1].Id);
-        Assert.Equal(Constants.CityIdForGetting4, cities[2].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting6, cities[0].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting5, cities[1].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting4, cities[2].Id);
     }
     
     [Fact]
     public async Task FindCitiesByNameRuAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "mila";
         // Act
@@ -534,16 +534,16 @@ public class CityRepositoryTests
         // Assert
         Assert.NotNull(result);
         Assert.Equal(3, result.Count());
-        Assert.Equal(Constants.CityIdForGetting4, result[0].Id);
-        Assert.Equal(Constants.CityIdForGetting5, result[1].Id);
-        Assert.Equal(Constants.CityIdForGetting6, result[2].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting4, result[0].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting5, result[1].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting6, result[2].Id);
     }
     
     [Fact]
     public async Task FindCitiesByOtherNameAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _cityRepository = new CityRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _cityRepository = new CityRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string name = "mila";
         // Act
@@ -555,9 +555,9 @@ public class CityRepositoryTests
         // Assert
         Assert.NotNull(result);
         Assert.Equal(3, result.Count());
-        Assert.Equal(Constants.CityIdForGetting4, result[0].Id);
-        Assert.Equal(Constants.CityIdForGetting5, result[1].Id);
-        Assert.Equal(Constants.CityIdForGetting6, result[2].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting4, result[0].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting5, result[1].Id);
+        Assert.Equal(TestDataConstants.CityIdForGetting6, result[2].Id);
     }
     #endregion
 }

@@ -15,6 +15,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new CountryConfiguration());
         modelBuilder.ApplyConfiguration(new CityConfiguration());
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new SubCategoryConfiguration());
         
         modelBuilder.ApplyConfiguration(new ProductConfiguration());
         modelBuilder.ApplyConfiguration(new ProductVariantConfiguration());
@@ -39,7 +40,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<ProductEntity> Products { get; set; }
     public DbSet<ProductVariantEntity> ProductVariants { get; set; }
     public DbSet<ProductDetailEntity> ProductDetails { get; set; }
-    public DbSet<ProductClothEntity> ProductCloth { get; set; }
+    public DbSet<ProductClothEntity> ProductClothes { get; set; }
     public DbSet<ProductClothSizeEntity> ProductClothSizes { get; set; }
     public DbSet<ProductAttributeEntity> ProductAttributes { get; set; }
     public DbSet<ProductPriceHistoryEntity> PriceHistories { get; set; }

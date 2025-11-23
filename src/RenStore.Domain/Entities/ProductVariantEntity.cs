@@ -10,6 +10,7 @@ public class ProductVariantEntity
     public int InStock { get; set; }
     public bool IsAvailable { get; set; }
     public DateTime CreatedDate { get; set; }
+    public string Url { get; set; } = string.Empty;
     public Guid ProductId { get; set; }
     public ProductEntity? Product { get; set; }
     public int ColorId { get; set; }

@@ -16,15 +16,15 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task CreateColorAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int colorId = 84587;
         var color = new ColorEntity()
         {
             Id = colorId,
-            Name = TestContextFactory.ColorNameForCreate,
-            NormalizedName = TestContextFactory.ColorNameForCreate.ToUpper(),
+            Name = TestDataConstants.ColorNameForCreate,
+            NormalizedName = TestDataConstants.ColorNameForCreate.ToUpper(),
             NameRu = Guid.NewGuid().ToString(),
             ColorCode = "#123",
             Description = Guid.NewGuid().ToString()
@@ -35,7 +35,7 @@ public class ColorRepositoryTests : IDisposable
         Assert.Equal(colorId, result);
         var savedColor = await _context.Colors
             .AsNoTracking()
-            .FirstOrDefaultAsync(c => c.Name == TestContextFactory.ColorNameForCreate);
+            .FirstOrDefaultAsync(c => c.Name == TestDataConstants.ColorNameForCreate);
         
         Assert.NotNull(savedColor);
         Assert.Equal(color.Name, savedColor.Name);
@@ -48,15 +48,15 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task CreateColorAsync_FailOnDuplicateName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int colorId = 4345;
         var color = new ColorEntity()
         {
             Id = colorId,
-            Name = TestContextFactory.ColorNameForCreate,
-            NormalizedName = TestContextFactory.ColorNameForCreate.ToUpper(),
+            Name = TestDataConstants.ColorNameForCreate,
+            NormalizedName = TestDataConstants.ColorNameForCreate.ToUpper(),
             NameRu = "белый",
             ColorCode = "#FFF",
             Description = "Test Description"
@@ -64,8 +64,8 @@ public class ColorRepositoryTests : IDisposable
         var duplicateColor = new ColorEntity()
         {
             Id = colorId + 1,
-            Name = TestContextFactory.ColorNameForCreate,
-            NormalizedName = TestContextFactory.ColorNameForCreate.ToUpper(),
+            Name = TestDataConstants.ColorNameForCreate,
+            NormalizedName = TestDataConstants.ColorNameForCreate.ToUpper(),
             NameRu = "белый",
             ColorCode = "#FFF",
             Description = "Test Description"
@@ -89,14 +89,14 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task UpdateColorAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string updatedName = Guid.NewGuid().ToString();
         string updatedNormalizedName = updatedName.ToUpper();
         string description = Guid.NewGuid().ToString();
         var color = await _context.Colors.FirstOrDefaultAsync(c => 
-            c.Id == Constants.ColorIdForUpdate);
+            c.Id == TestDataConstants.ColorIdForUpdate);
         if (color is null)
             return;
         // Act
@@ -106,7 +106,7 @@ public class ColorRepositoryTests : IDisposable
         await _colorRepository.UpdateAsync(color, CancellationToken.None);
         // Assert
         var updatedColor = await _context.Colors.FirstOrDefaultAsync(c => 
-            c.Id == Constants.ColorIdForUpdate);
+            c.Id == TestDataConstants.ColorIdForUpdate);
         Assert.NotNull(updatedColor);
         Assert.Equal(updatedName, updatedColor.Name);
         Assert.Equal(updatedNormalizedName, updatedColor.NormalizedName);
@@ -116,8 +116,8 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task UpdateColorAsync_FailOnWrongId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string updatedName = Guid.NewGuid().ToString();
         string updatedNormalizedName = updatedName.ToUpper();
@@ -140,18 +140,18 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task DeleteColorAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         await _colorRepository.DeleteAsync(
-            Constants.ColorIdForDelete, 
+            TestDataConstants.ColorIdForDelete, 
             CancellationToken.None);
         // Assert
         var color = await _context.Colors
             .AsNoTracking()
             .FirstOrDefaultAsync(c => 
-                c.Id == Constants.ColorIdForDelete);
+                c.Id == TestDataConstants.ColorIdForDelete);
         
         Assert.Null(color);
     }
@@ -159,8 +159,8 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task DeleteColorAsync_FailOnWrongId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         // Assert
@@ -173,8 +173,8 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task FindAllColorsAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _colorRepository
@@ -187,8 +187,8 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task FindAllColorsAsync_CountLimit_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _colorRepository
@@ -203,8 +203,8 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task FindAllColorsAsync_SortByName_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var colors = await _colorRepository
@@ -217,21 +217,21 @@ public class ColorRepositoryTests : IDisposable
         Assert.NotNull(result);
         Assert.Equal(8, result.Count());
         
-        Assert.Equal(TestContextFactory.ColorNameForUpdate, result[0].Name);
-        Assert.Equal(TestContextFactory.ColorNameForGetting1, result[1].Name);
-        Assert.Equal(TestContextFactory.ColorNameForGetting6, result[2].Name); 
-        Assert.Equal(TestContextFactory.ColorNameForGetting5, result[3].Name);
-        Assert.Equal(TestContextFactory.ColorNameForDelete, result[4].Name); 
-        Assert.Equal(TestContextFactory.ColorNameForGetting2, result[5].Name); 
-        Assert.Equal(TestContextFactory.ColorNameForGetting4, result[6].Name);
-        Assert.Equal(TestContextFactory.ColorNameForGetting3, result[7].Name);
+        Assert.Equal(TestDataConstants.ColorNameForUpdate, result[0].Name);
+        Assert.Equal(TestDataConstants.ColorNameForGetting1, result[1].Name);
+        Assert.Equal(TestDataConstants.ColorNameForGetting6, result[2].Name); 
+        Assert.Equal(TestDataConstants.ColorNameForGetting5, result[3].Name);
+        Assert.Equal(TestDataConstants.ColorNameForDelete, result[4].Name); 
+        Assert.Equal(TestDataConstants.ColorNameForGetting2, result[5].Name); 
+        Assert.Equal(TestDataConstants.ColorNameForGetting4, result[6].Name);
+        Assert.Equal(TestDataConstants.ColorNameForGetting3, result[7].Name);
     }
     
     [Fact]
     public async Task FindAllColorsAsync_SortByName_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var colors = await _colorRepository
@@ -243,21 +243,21 @@ public class ColorRepositoryTests : IDisposable
         var result = colors.ToList();
         Assert.NotNull(result);
         Assert.Equal(8, result.Count());
-        Assert.Equal(TestContextFactory.ColorNameForGetting3, result[0].Name);
-        Assert.Equal(TestContextFactory.ColorNameForGetting4, result[1].Name);
-        Assert.Equal(TestContextFactory.ColorNameForGetting2, result[2].Name); 
-        Assert.Equal(TestContextFactory.ColorNameForDelete, result[3].Name);
-        Assert.Equal(TestContextFactory.ColorNameForGetting5, result[4].Name); 
-        Assert.Equal(TestContextFactory.ColorNameForGetting6, result[5].Name); 
-        Assert.Equal(TestContextFactory.ColorNameForGetting1, result[6].Name);
-        Assert.Equal(TestContextFactory.ColorNameForUpdate, result[7].Name);
+        Assert.Equal(TestDataConstants.ColorNameForGetting3, result[0].Name);
+        Assert.Equal(TestDataConstants.ColorNameForGetting4, result[1].Name);
+        Assert.Equal(TestDataConstants.ColorNameForGetting2, result[2].Name); 
+        Assert.Equal(TestDataConstants.ColorNameForDelete, result[3].Name);
+        Assert.Equal(TestDataConstants.ColorNameForGetting5, result[4].Name); 
+        Assert.Equal(TestDataConstants.ColorNameForGetting6, result[5].Name); 
+        Assert.Equal(TestDataConstants.ColorNameForGetting1, result[6].Name);
+        Assert.Equal(TestDataConstants.ColorNameForUpdate, result[7].Name);
     }
     
     [Fact]
     public async Task FindAllColorsAsync_SortById_DescendingFalse_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var colors = await _colorRepository
@@ -269,21 +269,21 @@ public class ColorRepositoryTests : IDisposable
         var result = colors.ToList();
         Assert.NotNull(result);
         Assert.Equal(8, result.Count());
-        Assert.Equal(Constants.ColorIdForUpdate, result[0].Id); // 1 1
-        Assert.Equal(Constants.ColorIdForDelete, result[1].Id); // 2 3
-        Assert.Equal(Constants.ColorIdForGetting1, result[2].Id); // 3 6
-        Assert.Equal(Constants.ColorIdForGetting2, result[3].Id); // 4 7
-        Assert.Equal(Constants.ColorIdForGetting3, result[4].Id); // 5 2
-        Assert.Equal(Constants.ColorIdForGetting4, result[5].Id); // 6 4
-        Assert.Equal(Constants.ColorIdForGetting5, result[6].Id); // 7 5
-        Assert.Equal(Constants.ColorIdForGetting6, result[7].Id);
+        Assert.Equal(TestDataConstants.ColorIdForUpdate, result[0].Id); // 1 1
+        Assert.Equal(TestDataConstants.ColorIdForDelete, result[1].Id); // 2 3
+        Assert.Equal(TestDataConstants.ColorIdForGetting1, result[2].Id); // 3 6
+        Assert.Equal(TestDataConstants.ColorIdForGetting2, result[3].Id); // 4 7
+        Assert.Equal(TestDataConstants.ColorIdForGetting3, result[4].Id); // 5 2
+        Assert.Equal(TestDataConstants.ColorIdForGetting4, result[5].Id); // 6 4
+        Assert.Equal(TestDataConstants.ColorIdForGetting5, result[6].Id); // 7 5
+        Assert.Equal(TestDataConstants.ColorIdForGetting6, result[7].Id);
     }
     
     [Fact]
     public async Task FindAllColorsAsync_SortById_DescendingTrue_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var colors = await _colorRepository
@@ -295,37 +295,37 @@ public class ColorRepositoryTests : IDisposable
         var result = colors.ToList();
         Assert.NotNull(result);
         Assert.Equal(8, result.Count());
-        Assert.Equal(Constants.ColorIdForGetting6, result[0].Id);
-        Assert.Equal(Constants.ColorIdForGetting5, result[1].Id);
-        Assert.Equal(Constants.ColorIdForGetting4 , result[2].Id);
-        Assert.Equal(Constants.ColorIdForGetting3, result[3].Id);
-        Assert.Equal(Constants.ColorIdForGetting2, result[4].Id);
-        Assert.Equal(Constants.ColorIdForGetting1, result[5].Id);
-        Assert.Equal(Constants.ColorIdForDelete, result[6].Id);
-        Assert.Equal(Constants.ColorIdForUpdate, result[7].Id);
+        Assert.Equal(TestDataConstants.ColorIdForGetting6, result[0].Id);
+        Assert.Equal(TestDataConstants.ColorIdForGetting5, result[1].Id);
+        Assert.Equal(TestDataConstants.ColorIdForGetting4 , result[2].Id);
+        Assert.Equal(TestDataConstants.ColorIdForGetting3, result[3].Id);
+        Assert.Equal(TestDataConstants.ColorIdForGetting2, result[4].Id);
+        Assert.Equal(TestDataConstants.ColorIdForGetting1, result[5].Id);
+        Assert.Equal(TestDataConstants.ColorIdForDelete, result[6].Id);
+        Assert.Equal(TestDataConstants.ColorIdForUpdate, result[7].Id);
     }
     
     [Fact]
     public async Task FindColorByIdAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _colorRepository
             .FindByIdAsync(
-                Constants.ColorIdForGetting1, 
+                TestDataConstants.ColorIdForGetting1, 
                 CancellationToken.None);
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(Constants.ColorIdForGetting1, result.Id);
+        Assert.Equal(TestDataConstants.ColorIdForGetting1, result.Id);
     }
     
     [Fact]
     public async Task FindColorByIdAsync_FailOnWrongId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _colorRepository
@@ -339,24 +339,24 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task GetColorByIdAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var result = await _colorRepository
             .GetByIdAsync(
-                id: Constants.ColorIdForGetting1, 
+                id: TestDataConstants.ColorIdForGetting1, 
                 CancellationToken.None);
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(Constants.ColorIdForGetting1, result.Id);
+        Assert.Equal(TestDataConstants.ColorIdForGetting1, result.Id);
     }
     
     [Fact]
     public async Task GetColorByIdAsync_FailOnWrongId_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         int colorId = 5353336;
         // Act
@@ -370,32 +370,32 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task FindColorByNameAsync_WithDefaultParameters_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var colors = await _colorRepository
             .FindByNameAsync(
-                name: TestContextFactory.ColorNameForGetting1, 
+                name: TestDataConstants.ColorNameForGetting1, 
                 CancellationToken.None);
         
         var result = colors.ToList();
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(Constants.ColorIdForGetting1, result[0].Id);
+        Assert.Equal(TestDataConstants.ColorIdForGetting1, result[0].Id);
     }
     
     [Fact]
     public async Task FindColorByNameAsync_CountLimit_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var colors = await _colorRepository
             .FindByNameAsync(
                 pageCount: 2,
-                name: TestContextFactory.ColorNameForGetting5, 
+                name: TestDataConstants.ColorNameForGetting5, 
                 cancellationToken: CancellationToken.None);
         
         var result = colors.ToList();
@@ -407,8 +407,8 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task FindColorByNameAsync_FailOnWrongName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         string colorName = Guid.NewGuid().ToString();
         // Act
@@ -421,8 +421,8 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task FindColorByNameAsync_FailOnNullName_Test()
     { 
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(async() =>
@@ -435,8 +435,8 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task FindColorByNameAsync_FailOnEmptyName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(async() =>
@@ -449,26 +449,26 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task GetColorByNameAsync_Success_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         var colors = await _colorRepository
             .GetByNameAsync(
-                name: TestContextFactory.ColorNameForGetting1,
+                name: TestDataConstants.ColorNameForGetting1,
                 CancellationToken.None);
         
         var result = colors.ToList();
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(TestContextFactory.ColorNameForGetting1, result[0].Name);
+        Assert.Equal(TestDataConstants.ColorNameForGetting1, result[0].Name);
     }
     
     [Fact]
     public async Task GetColorByNameAsync_FailOnWrongName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act
         // Assert
@@ -482,8 +482,8 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task GetColorByNameAsync_FailOnNullName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(async() =>
@@ -496,8 +496,8 @@ public class ColorRepositoryTests : IDisposable
     [Fact]
     public async Task GetColorByNameAsync_FailOnEmptyName_Test()
     {
-        _context = TestContextFactory.CreateReadyContext();
-        _colorRepository = new ColorRepository(_context, TestContextFactory.ConnectionString);
+        _context = DatabaseFixture.CreateReadyContext();
+        _colorRepository = new ColorRepository(_context, DatabaseFixture.ConnectionString);
         // Arrange
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(async() =>

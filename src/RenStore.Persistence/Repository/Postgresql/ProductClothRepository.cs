@@ -41,7 +41,7 @@ public class ProductClothRepository : IProductClothRepository
         ProductClothEntity cloth, 
         CancellationToken cancellationToken)
     {
-        var result = await _context.ProductCloth.AddAsync(cloth, cancellationToken);
+        var result = await _context.ProductClothes.AddAsync(cloth, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
         return result.Entity.Id;
@@ -53,7 +53,7 @@ public class ProductClothRepository : IProductClothRepository
     {
         var existingCloth = await this.GetByIdAsync(cloth.Id, cancellationToken);
 
-        _context.ProductCloth.Update(cloth);
+        _context.ProductClothes.Update(cloth);
         await _context.SaveChangesAsync(cancellationToken);
     }
 
@@ -61,7 +61,7 @@ public class ProductClothRepository : IProductClothRepository
     {
         var cloth = await this.GetByIdAsync(id, cancellationToken);
         
-        _context.ProductCloth.Remove(cloth);
+        _context.ProductClothes.Remove(cloth);
         await _context.SaveChangesAsync(cancellationToken);
     }
     
@@ -86,13 +86,12 @@ public class ProductClothRepository : IProductClothRepository
             string sql =
                 $@"
                     SELECT 
-                        ""product_clothes_id"" AS Id,
+                        ""product_cloth_id"" AS Id,
                         ""gender"" AS Gender,
                         ""season"" AS Season,
                         ""neckline"" AS Neckline,
                         ""the_cut"" AS TheCut,
-                        ""product_id"" AS ProductId,
-                        ""product_clothes_id"" AS ProductClothId
+                        ""product_id"" AS ProductId
                     FROM
                         ""product_clothes""
                     ORDER BY {columnName} {direction} 
@@ -124,13 +123,12 @@ public class ProductClothRepository : IProductClothRepository
             const string sql = 
                 @"
                     SELECT 
-                        ""product_clothes_id"" AS Id,
+                        ""product_cloth_id"" AS Id,
                         ""gender"" AS Gender,
                         ""season"" AS Season,
                         ""neckline"" AS Neckline,
                         ""the_cut"" AS TheCut,
-                        ""product_id"" AS ProductId,
-                        ""product_clothes_id"" AS ProductClothId
+                        ""product_id"" AS ProductId
                     FROM
                         ""product_clothes""
                     WHERE 

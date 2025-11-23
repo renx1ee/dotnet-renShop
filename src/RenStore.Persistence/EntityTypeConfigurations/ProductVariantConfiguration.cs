@@ -63,6 +63,12 @@ public class ProductVariantConfiguration : IEntityTypeConfiguration<ProductVaria
             .HasColumnName("created_date")
             .HasDefaultValue(DateTime.UtcNow)
             .IsRequired();
+        
+        builder
+            .Property(v => v.Url)
+            .HasColumnName("url")
+            .HasMaxLength(500)
+            .IsRequired();
 
         builder
             .HasOne(v => v.Product)

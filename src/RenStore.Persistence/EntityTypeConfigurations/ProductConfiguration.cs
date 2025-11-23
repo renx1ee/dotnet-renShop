@@ -25,19 +25,28 @@ public class ProductConfiguration : IEntityTypeConfiguration<ProductEntity>
         builder
             .Property(p => p.OverallRating)
             .HasColumnName("overall_rating")
-            .IsRequired(false);
+            .IsRequired()
+            .HasDefaultValue(0);
         
         builder
             .HasOne(p => p.Seller)
             .WithMany(s => s.Products)
             .HasForeignKey(p => p.SellerId)
             .HasConstraintName("seller_id");
+
+        builder
+            .Property(p => p.SellerId)
+            .HasColumnName("seller_id");
         
         builder
             .HasOne(p => p.Category)
             .WithMany(c => c.Products)
             .HasForeignKey(p => p.CategoryId)
             .HasConstraintName("category_id");
+        
+        builder
+            .Property(p => p.CategoryId)
+            .HasColumnName("category_id");
 
         builder
             .HasMany(p => p.ProductVariants)
