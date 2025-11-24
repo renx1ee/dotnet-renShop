@@ -1211,4 +1211,118 @@ public static class TestData
             ProductClothId = TestDataConstants.ProductClothIdForGetting6
         }
     };
+
+    public static readonly IList<ProductPriceHistoryEntity> PriceHistories = new[]
+    {
+        // For Update
+        new ProductPriceHistoryEntity()
+        {
+            Id = TestDataConstants.ProductPriceHistoryIdForUpdate,
+            Price = 2990,
+            OldPrice = 3990,
+            DiscountPrice = 1000,
+            DiscountPercent = 0,
+            StartDate = DateTime.UtcNow,
+            EndDate = null,
+            ChangedBy = "seller",
+            ProductVariantId = TestDataConstants.ProductVariantIdForUpdate
+        },
+        // For Delete
+        new ProductPriceHistoryEntity()
+        {
+            Id = TestDataConstants.ProductPriceHistoryIdForDelete,
+            Price = 3000,
+            OldPrice = 5990,
+            DiscountPrice = 2990,
+            DiscountPercent = 0,
+            StartDate = DateTime.UtcNow,
+            EndDate = null,
+            ChangedBy = "seller",
+            ProductVariantId = TestDataConstants.ProductVariantIdForDelete
+        },
+        new ProductPriceHistoryEntity()
+        {
+            Id = TestDataConstants.ProductPriceHistoryIdForGetting1,
+            Price = 2990,
+            OldPrice = 3990,
+            DiscountPrice = 1000,
+            DiscountPercent = 0,
+            StartDate = DateTime.UtcNow,
+            EndDate = null,
+            ChangedBy = "seller",
+            ProductVariantId = TestDataConstants.ProductVariantIdForGetting1
+        },
+        new ProductPriceHistoryEntity()
+        {
+            Id = TestDataConstants.ProductPriceHistoryIdForGetting2,
+            Price = 2990,
+            OldPrice = 3990,
+            DiscountPrice = 1000,
+            DiscountPercent = 0,
+            StartDate = DateTime.UtcNow,
+            EndDate = null,
+            ChangedBy = "seller",
+            ProductVariantId = TestDataConstants.ProductVariantIdForGetting2
+        },
+        new ProductPriceHistoryEntity()
+        {
+            Id = TestDataConstants.ProductPriceHistoryIdForGetting3,
+            Price = 2990,
+            OldPrice = 3990,
+            DiscountPrice = 1000,
+            DiscountPercent = 0,
+            StartDate = DateTime.UtcNow,
+            EndDate = null,
+            ChangedBy = "seller",
+            ProductVariantId = TestDataConstants.ProductVariantIdForGetting3
+        },
+        new ProductPriceHistoryEntity()
+        {
+            Id = TestDataConstants.ProductPriceHistoryIdForGetting4,
+            Price = 2990,
+            OldPrice = 3990,
+            DiscountPrice = 1000,
+            DiscountPercent = 0,
+            StartDate = DateTime.UtcNow,
+            EndDate = null,
+            ChangedBy = "seller",
+            ProductVariantId = TestDataConstants.ProductVariantIdForGetting4
+        },
+        new ProductPriceHistoryEntity()
+        {
+            Id = TestDataConstants.ProductPriceHistoryIdForGetting5,
+            Price = 2990,
+            OldPrice = 3990,
+            DiscountPrice = 1000,
+            DiscountPercent = 0,
+            StartDate = DateTime.UtcNow,
+            EndDate = null,
+            ChangedBy = "seller",
+            ProductVariantId = TestDataConstants.ProductVariantIdForGetting5
+        },
+        new ProductPriceHistoryEntity()
+        {
+            Id = TestDataConstants.ProductPriceHistoryIdForGetting6,
+            Price = 2990,
+            OldPrice = 3990,
+            DiscountPrice = 1000,
+            DiscountPercent = 0,
+            StartDate = DateTime.UtcNow,
+            EndDate = null,
+            ChangedBy = "seller",
+            ProductVariantId = TestDataConstants.ProductVariantIdForGetting6
+        },
+        new ProductPriceHistoryEntity()
+        {
+            Id = TestDataConstants.ProductPriceHistoryIdForGetting7,
+            Price = 4000,
+            OldPrice = 5000,
+            DiscountPrice = 1000,
+            DiscountPercent = 0,
+            StartDate = DateTime.UtcNow.AddHours(8),
+            EndDate = null,
+            ChangedBy = "seller",
+            ProductVariantId = TestDataConstants.ProductVariantIdForGetting6
+        },
+    };
 }

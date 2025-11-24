@@ -65,7 +65,7 @@ public interface IProductVariantRepository
     /// </summary>
     /// <param name="id">The product variant unique identifier.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>The product variant entity if found; overwise <c>null</c>.</returns>
+    /// <returns>The product variant entity if found;</returns>
     /// <exception cref="NotFoundException">Thrown when product variant is not found.</exception>
     Task<ProductVariantEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 }

@@ -27,7 +27,7 @@ public class ProductRepository : IProductRepository
     {
         this._context = context;
         this._connectionString = connectionString 
-            ?? throw new ArgumentNullException(nameof(connectionString));
+                                 ?? throw new ArgumentNullException(nameof(connectionString));
     }
 
     public ProductRepository(
@@ -35,9 +35,8 @@ public class ProductRepository : IProductRepository
         IConfiguration configuration)
     {
         this._context = context;
-        this._connectionString = configuration
-            .GetConnectionString("DefaultConnection")
-            ?? throw new ArgumentNullException(nameof(_connectionString));
+        this._connectionString = configuration.GetConnectionString("DefaultConnection")
+                                 ?? throw new ArgumentNullException($"DefaultConnection is null");
     }
 
     public async Task<Guid> CreateAsync(
@@ -154,7 +153,7 @@ public class ProductRepository : IProductRepository
             ?? throw new NotFoundException(typeof(ProductEntity), id);
     }
 
-    public async Task<ProductFullDto?> FindFullAsync(Guid id, CancellationToken cancellationToken)
+    /*public async Task<ProductFullDto?> FindFullAsync(Guid id, CancellationToken cancellationToken)
     {
         try
         {
@@ -223,84 +222,89 @@ public class ProductRepository : IProductRepository
                         -- seller
                         s.""seller_id"" AS Id,
                         s.""seller_name"" AS Name,
-                        s.""url"" AS Url,
+                        s.""url"" AS Url
                         -- seller image
-                        ""storage_path"" AS StoragePath,
+                        -- ""storage_path"" AS StoragePath,
                         -- product image
-                        ""storage_path"" AS StoragePath,
-                        ""is_main"" AS IsMain,
-                        ""sort_order"" AS SortOrder
+                        -- ""storage_path"" AS StoragePath,
+                        -- ""is_main"" AS IsMain,
+                        -- ""sort_order"" AS SortOrder
                     FROM 
                         ""products"" p
-                    INNER JOIN ""product_variants"" pv ON vp.""product_id"" = p.""product_id""
+                    INNER JOIN ""product_variants"" pv ON pv.""product_id"" = p.""product_id""
                     LEFT JOIN ""product_clothes"" pc ON pc.""product_id"" = p.""product_id""
                     LEFT JOIN ""product_cloth_sizes"" pcs ON pcs.""product_cloth_id"" = pc.""product_cloth_id""
                     LEFT JOIN ""product_price_histories"" ph ON ph.""product_variant_id"" = pv.""product_variant_id""
                     LEFT JOIN ""product_details"" pd ON pd.""product_variant_id"" = pv.""product_variant_id""
                     LEFT JOIN ""product_attributes"" pa ON pa.""product_variant_id"" = pv.""product_variant_id""
                     LEFT JOIN ""sellers"" s ON s.""seller_id"" = p.""seller_id""
-                    LEFT JOIN ""seller_images"" si ON si.""seller_id"" = s.""seller_id""
-                    LEFT JOIN ""product_images"" pi ON pi.""product_id"" = p.""product_id""
+                    -- LEFT JOIN ""seller_images"" si ON si.""seller_id"" = s.""seller_id""
+                    -- LEFT JOIN ""product_images"" pi ON pi.""product_id"" = p.""product_id""
                     LEFT JOIN ""countries"" ct ON ct.""country_id"" = pd.""country_id"" 
                     WHERE 
                         p.""product_id"" = @Id
                     ORDER BY 
                         -- product images
-                        pi.""is_main"" DESC,
-                        pi.""sort_order"" ASC
+                        -- pi.""is_main"" DESC,
+                        -- pi.""sort_order"" ASC,
                         -- product cloth sizes
                         pcs.""amount"" ASC,
                         -- price history
                         ph.""start_date"" ASC;
                 ";
 
-            var lookupPrice = new Dictionary<Guid, ProductPriceHistoryDto>(); 
-            var lookupSize = new Dictionary<Guid, ProductClothSizeDto>(); 
-            var lookupAttributes = new Dictionary<Guid, ProductAttributeDto>(); 
-            var lookupProductImages = new Dictionary<Guid, ProductImageDto>(); 
-
-            var result = await connection.QueryAsync<
-                ProductFullDto>(
-                sql, 
-                (
+            var lookupPrice      = new Dictionary<Guid, ProductPriceHistoryDto>(); 
+            var lookupSize       = new Dictionary<Guid, ProductClothSizeDto>(); 
+            var lookupAttributes = new Dictionary<Guid, ProductAttributeDto>();
+            var productVariants  = new Dictionary<Guid, ProductVariantDto>();
+            // var lookupProductImages = new Dictionary<Guid, ProductImageDto>();
+            
+            ProductFullDto? product = null;
+            
+            return await connection.QueryAsync<ProductFullDto>(
+                sql: sql, 
+                param: new  { Id = id },
+                map: (
                     ProductDto product, 
                     ProductVariantDto variant, 
                     ProductDetailDto detail, 
                     ProductClothDto cloth, 
                     SellerDto seller, 
-                    SellerImageDto sellerImage, 
+                    // SellerImageDto sellerImage, 
                     ProductClothSizeDto clothSize, 
                     ProductAttributeDto attribute, 
-                    ProductPriceHistoryDto priceHistory, 
-                    ProductImageDto productImage ) =>
+                    ProductPriceHistoryDto priceHistory
+                    // ProductImageDto productImage 
+                    ) =>
                 {
-                    if (!lookupPrice!.ContainsKey(priceHistory.Id))
+                    if (!lookupPrice.ContainsKey(priceHistory.Id))
                         lookupPrice[priceHistory.Id] = priceHistory;
                     
-                    if (!lookupSize!.ContainsKey(clothSize.Id))
+                    if (!lookupSize.ContainsKey(clothSize.Id))
                         lookupSize[clothSize.Id] = clothSize;
                     
-                    if (!lookupAttributes!.ContainsKey(attribute.Id))
+                    if (!lookupAttributes.ContainsKey(attribute.Id))
                         lookupAttributes[attribute.Id] = attribute;
                     
-                    if (!lookupProductImages!.ContainsKey(productImage.Id))
-                        lookupProductImages[productImage.Id] = productImage;
+                    /*if (!lookupProductImages.ContainsKey(productImage.Id))
+                        lookupProductImages[productImage.Id] = productImage;#1#
                     
-                    return new ProductFullDto(
-                        Product: product,
-                        Variant: variant,
-                        Detail: detail,
-                        Cloth: cloth,
-                        Seller: seller,
-                        SellerImage: sellerImage,
-                        ClothSize: lookupSize.Values.ToList(),
-                        Attributes: lookupAttributes.Values.ToList(),
-                        Prices: lookupPrice.Values.ToList(),
-                        ProductImages: lookupProductImages.Values.ToList()
-                    );
-                });
+                    if(!productVariants.ContainsKey(variant.Id))
+                        productVariants[variant.Id] = variant;
 
-            return result.FirstOrDefault();
+                    product ??= new ProductFullDto(
+                        Product: product, 
+                        Detail: detail,
+                        Cloth: cloth, 
+                        Seller: seller,
+                        Variants: productVariants.ToList(),
+                        ClothSizes: lookupAttributes.Values.ToList(), 
+                        Prices: lookupPrice.Values.ToList(),
+                        Prices: lookupAttributes.Values.ToList());
+
+                    
+
+                });
         }
         catch (PostgresException e)
         {
@@ -312,5 +316,5 @@ public class ProductRepository : IProductRepository
     {
         return await this.FindFullAsync(id, cancellationToken)
             ?? throw new NotFoundException(typeof(ProductFullDto), id);
-    }
+    }*/
 }

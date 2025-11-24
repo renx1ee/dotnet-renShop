@@ -62,7 +62,7 @@ public interface IProductClothRepository
     /// </summary>
     /// <param name="id">The product cloth unique identifier.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>The product cloth entity if found; overwise <c>null</c>.</returns>
+    /// <returns>The product cloth entity if found.</returns>
     /// <exception cref="NotFoundException">Thrown when product cloth is not found.</exception>
     Task<ProductClothEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 }

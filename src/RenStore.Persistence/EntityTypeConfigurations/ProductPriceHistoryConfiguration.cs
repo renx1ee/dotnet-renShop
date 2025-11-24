@@ -58,5 +58,9 @@ public class ProductPriceHistoryConfiguration : IEntityTypeConfiguration<Product
             .WithMany(x => x.PriceHistories)
             .HasForeignKey(x => x.ProductVariantId)
             .HasConstraintName("product_variant_id");
+
+        builder
+            .Property(x => x.ProductVariantId)
+            .HasColumnName("product_variant_id");
     }
 }

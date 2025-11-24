@@ -280,4 +280,16 @@ public static class TestDataConstants
     public static readonly Guid ProductClothSizeIdForGetting13 = Guid.NewGuid();
     public static readonly Guid ProductClothSizeIdForGetting14 = Guid.NewGuid();
     public static readonly Guid ProductClothSizeIdForGetting15 = Guid.NewGuid();
+    
+    // Product Clothes 
+    public static readonly int OverallProductPriceHistoriesCount = 9;
+    public static readonly Guid ProductPriceHistoryIdForUpdate = Guid.NewGuid();
+    public static readonly Guid ProductPriceHistoryIdForDelete = Guid.NewGuid();
+    public static readonly Guid ProductPriceHistoryIdForGetting1 = Guid.NewGuid();
+    public static readonly Guid ProductPriceHistoryIdForGetting2 = Guid.NewGuid();
+    public static readonly Guid ProductPriceHistoryIdForGetting3 = Guid.NewGuid();
+    public static readonly Guid ProductPriceHistoryIdForGetting4 = Guid.NewGuid();
+    public static readonly Guid ProductPriceHistoryIdForGetting5 = Guid.NewGuid();
+    public static readonly Guid ProductPriceHistoryIdForGetting6 = Guid.NewGuid();
+    public static readonly Guid ProductPriceHistoryIdForGetting7 = Guid.NewGuid();
 }

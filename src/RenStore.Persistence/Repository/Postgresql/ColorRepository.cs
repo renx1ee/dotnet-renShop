@@ -25,7 +25,8 @@ public class ColorRepository : IColorRepository
         string connectionString)
     {
         this._context = context;
-        this._connectionString = connectionString  ?? throw new ArgumentNullException(nameof(connectionString));
+        this._connectionString = connectionString  
+                                 ?? throw new ArgumentNullException(nameof(connectionString));
     }
 
     public ColorRepository(
@@ -33,7 +34,8 @@ public class ColorRepository : IColorRepository
         IConfiguration configuration)
     {
         this._context = context;
-        this._connectionString = configuration.GetConnectionString("DefaultConnection")!;
+        this._connectionString = configuration.GetConnectionString("DefaultConnection")
+                                 ?? throw new ArgumentNullException($"DefaultConnection is null");
     }
 
     public async Task<int> CreateAsync(ColorEntity color, CancellationToken cancellationToken)

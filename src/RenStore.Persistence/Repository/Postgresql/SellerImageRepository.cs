@@ -8,17 +8,18 @@ using RenStore.Domain.Repository;
 
 namespace RenStore.Persistence.Repository.Postgresql;
 
-public class ProductDetailRepository : IProductDetailRepository
+public class SellerImageRepository : ISellerImageRepository
 {
     private readonly ApplicationDbContext _context;
     private readonly string _connectionString;
 
-    private readonly Dictionary<ProductDetailSortBy, string> _sortColumnMapping = new()
+    private readonly Dictionary<SellerImageSortBy, string> _sortColumnMapping = new()
     {
-        { ProductDetailSortBy.Id, "product_detail_id" }
+        { SellerImageSortBy.Id, "seller_image_id" },
+        { SellerImageSortBy.UploadedAt, "seller_image_upload_date" },
     };
 
-    public ProductDetailRepository(
+    public SellerImageRepository(
         ApplicationDbContext context,
         string connectionString)
     {
@@ -27,50 +28,49 @@ public class ProductDetailRepository : IProductDetailRepository
                                  ?? throw new ArgumentNullException(nameof(connectionString));
     }
 
-    public ProductDetailRepository(
+    public SellerImageRepository(
         ApplicationDbContext context,
         IConfiguration configuration)
     {
         this._context = context;
-        this._connectionString = configuration .GetConnectionString("DefaultConnection")
+        this._connectionString = configuration.GetConnectionString("DefaultConnection") 
                                  ?? throw new ArgumentNullException($"DefaultConnection is null");
     }
-
+    
     public async Task<Guid> CreateAsync(
-        ProductDetailEntity detail, 
+        SellerImageEntity image, 
         CancellationToken cancellationToken)
     {
-        var result = await _context.ProductDetails.AddAsync(detail, cancellationToken);
+        var result = await _context.SellerImages.AddAsync(image, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
         return result.Entity.Id;
     }
 
     public async Task UpdateAsync(
-        ProductDetailEntity detail,
+        SellerImageEntity image,
         CancellationToken cancellationToken)
     {
-        var existingDetail = await this.GetByIdAsync(detail.Id, cancellationToken);
+        var existingAttribute = await this.GetByIdAsync(image.Id, cancellationToken);
 
-        _context.ProductDetails.Update(detail);
+        _context.SellerImages.Update(image);
         await _context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var existingDetail = await this.GetByIdAsync(id, cancellationToken);
+        var image = await this.GetByIdAsync(id, cancellationToken);
         
-        _context.ProductDetails.Remove(existingDetail);
+        _context.SellerImages.Remove(image);
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<ProductDetailEntity>> FindAllAsync(
-        CancellationToken cancellationToken,
-        ProductDetailSortBy sortBy = ProductDetailSortBy.Id,
-        uint pageCount = 25,
-        uint page = 1,
-        bool descending = false)
-    
+    public async Task<IEnumerable<SellerImageEntity>> FindAllAsync(
+        CancellationToken cancellationToken, 
+        uint pageCount = 25, 
+        uint page = 1, 
+        bool descending = false,
+        SellerImageSortBy sortBy = SellerImageSortBy.Id)
     {
         try
         {
@@ -80,30 +80,30 @@ public class ProductDetailRepository : IProductDetailRepository
             pageCount = Math.Min(pageCount, 1000);
             uint offset = (page - 1) * pageCount;
             string direction = descending ? "DESC" : "ASC";
-            var columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "product_detail_id");
+            var columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "price_history_id");
 
             string sql =
                 $@"
                     SELECT 
-                        ""product_detail_id"" AS Id,
-                        ""description"" AS Description,
-                        ""model_features"" AS ModelFeatures,
-                        ""decorative_elements"" AS DecorativeElements,
-                        ""equipment"" AS Equipment,
-                        ""composition"" AS Composition,
-                        ""caring_of_things"" AS CaringOfThings,
-                        ""type_of_packing"" AS TypeOfPacking,
-                        ""country_id"" AS CountryOfManufactureId,
-                        ""product_variant_id"" AS ProductVariantId
+                        ""seller_image_id"" AS Id,
+                        ""original_file_name"" AS OriginalFileName,
+                        ""storage_path"" AS StoragePath,
+                        ""file_size_bites"" AS FileSizeBytes,
+                        ""is_main"" AS IsMain,
+                        ""sort_order"" AS SortOrder,
+                        ""uploaded_date"" AS UploadedAt,
+                        ""weight"" AS Weight,
+                        ""height"" AS Height,
+                        ""seller_id"" AS SellerId
                     FROM
-                        ""product_details""
+                        ""seller_images""
                     ORDER BY {columnName} {direction} 
                     LIMIT @Count 
                     OFFSET @Offset;
                 ";
 
             return await connection
-                .QueryAsync<ProductDetailEntity>(
+                .QueryAsync<SellerImageEntity>(
                     sql, new
                     {
                         Count = (int)pageCount,
@@ -116,7 +116,7 @@ public class ProductDetailRepository : IProductDetailRepository
         }
     }
 
-    public async Task<ProductDetailEntity?> FindByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<SellerImageEntity?> FindByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         try
         {
@@ -126,24 +126,24 @@ public class ProductDetailRepository : IProductDetailRepository
             const string sql = 
                 @"
                     SELECT 
-                        ""product_detail_id"" AS Id,
-                        ""description"" AS Description,
-                        ""model_features"" AS ModelFeatures,
-                        ""decorative_elements"" AS DecorativeElements,
-                        ""equipment"" AS Equipment,
-                        ""composition"" AS Composition,
-                        ""caring_of_things"" AS CaringOfThings,
-                        ""type_of_packing"" AS TypeOfPacking,
-                        ""country_id"" AS CountryOfManufactureId,
-                        ""product_variant_id"" AS ProductVariantId
+                        ""seller_image_id"" AS Id,
+                        ""original_file_name"" AS OriginalFileName,
+                        ""storage_path"" AS StoragePath,
+                        ""file_size_bites"" AS FileSizeBytes,
+                        ""is_main"" AS IsMain,
+                        ""sort_order"" AS SortOrder,
+                        ""uploaded_date"" AS UploadedAt,
+                        ""weight"" AS Weight,
+                        ""height"" AS Height,
+                        ""seller_id"" AS SellerId
                     FROM
-                        ""product_details""
+                        ""seller_images""
                     WHERE 
-                        ""product_detail_id"" = @Id;
+                        ""seller_image_id"" = @Id;
                 ";
 
             return await connection
-                .QueryFirstOrDefaultAsync<ProductDetailEntity>(
+                .QueryFirstOrDefaultAsync<SellerImageEntity>(
                     sql, new
                     {
                         Id = id
@@ -155,9 +155,9 @@ public class ProductDetailRepository : IProductDetailRepository
         }
     }
 
-    public async Task<ProductDetailEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<SellerImageEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return await this.FindByIdAsync(id, cancellationToken)
-            ?? throw new NotFoundException(typeof(ProductDetailEntity), id);
+            ?? throw new NotFoundException(typeof(SellerImageEntity), id);
     }
 }

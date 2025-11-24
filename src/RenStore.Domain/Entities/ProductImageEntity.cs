@@ -1,6 +1,6 @@
 namespace RenStore.Domain.Entities;
 
-public class ProductImage
+public class ProductImageEntity
 {
     public Guid Id { get; set; }
     public string OriginalFileName { get; set; } = string.Empty;
@@ -12,4 +12,5 @@ public class ProductImage
     public int Weight { get; set; }
     public int Height { get; set; }
     public Guid ProductVariantId { get; set; }
+    public ProductVariantEntity? ProductVariant { get; set; }
 }

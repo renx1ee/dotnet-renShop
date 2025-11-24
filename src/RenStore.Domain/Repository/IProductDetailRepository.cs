@@ -62,7 +62,7 @@ public interface IProductDetailRepository
     /// </summary>
     /// <param name="id">The product detail unique identifier.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>The product detail entity if found; overwise <c>null</c>.</returns>
+    /// <returns>The product detail entity if found.</returns>
     /// /// <exception cref="NotFoundException">Thrown when product detail is not found.</exception>
     Task<ProductDetailEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 }

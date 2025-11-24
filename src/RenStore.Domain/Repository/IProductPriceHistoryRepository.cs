@@ -62,7 +62,7 @@ public interface IProductPriceHistoryRepository
     /// </summary>
     /// <param name="id">The product price history unique identifier.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>The product price history entity if found; overwise <c>null</c>.</returns>
+    /// <returns>The product price history entity if found.</returns>
     /// <exception cref="NotFoundException">Thrown when product price history is not found.</exception>
     Task<ProductPriceHistoryEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 }

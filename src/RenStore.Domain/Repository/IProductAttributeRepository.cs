@@ -62,7 +62,7 @@ public interface IProductAttributeRepository
     /// </summary>
     /// <param name="id">The product attribute unique identifier.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>The product attribute entity if found; overwise <c>null</c>.</returns>
+    /// <returns>The product attribute entity if found.</returns>
     /// <exception cref="NotFoundException">Thrown when product attribute is not found.</exception>
     Task<ProductAttributeEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 }

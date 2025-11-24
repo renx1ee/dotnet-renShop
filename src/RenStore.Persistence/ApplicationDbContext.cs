@@ -25,6 +25,9 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ProductAttributeConfiguration());
         modelBuilder.ApplyConfiguration(new ProductPriceHistoryConfiguration());
         
+        modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
+        modelBuilder.ApplyConfiguration(new SellerImageConfiguration());
+        
         base.OnModelCreating(modelBuilder);
     }
     
@@ -44,4 +47,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<ProductClothSizeEntity> ProductClothSizes { get; set; }
     public DbSet<ProductAttributeEntity> ProductAttributes { get; set; }
     public DbSet<ProductPriceHistoryEntity> PriceHistories { get; set; }
+    public DbSet<ProductImageEntity> ProductImages { get; set; }
+    public DbSet<SellerImageEntity> SellerImages { get; set; }
 }

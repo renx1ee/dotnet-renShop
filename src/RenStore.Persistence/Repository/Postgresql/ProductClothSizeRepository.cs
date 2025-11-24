@@ -24,7 +24,7 @@ public class ProductClothSizeRepository : IProductClothSizeRepository
     {
         this._context = context;
         this._connectionString = connectionString 
-            ?? throw new ArgumentNullException(nameof(connectionString));
+                                 ?? throw new ArgumentNullException(nameof(connectionString));
     }
 
     public ProductClothSizeRepository(
@@ -32,9 +32,8 @@ public class ProductClothSizeRepository : IProductClothSizeRepository
         IConfiguration configuration)
     {
         this._context = context;
-        this._connectionString = configuration
-            .GetConnectionString("DefaultConnection")
-                ?? throw new ArgumentNullException(nameof(_connectionString));
+        this._connectionString = configuration .GetConnectionString("DefaultConnection")
+                                 ?? throw new ArgumentNullException($"DefaultConnection is null");
     }
     
     public async Task<Guid> CreateAsync(
@@ -87,12 +86,13 @@ public class ProductClothSizeRepository : IProductClothSizeRepository
                 $@"
                     SELECT 
                         ""cloth_size_id"" AS Id,
-                        ""cloth_size"" AS ClothSize,
+                        ""cloth_size"" AS ClothSizes,
                         ""amount"" AS Amount,
                         ""product_cloth_id"" AS ProductClothId
                     FROM
                         ""product_cloth_sizes""
-                    ORDER BY {columnName} {direction} 
+                    ORDER BY 
+                        {columnName} {direction} 
                     LIMIT @Count 
                     OFFSET @Offset;
                 ";
@@ -122,7 +122,7 @@ public class ProductClothSizeRepository : IProductClothSizeRepository
                 @"
                     SELECT 
                         ""cloth_size_id"" AS Id,
-                        ""cloth_size"" AS ClothSize,
+                        ""cloth_size"" AS ClothSizes,
                         ""amount"" AS Amount,
                         ""product_cloth_id"" AS ProductClothId
                     FROM

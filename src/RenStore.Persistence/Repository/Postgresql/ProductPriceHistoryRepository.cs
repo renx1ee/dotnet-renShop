@@ -15,7 +15,7 @@ public class ProductPriceHistoryRepository : IProductPriceHistoryRepository
 
     private readonly Dictionary<ProductPriceHistorySortBy, string> _sortColumnMapping = new()
     {
-        { ProductPriceHistorySortBy.Id, "product_attribute_id" }
+        { ProductPriceHistorySortBy.Id, "price_history_id" }
     };
 
     public ProductPriceHistoryRepository(
@@ -24,7 +24,7 @@ public class ProductPriceHistoryRepository : IProductPriceHistoryRepository
     {
         this._context = context;
         this._connectionString = connectionString 
-            ?? throw new ArgumentNullException(nameof(connectionString));
+                                 ?? throw new ArgumentNullException(nameof(connectionString));
     }
 
     public ProductPriceHistoryRepository(
@@ -32,9 +32,8 @@ public class ProductPriceHistoryRepository : IProductPriceHistoryRepository
         IConfiguration configuration)
     {
         this._context = context;
-        this._connectionString = configuration
-            .GetConnectionString("DefaultConnection")
-                ?? throw new ArgumentNullException(nameof(_connectionString));
+        this._connectionString = configuration .GetConnectionString("DefaultConnection")
+                                 ?? throw new ArgumentNullException($"DefaultConnection is null");
     }
     
     public async Task<Guid> CreateAsync(
@@ -81,7 +80,7 @@ public class ProductPriceHistoryRepository : IProductPriceHistoryRepository
             pageCount = Math.Min(pageCount, 1000);
             uint offset = (page - 1) * pageCount;
             string direction = descending ? "DESC" : "ASC";
-            var columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "product_attribute_id");
+            var columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "price_history_id");
 
             string sql =
                 $@"

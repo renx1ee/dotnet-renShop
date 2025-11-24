@@ -60,7 +60,7 @@ public interface ISellerRepository
     /// </summary>
     /// <param name="id">The seller identifier.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>The seller entity</returns>
+    /// <returns>The seller entity.</returns>
     /// <exception cref="NotFoundException">Thrown when seller is not found.</exception>
     Task<SellerEntity> GetByIdAsync(long id, CancellationToken cancellationToken);
     /// <summary>

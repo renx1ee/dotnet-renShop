@@ -62,7 +62,7 @@ public interface IProductClothSizeRepository
     /// </summary>
     /// <param name="id">The product cloth size unique identifier.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>The product cloth size entity if found; overwise <c>null</c>.</returns>
+    /// <returns>The product cloth size entity if found.</returns>
     /// <exception cref="NotFoundException">Thrown when product cloth size is not found.</exception>
     Task<ProductClothSizeEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 }

@@ -62,7 +62,7 @@ public interface ICategoryRepository
     /// </summary>
     /// <param name="id">The category identifier.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>The category entity</returns>
+    /// <returns>The category entity.</returns>
     /// <exception cref="NotFoundException">Thrown when category is not found.</exception>
     Task<CategoryEntity> GetByIdAsync( int id, CancellationToken cancellationToken);
     /// <summary>

@@ -377,4 +377,26 @@ public class ProductRepositoryTest
                     CancellationToken.None));
     }
     #endregion
+    #region Full Page
+    /*[Fact]
+    public async Task FindFullProductPageById_Success_Test()
+    {
+        _context = DatabaseFixture.CreateReadyContext();
+        _productRepository = new ProductRepository(_context, DatabaseFixture.ConnectionString);
+        // Arrange
+        var productId = TestDataConstants.ProductIdForGetting6;
+        // Act
+        var result = await _productRepository.FindFullAsync(
+            productId, 
+            CancellationToken.None);
+        
+        // Assert
+        Assert.NotNull(result.Product);
+        Assert.NotNull(result.Detail);
+        Assert.NotNull(result.Variants);
+        Assert.NotNull(result.Cloth);
+        Assert.NotNull(result.ClothSizes);
+    }*/
+
+    #endregion
 }

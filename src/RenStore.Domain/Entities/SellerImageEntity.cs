@@ -1,6 +1,6 @@
 namespace RenStore.Domain.Entities;
 
-public class SellerImage
+public class SellerImageEntity
 {
     public Guid Id { get; set; }
     public string OriginalFileName { get; set; } = string.Empty;
@@ -12,4 +12,5 @@ public class SellerImage
     public int Weight { get; set; }
     public int Height { get; set; }
     public long SellerId { get; set; }
+    public SellerEntity? Seller { get; set; }
 }

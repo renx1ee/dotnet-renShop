@@ -9,7 +9,7 @@ namespace RenStore.Domain.Repository;
 public interface ICityRepository
 {
     /// <summary>
-    /// Create a new city it the database.
+    /// Create a new city in the database.
     /// </summary>
     /// <param name="city">The city entity to create.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>

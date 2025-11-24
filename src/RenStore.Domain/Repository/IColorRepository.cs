@@ -59,7 +59,7 @@ public interface IColorRepository
     /// </summary>
     /// <param name="id">The color identifier.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>The color entity</returns>
+    /// <returns>The color entity.</returns>
     /// <exception cref="NotFoundException">Thrown when color is not found.</exception>
     Task<ColorEntity> GetByIdAsync(int id, CancellationToken cancellationToken);
     /// <summary>

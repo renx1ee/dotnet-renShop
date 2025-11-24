@@ -24,7 +24,7 @@ public class ProductClothRepository : IProductClothRepository
     {
         this._context = context;
         this._connectionString = connectionString 
-            ?? throw new ArgumentNullException(nameof(connectionString));
+                                 ?? throw new ArgumentNullException(nameof(connectionString));
     }
 
     public ProductClothRepository(
@@ -32,9 +32,8 @@ public class ProductClothRepository : IProductClothRepository
         IConfiguration configuration)
     {
         this._context = context;
-        this._connectionString = configuration
-            .GetConnectionString("DefaultConnection")
-                ?? throw new ArgumentNullException(nameof(_connectionString));
+        this._connectionString = configuration .GetConnectionString("DefaultConnection")
+                                 ?? throw new ArgumentNullException($"DefaultConnection is null");
     }
     
     public async Task<Guid> CreateAsync(

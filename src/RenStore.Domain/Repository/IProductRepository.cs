@@ -66,7 +66,7 @@ public interface IProductRepository
     /// </summary>
     /// <param name="id">The product unique identifier.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
-    /// <returns>The product entity if found; overwise <c>null</c>.</returns>
+    /// <returns>The product entity if found.</returns>
     /// <exception cref="NotFoundException">Thrown when product is not found.</exception>
     Task<ProductEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 }
