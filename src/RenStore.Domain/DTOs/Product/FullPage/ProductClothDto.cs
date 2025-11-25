@@ -5,7 +5,7 @@ namespace RenStore.Domain.DTOs.Product.FullPage;
 
 public record ProductClothDto
 (
-    Guid Id,
+    Guid ClothId,
     Gender? Gender,
     Season? Season,
     Neckline? Neckline,

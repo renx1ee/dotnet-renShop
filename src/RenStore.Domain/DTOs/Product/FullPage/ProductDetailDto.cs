@@ -4,7 +4,7 @@ namespace RenStore.Domain.DTOs.Product.FullPage;
 
 public record ProductDetailDto
 (
-    Guid Id,
+    Guid DetailId,
     string Description,
     string ModelFeatures,
     string DecorativeElements,

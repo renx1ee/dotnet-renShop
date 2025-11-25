@@ -164,24 +164,24 @@ public class ProductRepository : IProductRepository
                 @"
                     SELECT 
                         -- products
-                        p.""product_id"" AS Id, 
+                        p.""product_id"" AS ProductId, 
                         p.""is_blocked"" AS IsBlocked, 
                         p.""overall_rating"" AS OverallRating, 
                         p.""seller_id"" AS SellerId, 
                         p.""category_id"" AS CategoryId,
                         -- cloth
-                        pc.""product_cloth_id"" AS Id,
+                        pc.""product_cloth_id"" AS ClothId,
                         pc.""gender"" AS Gender,
                         pc.""season"" AS Season,
                         pc.""neckline"" AS Neckline,
                         pc.""the_cut"" AS TheCut,
                         -- cloth sizes
-                        pcs.""cloth_size_id"" AS Id,
+                        pcs.""cloth_size_id"" AS ClothSizeId,
                         pcs.""amount"" AS Amount,
                         pcs.""cloth_size"" AS ClothesSizes,
                         pcs.""product_cloth_id"" AS ProductClothId,
                         -- price history
-                        ph.""price_history_id"" AS Id,
+                        ph.""price_history_id"" AS PriceHistoryId,
                         ph.""price"" AS Price,
                         ph.""old_price"" AS OldPrice,
                         ph.""discount_price"" AS DiscountPrice,
@@ -190,7 +190,7 @@ public class ProductRepository : IProductRepository
                         ph.""end_date"" AS EndDate,
                         ph.""changed_by"" AS ChangedBy,
                         -- variant
-                        pv.""product_variant_id"" AS Id,
+                        pv.""product_variant_id"" AS VariantId,
                         pv.""variant_name"" AS Name,
                         pv.""normalized_variant_name"" AS NormalizedName,
                         pv.""rating"" AS Rating,
@@ -202,7 +202,7 @@ public class ProductRepository : IProductRepository
                         pv.""product_id"" AS ProductId,
                         pv.""color_id"" AS ColorId,
                         -- detail
-                        pd.""product_detail_id"" AS Id,
+                        pd.""product_detail_id"" AS DetailId,
                         pd.""description"" AS Description,
                         pd.""model_features"" AS ModelFeatures,
                         pd.""decorative_elements"" AS DecorativeElements,
@@ -215,12 +215,12 @@ public class ProductRepository : IProductRepository
                         -- country
                         ct.""country_name"",
                         -- attribute
-                        pa.""attribute_id"" AS Id,
+                        pa.""attribute_id"" AS AttributeId,
                         pa.""attribute_name"" AS Name,
                         pa.""attribute_value"" AS Value,
                         pa.""product_variant_id"" AS ProductVariantId,
                         -- seller
-                        s.""seller_id"" AS Id,
+                        s.""seller_id"" AS SellerId,
                         s.""seller_name"" AS Name,
                         s.""url"" AS Url
                         -- seller image
@@ -254,12 +254,12 @@ public class ProductRepository : IProductRepository
                 ";
 
             var lookupPrice      = new Dictionary<Guid, ProductPriceHistoryDto>(); 
-            var lookupSize       = new Dictionary<Guid, ProductClothSizeDto>(); 
+            var lookupClothSize  = new Dictionary<Guid, ProductClothSizeDto>(); 
             var lookupAttributes = new Dictionary<Guid, ProductAttributeDto>();
             var productVariants  = new Dictionary<Guid, ProductVariantDto>();
             // var lookupProductImages = new Dictionary<Guid, ProductImageDto>();
             
-            ProductFullDto? product = null;
+            ProductFullDto? fullProduct = null;
             
             return await connection.QueryAsync<ProductFullDto>(
                 sql: sql, 
@@ -267,44 +267,55 @@ public class ProductRepository : IProductRepository
                 map: (
                     ProductDto product, 
                     ProductVariantDto variant, 
-                    ProductDetailDto detail, 
                     ProductClothDto cloth, 
+                    ProductDetailDto detail, 
                     SellerDto seller, 
-                    // SellerImageDto sellerImage, 
                     ProductClothSizeDto clothSize, 
                     ProductAttributeDto attribute, 
                     ProductPriceHistoryDto priceHistory
-                    // ProductImageDto productImage 
                     ) =>
                 {
-                    if (!lookupPrice.ContainsKey(priceHistory.Id))
-                        lookupPrice[priceHistory.Id] = priceHistory;
+                    if (!lookupPrice.ContainsKey(priceHistory.PriceHistoryId))
+                        lookupPrice[priceHistory.PriceHistoryId] = priceHistory;
                     
-                    if (!lookupSize.ContainsKey(clothSize.Id))
-                        lookupSize[clothSize.Id] = clothSize;
+                    if (!lookupClothSize.ContainsKey(clothSize.ClothSizeId))
+                        lookupClothSize[clothSize.ClothSizeId] = clothSize;
                     
-                    if (!lookupAttributes.ContainsKey(attribute.Id))
-                        lookupAttributes[attribute.Id] = attribute;
+                    if (!lookupAttributes.ContainsKey(attribute.AttributeId))
+                        lookupAttributes[attribute.AttributeId] = attribute;
                     
                     /*if (!lookupProductImages.ContainsKey(productImage.Id))
                         lookupProductImages[productImage.Id] = productImage;#1#
                     
-                    if(!productVariants.ContainsKey(variant.Id))
-                        productVariants[variant.Id] = variant;
+                    if(!productVariants.ContainsKey(variant.VariantId))
+                        productVariants[variant.VariantId] = variant;
 
-                    product ??= new ProductFullDto(
-                        Product: product, 
+                    fullProduct ??= new ProductFullDto
+                    {
+                        Product = product,
+                        Detail = detail,
+                        Cloth = cloth,
+                        Seller = seller,
+                        Variants = productVariants.ToList(),
+                        ClothSizes = lookupClothSize.Values.ToList(),
+                        Prices = lookupPrice.Values.ToList(),
+                        Attributes = lookupAttributes.Values.ToList()
+                    };
+                        /*Product: product, 
                         Detail: detail,
                         Cloth: cloth, 
                         Seller: seller,
                         Variants: productVariants.ToList(),
-                        ClothSizes: lookupAttributes.Values.ToList(), 
+                        ClothSizes: lookupClothSize.Values.ToList(), 
                         Prices: lookupPrice.Values.ToList(),
-                        Prices: lookupAttributes.Values.ToList());
-
+                        Attributes: lookupAttributes.Values.ToList());#1#
                     
 
-                });
+                    return fullProduct;
+                },
+                splitOn: "VariantId,ClothId,DetailId,SellerId,ClothSizeId,AttributeId,PriceHistoryId",
+                buffered: false,
+                commandTimeout: 30);
         }
         catch (PostgresException e)
         {

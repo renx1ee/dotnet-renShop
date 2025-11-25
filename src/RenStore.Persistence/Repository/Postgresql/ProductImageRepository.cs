@@ -46,6 +46,8 @@ public class ProductImageRepository
 
     public async Task UpdateAsync(ProductImageEntity image, CancellationToken cancellationToken)
     {
+        var existsImage = await this.GetByIdAsync(image.Id, cancellationToken);
+        
         _context.Update(image);
         await _context.SaveChangesAsync(cancellationToken);
     }

@@ -4,7 +4,7 @@ namespace RenStore.Domain.DTOs.Product.FullPage;
 
 public record ProductClothSizeDto
 (
-    Guid Id,
+    Guid ClothSizeId,
     int Amount,
     Guid ProductClothId,
     ClothesSizes ClothesSize

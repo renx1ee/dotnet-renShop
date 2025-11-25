@@ -2,7 +2,7 @@ namespace RenStore.Domain.DTOs.Product.FullPage;
 
 public record SellerDto
 (
-    long Id, 
+    long SellerId, 
     string Name,
     string Url
 );

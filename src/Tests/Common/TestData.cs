@@ -1325,4 +1325,211 @@ public static class TestData
             ProductVariantId = TestDataConstants.ProductVariantIdForGetting6
         },
     };
+
+    public static readonly IList<ProductImageEntity> ProductImages = new[]
+    {
+        // For Update
+        new ProductImageEntity()
+        {
+            Id = TestDataConstants.ProductImageIdForUpdate,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            ProductVariantId = TestDataConstants.ProductVariantIdForUpdate
+        },
+        // For Delete
+        new ProductImageEntity()
+        {
+            Id = TestDataConstants.ProductImageIdForDelete,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            ProductVariantId = TestDataConstants.ProductVariantIdForDelete
+        },
+        new ProductImageEntity()
+        {
+            Id = TestDataConstants.ProductImageIdForGetting1,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            ProductVariantId = TestDataConstants.ProductVariantIdForGetting1
+        },
+        new ProductImageEntity()
+        {
+            Id = TestDataConstants.ProductImageIdForGetting2,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            ProductVariantId = TestDataConstants.ProductVariantIdForGetting2
+        },
+        new ProductImageEntity()
+        {
+            Id = TestDataConstants.ProductImageIdForGetting3,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            ProductVariantId = TestDataConstants.ProductVariantIdForGetting3
+        },
+        new ProductImageEntity()
+        {
+            Id = TestDataConstants.ProductImageIdForGetting4,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            ProductVariantId = TestDataConstants.ProductVariantIdForGetting4
+        },
+        new ProductImageEntity()
+        {
+            Id = TestDataConstants.ProductImageIdForGetting5,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            ProductVariantId = TestDataConstants.ProductVariantIdForGetting5
+        },
+        new ProductImageEntity()
+        {
+            Id = TestDataConstants.ProductImageIdForGetting6,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            ProductVariantId = TestDataConstants.ProductVariantIdForGetting6
+        },
+        new ProductImageEntity()
+        {
+            Id = TestDataConstants.ProductImageIdForGetting7,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            ProductVariantId = TestDataConstants.ProductVariantIdForGetting7
+        },
+    };
+    
+    public static readonly IList<SellerImageEntity> SellerImages = new[]
+    {
+        // For Update
+        new SellerImageEntity()
+        {
+            Id = TestDataConstants.SellerImageIdForUpdate,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            SellerId = TestDataConstants.SellerIdForUpdate
+        },
+        // For Delete
+        new SellerImageEntity()
+        {
+            Id = TestDataConstants.SellerImageIdForDelete,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            SellerId = TestDataConstants.SellerIdForDelete
+        },
+        new SellerImageEntity()
+        {
+            Id = TestDataConstants.SellerImageIdForGetting1,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            SellerId = TestDataConstants.SellerIdForGetting1
+        },
+        new SellerImageEntity()
+        {
+            Id = TestDataConstants.SellerImageIdForGetting2,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            SellerId = TestDataConstants.SellerIdForGetting2
+        },
+        new SellerImageEntity()
+        {
+            Id = TestDataConstants.SellerImageIdForGetting3,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            SellerId = TestDataConstants.SellerIdForGetting3
+        },
+        new SellerImageEntity()
+        {
+            Id = TestDataConstants.SellerImageIdForGetting4,
+            OriginalFileName = Guid.NewGuid().ToString(),
+            StoragePath = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString(),
+            FileSizeBytes = 500,
+            IsMain = true,
+            SortOrder = 1,
+            UploadedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            Weight = 500,
+            Height = 500,
+            SellerId = TestDataConstants.SellerIdForGetting4
+        }
+    };
 }

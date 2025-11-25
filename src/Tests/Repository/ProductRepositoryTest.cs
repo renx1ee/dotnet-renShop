@@ -387,9 +387,9 @@ public class ProductRepositoryTest
         var productId = TestDataConstants.ProductIdForGetting6;
         // Act
         var result = await _productRepository.FindFullAsync(
-            productId, 
+            productId,
             CancellationToken.None);
-        
+
         // Assert
         Assert.NotNull(result.Product);
         Assert.NotNull(result.Detail);
@@ -397,6 +397,5 @@ public class ProductRepositoryTest
         Assert.NotNull(result.Cloth);
         Assert.NotNull(result.ClothSizes);
     }*/
-
     #endregion
 }

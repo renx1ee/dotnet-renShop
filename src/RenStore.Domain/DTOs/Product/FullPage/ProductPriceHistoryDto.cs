@@ -2,7 +2,7 @@ namespace RenStore.Domain.DTOs.Product.FullPage;
 
 public record ProductPriceHistoryDto
 (
-    Guid Id,
+    Guid PriceHistoryId,
     decimal Price,
     decimal OldPrice,
     decimal DiscountPrice,
