@@ -82,13 +82,13 @@ public class SellerRepository : ISellerRepository
             var sql = new StringBuilder(
                 @"
                 SELECT
-                    ""seller_id"" AS Id,
-                    ""seller_name"" AS Name,
+                    ""seller_id""              AS Id,
+                    ""seller_name""            AS Name,
                     ""normalized_seller_name"" AS NormalizedName,
-                    ""seller_description"" AS Description,
-                    ""created_date"" AS CreatedDate,
-                    ""is_blocked"" AS IsBlocked,
-                    ""user_id""  AS UserId
+                    ""seller_description""     AS Description,
+                    ""created_date""           AS CreatedDate,
+                    ""is_blocked""             AS IsBlocked,
+                    ""user_id""                AS UserId
                 FROM
                     ""sellers""
             ");
@@ -126,17 +126,17 @@ public class SellerRepository : ISellerRepository
             const string sql = 
                 @"
                 SELECT
-                    ""seller_id"" AS Id,
-                    ""seller_name"" AS Name,
+                    ""seller_id""              AS Id,
+                    ""seller_name""            AS Name,
                     ""normalized_seller_name"" AS NormalizedName,
-                    ""seller_description"" AS Description,
-                    ""created_date"" AS CreatedDate,
-                    ""is_blocked"" AS IsBlocked,
-                    ""user_id""  AS UserId
+                    ""seller_description""     AS Description,
+                    ""created_date""           AS CreatedDate,
+                    ""is_blocked""             AS IsBlocked,
+                    ""user_id""                AS UserId
                 FROM
                     ""sellers""
                 WHERE
-                    ""seller_id"" = @id;
+                    ""seller_id"" = @Id;
             ";
         
             return await connection
@@ -180,13 +180,13 @@ public class SellerRepository : ISellerRepository
             var sql = new StringBuilder(
                 @"
                     SELECT
-                        ""seller_id"" AS Id,
-                        ""seller_name"" AS Name,
+                        ""seller_id""              AS Id,
+                        ""seller_name""            AS Name,
                         ""normalized_seller_name"" AS NormalizedName,
-                        ""seller_description"" AS Description,
-                        ""created_date"" AS CreatedDate,
-                        ""is_blocked"" AS IsBlocked,
-                        ""user_id""  AS UserId
+                        ""seller_description""     AS Description,
+                        ""created_date""           AS CreatedDate,
+                        ""is_blocked""             AS IsBlocked,
+                        ""user_id""                AS UserId
                     FROM
                         ""sellers""
                     WHERE
@@ -240,13 +240,13 @@ public class SellerRepository : ISellerRepository
             const string sql = 
                 @"
                 SELECT
-                    ""seller_id"" AS Id,
-                    ""seller_name"" AS Name,
+                    ""seller_id""              AS Id,
+                    ""seller_name""            AS Name,
                     ""normalized_seller_name"" AS NormalizedName,
-                    ""seller_description"" AS Description,
-                    ""created_date"" AS CreatedDate,
-                    ""is_blocked"" AS IsBlocked,
-                    ""user_id""  AS UserId
+                    ""seller_description""     AS Description,
+                    ""created_date""           AS CreatedDate,
+                    ""is_blocked""             AS IsBlocked,
+                    ""user_id""                AS UserId
                 FROM
                     ""sellers""
                 WHERE

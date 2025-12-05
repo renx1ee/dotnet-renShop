@@ -66,7 +66,7 @@ public class ShoppingCartService
         };
     }#2#
 
-    public async Task<ShoppingCart> GetCartAsync(Guid shoppingCartId)
+    public async Task<ShoppingCartEntity> GetCartAsync(Guid shoppingCartId)
     {
        return await shoppingCartRepository.GetCartAsync(shoppingCartId, CancellationToken.None);
     }
@@ -78,14 +78,14 @@ public class ShoppingCartService
         if (cart is null)
             await shoppingCartRepository
                 .CreateShoppingCartAsync(
-                    new ShoppingCart
+                    new ShoppingCartEntity
                     {
                         UserId = userId,
                     }, 
                     CancellationToken.None);
     }
     
-    /*public async Task<ShoppingCart> GetOrCreateCartAsync(string cartId)
+    /*public async Task<ShoppingCartEntity> GetOrCreateCartAsync(string cartId)
     {
         var cart = await _context.ShoppingCarts
             .Include(c => c.Items)
@@ -93,7 +93,7 @@ public class ShoppingCartService
 
         if (cart == null)
         {
-            cart = new ShoppingCart { CartId = cartId };
+            cart = new ShoppingCartEntity { CartId = cartId };
             _context.ShoppingCarts.Add(cart);
             await _context.SaveChangesAsync();
         }

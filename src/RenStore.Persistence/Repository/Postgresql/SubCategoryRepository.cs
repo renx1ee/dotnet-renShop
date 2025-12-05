@@ -80,15 +80,15 @@ public class SubCategoryRepository : ISubCategoryRepository
             string sql =
                 $@"
                     SELECT
-                        ""sub_category_id"" AS Id,
-                        ""sub_category_name"" AS Name,
-                        ""normalized_sub_category_name"" AS NormalizedName,
-                        ""sub_category_name_ru"" AS NameRu,
+                        ""sub_category_id""                 AS Id,
+                        ""sub_category_name""               AS Name,
+                        ""normalized_sub_category_name""    AS NormalizedName,
+                        ""sub_category_name_ru""            AS NameRu,
                         ""normalized_sub_category_name_ru"" AS NormalizedNameRu,
-                        ""sub_category_description"" AS Description,
-                        ""is_active"" AS IsActive,
-                        ""created_date"" AS CreatedDate,
-                        ""category_id"" As CategoryId
+                        ""sub_category_description""        AS Description,
+                        ""is_active""                       AS IsActive,
+                        ""created_date""                    AS CreatedDate,
+                        ""category_id""                     As CategoryId
                     FROM
                         ""sub_categories"" 
                     ORDER BY {columnName} {direction} 
@@ -122,15 +122,15 @@ public class SubCategoryRepository : ISubCategoryRepository
             string sql =  
                 @"
                     SELECT
-                        ""sub_category_id"" AS Id,
-                        ""sub_category_name"" AS Name,
-                        ""normalized_sub_category_name"" AS NormalizedName,
-                        ""sub_category_name_ru"" AS NameRu,
+                        ""sub_category_id""                 AS Id,
+                        ""sub_category_name""               AS Name,
+                        ""normalized_sub_category_name""    AS NormalizedName,
+                        ""sub_category_name_ru""            AS NameRu,
                         ""normalized_sub_category_name_ru"" AS NormalizedNameRu,
-                        ""sub_category_description"" AS Description,
-                        ""is_active"" AS IsActive,
-                        ""created_date"" AS CreatedDate,
-                        ""category_id"" As CategoryId
+                        ""sub_category_description""        AS Description,
+                        ""is_active""                       AS IsActive,
+                        ""created_date""                    AS CreatedDate,
+                        ""category_id""                     As CategoryId
                     FROM
                         ""sub_categories""
                     WHERE
@@ -178,15 +178,15 @@ public class SubCategoryRepository : ISubCategoryRepository
             string sql = 
                 $@"
                     SELECT
-                        ""sub_category_id"" AS Id,
-                        ""sub_category_name"" AS Name,
-                        ""normalized_sub_category_name"" AS NormalizedName,
-                        ""sub_category_name_ru"" AS NameRu,
+                        ""sub_category_id""                 AS Id,
+                        ""sub_category_name""               AS Name,
+                        ""normalized_sub_category_name""    AS NormalizedName,
+                        ""sub_category_name_ru""            AS NameRu,
                         ""normalized_sub_category_name_ru"" AS NormalizedNameRu,
-                        ""sub_category_description"" AS Description,
-                        ""is_active"" AS IsActive,
-                        ""created_date"" AS CreatedDate,
-                        ""category_id"" As CategoryId
+                        ""sub_category_description""        AS Description,
+                        ""is_active""                       AS IsActive,
+                        ""created_date""                    AS CreatedDate,
+                        ""category_id""                     As CategoryId
                     FROM
                         ""sub_categories""
                     WHERE
@@ -255,15 +255,15 @@ public class SubCategoryRepository : ISubCategoryRepository
             string sql = 
                 $@"
                     SELECT
-                        ""sub_category_id"" AS Id,
-                        ""sub_category_name"" AS Name,
-                        ""normalized_sub_category_name"" AS NormalizedName,
-                        ""sub_category_name_ru"" AS NameRu,
+                        ""sub_category_id""                 AS Id,
+                        ""sub_category_name""               AS Name,
+                        ""normalized_sub_category_name""    AS NormalizedName,
+                        ""sub_category_name_ru""            AS NameRu,
                         ""normalized_sub_category_name_ru"" AS NormalizedNameRu,
-                        ""sub_category_description"" AS Description,
-                        ""is_active"" AS IsActive,
-                        ""created_date"" AS CreatedDate,
-                        ""category_id"" As CategoryId
+                        ""sub_category_description""        AS Description,
+                        ""is_active""                       AS IsActive,
+                        ""created_date""                    AS CreatedDate,
+                        ""category_id""                     As CategoryId
                     FROM
                         ""sub_categories""
                     WHERE

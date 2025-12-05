@@ -81,15 +81,15 @@ public class ProductImageRepository
             string sql =
                 @$"
                     SELECT 
-                        ""product_image_id"" AS Id,
+                        ""product_image_id""   AS Id,
                         ""original_file_name"" AS OriginalFileName,
-                        ""storage_path"" AS StoragePath,
-                        ""file_size_bites"" AS FileSizeBytes,
-                        ""is_main"" AS IsMain,
-                        ""sort_order"" AS SortOrder,
-                        ""uploaded_date"" AS UploadedAt,
-                        ""weight"" AS Weight,
-                        ""height"" AS Height,
+                        ""storage_path""       AS StoragePath,
+                        ""file_size_bites""    AS FileSizeBytes,
+                        ""is_main""            AS IsMain,
+                        ""sort_order""         AS SortOrder,
+                        ""uploaded_date""      AS UploadedAt,
+                        ""weight""             AS Weight,
+                        ""height""             AS Height,
                         ""product_variant_id"" AS ProductVariantId
                     FROM
                         ""product_images""
@@ -122,15 +122,15 @@ public class ProductImageRepository
             const string sql =
                 @"
                     SELECT 
-                        ""product_image_id"" AS Id,
+                        ""product_image_id""   AS Id,
                         ""original_file_name"" AS OriginalFileName,
-                        ""storage_path"" AS StoragePath,
-                        ""file_size_bites"" AS FileSizeBytes,
-                        ""is_main"" AS IsMain,
-                        ""sort_order"" AS SortOrder,
-                        ""uploaded_date"" AS UploadedAt,
-                        ""weight"" AS Weight,
-                        ""height"" AS Height,
+                        ""storage_path""       AS StoragePath,
+                        ""file_size_bites""    AS FileSizeBytes,
+                        ""is_main""            AS IsMain,
+                        ""sort_order""         AS SortOrder,
+                        ""uploaded_date""      AS UploadedAt,
+                        ""weight""             AS Weight,
+                        ""height""             AS Height,
                         ""product_variant_id"" AS ProductVariantId
                     FROM
                         ""product_images""

@@ -14,4 +14,8 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RenStore.Microservice.Payment\RenStore.Microservice.Payment.csproj" />
+  </ItemGroup>
+
 </Project>

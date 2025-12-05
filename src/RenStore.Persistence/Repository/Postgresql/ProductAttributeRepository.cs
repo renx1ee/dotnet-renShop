@@ -86,9 +86,9 @@ public class ProductAttributeRepository : IProductAttributeRepository
             string sql =
                 $@"
                     SELECT 
-                        ""attribute_id"" AS Id,
-                        ""attribute_name"" AS Name,
-                        ""attribute_value"" AS Value,
+                        ""attribute_id""       AS Id,
+                        ""attribute_name""     AS Name,
+                        ""attribute_value""    AS Value,
                         ""product_variant_id"" AS ProductVariantId
                     FROM
                         ""product_attributes""
@@ -121,9 +121,9 @@ public class ProductAttributeRepository : IProductAttributeRepository
             const string sql = 
                 @"
                     SELECT 
-                        ""attribute_id"" AS Id,
-                        ""attribute_name"" AS Name,
-                        ""attribute_value"" AS Value,
+                        ""attribute_id""       AS Id,
+                        ""attribute_name""     AS Name,
+                        ""attribute_value""    AS Value,
                         ""product_variant_id"" AS ProductVariantId
                     FROM
                         ""product_attributes""

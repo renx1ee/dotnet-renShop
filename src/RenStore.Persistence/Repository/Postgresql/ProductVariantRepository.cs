@@ -87,16 +87,16 @@ public class ProductVariantRepository : IProductVariantRepository
             var sql = new StringBuilder(
                 $@"
                     SELECT
-                        ""product_variant_id"" AS Id,
-                        ""variant_name"" AS Name,
+                        ""product_variant_id""      AS Id,
+                        ""variant_name""            AS Name,
                         ""normalized_variant_name"" AS NormalizedName,
-                        ""rating"" AS Rating,
-                        ""article"" AS Article,
-                        ""in_stock"" AS InStock,
-                        ""is_available"" AS IsAvailable,
-                        ""created_date"" AS CreatedDate,
-                        ""product_id"" AS ProductId,
-                        ""color_id"" AS ColorId
+                        ""rating""                  AS Rating,
+                        ""article""                 AS Article,
+                        ""in_stock""                AS InStock,
+                        ""is_available""            AS IsAvailable,
+                        ""created_date""            AS CreatedDate,
+                        ""product_id""              AS ProductId,
+                        ""color_id""                AS ColorId
                     FROM
                         ""product_variants""
                 ");
@@ -135,16 +135,16 @@ public class ProductVariantRepository : IProductVariantRepository
             const string sql =
                 @"
                     SELECT
-                        ""product_variant_id"" AS Id,
-                        ""variant_name"" AS Name,
+                        ""product_variant_id""      AS Id,
+                        ""variant_name""            AS Name,
                         ""normalized_variant_name"" AS NormalizedName,
-                        ""rating"" AS Rating,
-                        ""article"" AS Article,
-                        ""in_stock"" AS InStock,
-                        ""is_available"" AS IsAvailable,
-                        ""created_date"" AS CreatedDate,
-                        ""product_id"" AS ProductId,
-                        ""color_id"" AS ColorId
+                        ""rating""                  AS Rating,
+                        ""article""                 AS Article,
+                        ""in_stock""                AS InStock,
+                        ""is_available""            AS IsAvailable,
+                        ""created_date""            AS CreatedDate,
+                        ""product_id""              AS ProductId,
+                        ""color_id""                AS ColorId
                     FROM
                         ""product_variants""
                     WHERE

@@ -105,7 +105,7 @@ public class ProductQuestionController(IMapper mapper) : BaseController
     
     [HttpGet]
     [MapToApiVersion(1)]
-    [Route("/api/v{version:apiVersion}/question-with-answer/{questionId:guid}")]
+    [Route("/api/v{version:apiVersion}/question-with-ProductAnswerEntity/{questionId:guid}")]
     public async Task<IActionResult> GetQuestionWithAnswer(Guid questionId)
     {
         var result = await Mediator.Send(
@@ -124,7 +124,7 @@ public class ProductQuestionController(IMapper mapper) : BaseController
     #region Answer
     [HttpPost]
     [MapToApiVersion(1)]
-    [Route("/api/v{version:apiVersion}/answer/{productQuestionId:guid}/{sellerId:int}/{message}")]
+    [Route("/api/v{version:apiVersion}/ProductAnswerEntity/{productQuestionId:guid}/{sellerId:int}/{message}")]
     public async Task<IActionResult> CreateAnswer(CreateAnswerDto dto)
     {
         var result = await Mediator.Send(
@@ -143,7 +143,7 @@ public class ProductQuestionController(IMapper mapper) : BaseController
     
     [HttpDelete]
     [MapToApiVersion(1)]
-    [Route("/api/v{version:apiVersion}/answer/{answerId:guid}")]
+    [Route("/api/v{version:apiVersion}/ProductAnswerEntity/{answerId:guid}")]
     public async Task<IActionResult> DeleteAnswer(Guid answerId)
     {
         await Mediator.Send(
@@ -157,7 +157,7 @@ public class ProductQuestionController(IMapper mapper) : BaseController
 
     [HttpGet]
     [MapToApiVersion(1)]
-    [Route("/api/v{version:apiVersion}/answer/{answerId:guid}")]
+    [Route("/api/v{version:apiVersion}/ProductAnswerEntity/{answerId:guid}")]
     public async Task<IActionResult> GetAnswerById(Guid answerId)
     {
         var result = await Mediator.Send(

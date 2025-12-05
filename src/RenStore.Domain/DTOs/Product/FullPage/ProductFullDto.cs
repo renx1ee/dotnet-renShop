@@ -6,11 +6,8 @@ public record ProductFullDto
     ProductDetailDto Detail,
     ProductClothDto Cloth,
     SellerDto Seller,
-    // SellerImageDto SellerImage,
     IReadOnlyList<KeyValuePair<Guid, ProductVariantDto>> Variants,
     IReadOnlyList<ProductClothSizeDto> ClothSizes,
     IReadOnlyList<ProductAttributeDto> Attributes,
     IReadOnlyList<ProductPriceHistoryDto> Prices
-    // IReadOnlyList<ProductImageDto> ProductImages
-    /*IReadOnlyList<ProductReviewDto> RecentReviews*/
 );

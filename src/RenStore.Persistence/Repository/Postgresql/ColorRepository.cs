@@ -80,12 +80,12 @@ public class ColorRepository : IColorRepository
             string sql =
                 $@"
                     SELECT
-                        ""color_id"" AS Id,
-                        ""color_name"" AS Name,
+                        ""color_id""              AS Id,
+                        ""color_name""            AS Name,
                         ""normalized_color_name"" AS NormalizedName,
-                        ""color_name_ru"" AS NameRu,
-                        ""color_code"" AS ColorCode,
-                        ""color_description"" AS Description
+                        ""color_name_ru""         AS NameRu,
+                        ""color_code""            AS ColorCode,
+                        ""color_description""     AS Description
                     FROM
                         ""colors"" 
                     ORDER BY {columnName} {direction} 
@@ -119,12 +119,12 @@ public class ColorRepository : IColorRepository
             string sql =  
                 @"
                 SELECT
-                    ""color_id"" AS Id,
-                    ""color_name"" AS Name,
+                    ""color_id""              AS Id,
+                    ""color_name""            AS Name,
                     ""normalized_color_name"" AS NormalizedName,
-                    ""color_name_ru"" AS NameRu,
-                    ""color_code"" AS ColorCode,
-                    ""color_description"" AS Description
+                    ""color_name_ru""         AS NameRu,
+                    ""color_code""            AS ColorCode,
+                    ""color_description""     AS Description
                 FROM
                     ""colors""
                 WHERE
@@ -172,12 +172,12 @@ public class ColorRepository : IColorRepository
             string sql = 
                 $@"
                 SELECT
-                    ""color_id"" AS Id,
-                    ""color_name"" AS Name,
+                    ""color_id""              AS Id,
+                    ""color_name""            AS Name,
                     ""normalized_color_name"" AS NormalizedName,
-                    ""color_name_ru"" AS NameRu,
-                    ""color_code"" AS ColorCode,
-                    ""color_description"" AS Description
+                    ""color_name_ru""         AS NameRu,
+                    ""color_code""            AS ColorCode,
+                    ""color_description""     AS Description
                 FROM
                     ""colors""
                 WHERE

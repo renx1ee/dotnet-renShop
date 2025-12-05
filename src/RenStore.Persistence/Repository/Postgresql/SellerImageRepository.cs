@@ -85,16 +85,16 @@ public class SellerImageRepository : ISellerImageRepository
             string sql =
                 $@"
                     SELECT 
-                        ""seller_image_id"" AS Id,
+                        ""seller_image_id""    AS Id,
                         ""original_file_name"" AS OriginalFileName,
-                        ""storage_path"" AS StoragePath,
-                        ""file_size_bites"" AS FileSizeBytes,
-                        ""is_main"" AS IsMain,
-                        ""sort_order"" AS SortOrder,
-                        ""uploaded_date"" AS UploadedAt,
-                        ""weight"" AS Weight,
-                        ""height"" AS Height,
-                        ""seller_id"" AS SellerId
+                        ""storage_path""       AS StoragePath,
+                        ""file_size_bites""    AS FileSizeBytes,
+                        ""is_main""            AS IsMain,
+                        ""sort_order""         AS SortOrder,
+                        ""uploaded_date""      AS UploadedAt,
+                        ""weight""             AS Weight,
+                        ""height""             AS Height,
+                        ""seller_id""          AS SellerId
                     FROM
                         ""seller_images""
                     ORDER BY {columnName} {direction} 
@@ -126,16 +126,16 @@ public class SellerImageRepository : ISellerImageRepository
             const string sql = 
                 @"
                     SELECT 
-                        ""seller_image_id"" AS Id,
+                        ""seller_image_id""    AS Id,
                         ""original_file_name"" AS OriginalFileName,
-                        ""storage_path"" AS StoragePath,
-                        ""file_size_bites"" AS FileSizeBytes,
-                        ""is_main"" AS IsMain,
-                        ""sort_order"" AS SortOrder,
-                        ""uploaded_date"" AS UploadedAt,
-                        ""weight"" AS Weight,
-                        ""height"" AS Height,
-                        ""seller_id"" AS SellerId
+                        ""storage_path""       AS StoragePath,
+                        ""file_size_bites""    AS FileSizeBytes,
+                        ""is_main""            AS IsMain,
+                        ""sort_order""         AS SortOrder,
+                        ""uploaded_date""      AS UploadedAt,
+                        ""weight""             AS Weight,
+                        ""height""             AS Height,
+                        ""seller_id""          AS SellerId
                     FROM
                         ""seller_images""
                     WHERE 

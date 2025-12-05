@@ -81,14 +81,14 @@ public class CategoryRepository : ICategoryRepository
             string sql =
                 $@"
                     SELECT
-                        ""category_id"" AS Id,
-                        ""category_name"" AS Name,
-                        ""normalized_category_name"" AS NormalizedName,
-                        ""category_name_ru"" AS NameRu,
+                        ""category_id""                 AS Id,
+                        ""category_name""               AS Name,
+                        ""normalized_category_name""    AS NormalizedName,
+                        ""category_name_ru""            AS NameRu,
                         ""normalized_category_name_ru"" AS NormalizedNameRu,
-                        ""category_description"" AS Description,
-                        ""is_active"" AS IsActive,
-                        ""created_date"" AS CreatedDate
+                        ""category_description""        AS Description,
+                        ""is_active""                   AS IsActive,
+                        ""created_date""                AS CreatedDate
                     FROM
                         ""categories"" 
                     ORDER BY {columnName} {direction} 
@@ -122,14 +122,14 @@ public class CategoryRepository : ICategoryRepository
             string sql =  
                 @"
                     SELECT
-                        ""category_id"" AS Id,
-                        ""category_name"" AS Name,
-                        ""normalized_category_name"" AS NormalizedName,
-                        ""category_name_ru"" AS NameRu,
+                        ""category_id""                 AS Id,
+                        ""category_name""               AS Name,
+                        ""normalized_category_name""    AS NormalizedName,
+                        ""category_name_ru""            AS NameRu,
                         ""normalized_category_name_ru"" AS NormalizedNameRu,
-                        ""category_description"" AS Description,
-                        ""is_active"" AS IsActive,
-                        ""created_date"" AS CreatedDate
+                        ""category_description""        AS Description,
+                        ""is_active""                   AS IsActive,
+                        ""created_date""                AS CreatedDate
                     FROM
                         ""categories""
                     WHERE
@@ -177,14 +177,14 @@ public class CategoryRepository : ICategoryRepository
             string sql = 
                 $@"
                     SELECT
-                        ""category_id"" AS Id,
-                        ""category_name"" AS Name,
-                        ""normalized_category_name"" AS NormalizedName,
-                        ""category_name_ru"" AS NameRu,
+                        ""category_id""                 AS Id,
+                    ""category_name""                   AS Name,
+                        ""normalized_category_name""    AS NormalizedName,
+                        ""category_name_ru""            AS NameRu,
                         ""normalized_category_name_ru"" AS NormalizedNameRu,
-                        ""category_description"" AS Description,
-                        ""is_active"" AS IsActive,
-                        ""created_date"" AS CreatedDate
+                        ""category_description""        AS Description,
+                        ""is_active""                   AS IsActive,
+                        ""created_date""                AS CreatedDate
                     FROM
                         ""categories""
                     WHERE

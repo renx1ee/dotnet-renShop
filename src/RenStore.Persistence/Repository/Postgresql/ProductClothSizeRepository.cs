@@ -85,9 +85,9 @@ public class ProductClothSizeRepository : IProductClothSizeRepository
             string sql =
                 $@"
                     SELECT 
-                        ""cloth_size_id"" AS Id,
-                        ""cloth_size"" AS ClothSizes,
-                        ""amount"" AS Amount,
+                        ""cloth_size_id""    AS Id,
+                        ""cloth_size""       AS ClothSizes,
+                        ""amount""           AS Amount,
                         ""product_cloth_id"" AS ProductClothId
                     FROM
                         ""product_cloth_sizes""
@@ -121,9 +121,9 @@ public class ProductClothSizeRepository : IProductClothSizeRepository
             const string sql = 
                 @"
                     SELECT 
-                        ""cloth_size_id"" AS Id,
-                        ""cloth_size"" AS ClothSizes,
-                        ""amount"" AS Amount,
+                        ""cloth_size_id""    AS Id,
+                        ""cloth_size""       AS ClothSizes,
+                        ""amount""           AS Amount,
                         ""product_cloth_id"" AS ProductClothId
                     FROM
                         ""product_cloth_sizes""

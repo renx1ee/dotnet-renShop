@@ -85,12 +85,12 @@ public class CityRepository : ICityRepository
             string sql =
                 $@"
                     SELECT
-                        ""city_id"" AS Id,
-                        ""city_name"" AS Name,
-                        ""normalized_city_name"" AS NormalizedName,
-                        ""city_name_ru"" AS NameRu,
+                        ""city_id""                 AS Id,
+                        ""city_name""               AS Name,
+                        ""normalized_city_name""    AS NormalizedName,
+                        ""city_name_ru""            AS NameRu,
                         ""normalized_city_name_ru"" AS NormalizedNameRu,
-                        ""country_id"" AS CountryOfManufactureId
+                        ""country_id""              AS CountryOfManufactureId
                     FROM
                         ""cities""
                     ORDER BY 
@@ -125,12 +125,12 @@ public class CityRepository : ICityRepository
             const string sql =
                 @"
                     SELECT
-                        ""city_id"" AS Id,
-                        ""city_name"" AS Name,
-                        ""normalized_city_name"" AS NormalizedName,
-                        ""city_name_ru"" AS NameRu,
+                        ""city_id""                 AS Id,
+                        ""city_name""               AS Name,
+                        ""normalized_city_name""    AS NormalizedName,
+                        ""city_name_ru""            AS NameRu,
                         ""normalized_city_name_ru"" AS NormalizedNameRu,
-                        ""country_id"" AS CountryOfManufactureId
+                        ""country_id""              AS CountryOfManufactureId
                     FROM
                         ""cities""
                     WHERE
@@ -176,12 +176,12 @@ public class CityRepository : ICityRepository
             string sql =
                 @$"
                     SELECT
-                        ""city_id"" AS Id,
-                        ""city_name"" AS Name,
-                        ""normalized_city_name"" AS NormalizedName,
-                        ""city_name_ru"" AS NameRu,
+                        ""city_id""                 AS Id,
+                        ""city_name""               AS Name,
+                        ""normalized_city_name""    AS NormalizedName,
+                        ""city_name_ru""            AS NameRu,
                         ""normalized_city_name_ru"" AS NormalizedNameRu,
-                        ""country_id"" AS CountryOfManufactureId
+                        ""country_id""              AS CountryOfManufactureId
                     FROM
                         ""cities""
                     WHERE

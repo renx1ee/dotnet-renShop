@@ -85,16 +85,16 @@ public class ProductDetailRepository : IProductDetailRepository
             string sql =
                 $@"
                     SELECT 
-                        ""product_detail_id"" AS Id,
-                        ""description"" AS Description,
-                        ""model_features"" AS ModelFeatures,
+                        ""product_detail_id""   AS Id,
+                        ""description""         AS Description,
+                        ""model_features""      AS ModelFeatures,
                         ""decorative_elements"" AS DecorativeElements,
-                        ""equipment"" AS Equipment,
-                        ""composition"" AS Composition,
-                        ""caring_of_things"" AS CaringOfThings,
-                        ""type_of_packing"" AS TypeOfPacking,
-                        ""country_id"" AS CountryOfManufactureId,
-                        ""product_variant_id"" AS ProductVariantId
+                        ""equipment""           AS Equipment,
+                        ""composition""         AS Composition,
+                        ""caring_of_things""    AS CaringOfThings,
+                        ""type_of_packing""     AS TypeOfPacking,
+                        ""country_id""          AS CountryOfManufactureId,
+                        ""product_variant_id""  AS ProductVariantId
                     FROM
                         ""product_details""
                     ORDER BY {columnName} {direction} 
@@ -126,16 +126,16 @@ public class ProductDetailRepository : IProductDetailRepository
             const string sql = 
                 @"
                     SELECT 
-                        ""product_detail_id"" AS Id,
-                        ""description"" AS Description,
-                        ""model_features"" AS ModelFeatures,
+                        ""product_detail_id""   AS Id,
+                        ""description""         AS Description,
+                        ""model_features""      AS ModelFeatures,
                         ""decorative_elements"" AS DecorativeElements,
-                        ""equipment"" AS Equipment,
-                        ""composition"" AS Composition,
-                        ""caring_of_things"" AS CaringOfThings,
-                        ""type_of_packing"" AS TypeOfPacking,
-                        ""country_id"" AS CountryOfManufactureId,
-                        ""product_variant_id"" AS ProductVariantId
+                        ""equipment""           AS Equipment,
+                        ""composition""         AS Composition,
+                        ""caring_of_things""    AS CaringOfThings,
+                        ""type_of_packing""     AS TypeOfPacking,
+                        ""country_id""          AS CountryOfManufactureId,
+                        ""product_variant_id""  AS ProductVariantId
                     FROM
                         ""product_details""
                     WHERE 

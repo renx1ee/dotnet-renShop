@@ -85,15 +85,15 @@ public class CountryRepository : ICountryRepository
             string sql =
                 $@"
                     SELECT
-                        ""country_id"" AS Id,
-                        ""country_name"" AS Name,
-                        ""normalized_country_name"" AS NormalizedName,
-                        ""other_name"" AS OtherName,
-                        ""normalized_other_name"" AS NormalizedOtherName,
-                        ""country_name_ru"" AS NameRu,
+                        ""country_id""                 AS Id,
+                        ""country_name""               AS Name,
+                        ""normalized_country_name""    AS NormalizedName,
+                        ""other_name""                 AS OtherName,
+                        ""normalized_other_name""      AS NormalizedOtherName,
+                        ""country_name_ru""            AS NameRu,
                         ""normalized_country_name_ru"" AS NormalizedNameRu,
-                        ""country_code"" AS Code,
-                        ""country_phone_code"" AS Code
+                        ""country_code""               AS Code,
+                        ""country_phone_code""         AS Code
                     FROM
                         ""countries""
                     ORDER BY 
@@ -128,15 +128,15 @@ public class CountryRepository : ICountryRepository
             const string sql =
                 @"
                     SELECT
-                        ""country_id"" AS Id,
-                        ""country_name"" AS Name,
-                        ""normalized_country_name"" AS NormalizedName,
-                        ""other_name"" AS OtherName,
-                        ""normalized_other_name"" AS NormalizedOtherName,
-                        ""country_name_ru"" AS NameRu,
+                        ""country_id""                 AS Id,
+                        ""country_name""               AS Name,
+                        ""normalized_country_name""    AS NormalizedName,
+                        ""other_name""                 AS OtherName,
+                        ""normalized_other_name""      AS NormalizedOtherName,
+                        ""country_name_ru""            AS NameRu,
                         ""normalized_country_name_ru"" AS NormalizedNameRu,
-                        ""country_code"" AS Code,
-                        ""country_phone_code"" AS Code
+                        ""country_code""               AS Code,
+                        ""country_phone_code""         AS Code
                     FROM
                         ""countries""
                     WHERE
@@ -185,15 +185,15 @@ public class CountryRepository : ICountryRepository
             string sql =
                 @$"
                     SELECT
-                        ""country_id"" AS Id,
-                        ""country_name"" AS Name,
-                        ""normalized_country_name"" AS NormalizedName,
-                        ""other_name"" AS OtherName,
-                        ""normalized_other_name"" AS NormalizedOtherName,
-                        ""country_name_ru"" AS NameRu,
+                        ""country_id""                 AS Id,
+                        ""country_name""               AS Name,
+                        ""normalized_country_name""    AS NormalizedName,
+                        ""other_name""                 AS OtherName,
+                        ""normalized_other_name""      AS NormalizedOtherName,
+                        ""country_name_ru""            AS NameRu,
                         ""normalized_country_name_ru"" AS NormalizedNameRu,
-                        ""country_code"" AS Code,
-                        ""country_phone_code"" AS Code
+                        ""country_code""               AS Code,
+                        ""country_phone_code""         AS Code
                     FROM
                         ""countries""
                     WHERE

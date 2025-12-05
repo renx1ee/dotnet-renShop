@@ -6,6 +6,7 @@ using RenStore.Application.Common.Exceptions;
 using RenStore.Domain.DTOs;
 using RenStore.Domain.DTOs.Product.FullPage;
 using RenStore.Domain.Entities;
+using RenStore.Domain.Enums;
 using RenStore.Domain.Enums.Sorting;
 using RenStore.Domain.Repository;
 
@@ -87,11 +88,11 @@ public class ProductRepository : IProductRepository
             StringBuilder sql = new StringBuilder(
                 $@"
                     SELECT
-                        ""product_id"" AS Id,
-                        ""is_blocked"" AS IsBlocked,
+                        ""product_id""     AS Id,
+                        ""is_blocked""     AS IsBlocked,
                         ""overall_rating"" AS OverallRating,
-                        ""seller_id"" AS SellerId,
-                        ""category_id"" AS CategoryId
+                        ""seller_id""      AS SellerId,
+                        ""category_id""    AS CategoryId
                     FROM
                         ""products""
                     
@@ -126,11 +127,11 @@ public class ProductRepository : IProductRepository
             const string sql = 
                 @"
                     SELECT
-                        ""product_id"" AS Id,
-                        ""is_blocked"" AS IsBlocked,
+                        ""product_id""     AS Id,
+                        ""is_blocked""     AS IsBlocked,
                         ""overall_rating"" AS OverallRating,
-                        ""seller_id"" AS SellerId,
-                        ""category_id"" AS CategoryId
+                        ""seller_id""      AS SellerId,
+                        ""category_id""    AS CategoryId
                     FROM
                         ""products""
                     WHERE
@@ -153,7 +154,8 @@ public class ProductRepository : IProductRepository
             ?? throw new NotFoundException(typeof(ProductEntity), id);
     }
 
-    /*public async Task<ProductFullDto?> FindFullAsync(Guid id, CancellationToken cancellationToken)
+    /*
+    public async Task<ProductFullDto?> FindFullAsync(Guid id, CancellationToken cancellationToken)
     {
         try
         {
@@ -164,90 +166,79 @@ public class ProductRepository : IProductRepository
                 @"
                     SELECT 
                         -- products
-                        p.""product_id"" AS ProductId, 
-                        p.""is_blocked"" AS IsBlocked, 
-                        p.""overall_rating"" AS OverallRating, 
-                        p.""seller_id"" AS SellerId, 
-                        p.""category_id"" AS CategoryId,
+                        p.""product_id""               AS ProductId, 
+                        p.""is_blocked""               AS IsBlocked, 
+                        p.""overall_rating""           AS OverallRating, 
+                        p.""seller_id""                AS SellerId, 
+                        p.""category_id""              AS CategoryId,
                         -- cloth
-                        pc.""product_cloth_id"" AS ClothId,
-                        pc.""gender"" AS Gender,
-                        pc.""season"" AS Season,
-                        pc.""neckline"" AS Neckline,
-                        pc.""the_cut"" AS TheCut,
+                        pc.""product_cloth_id""        AS ClothId,
+                        pc.""gender""                  AS Gender,
+                        pc.""season""                  AS Season,
+                        pc.""neckline""                AS Neckline,
+                        pc.""the_cut""                 AS TheCut,
                         -- cloth sizes
-                        pcs.""cloth_size_id"" AS ClothSizeId,
-                        pcs.""amount"" AS Amount,
-                        pcs.""cloth_size"" AS ClothesSizes,
-                        pcs.""product_cloth_id"" AS ProductClothId,
+                        pcs.""cloth_size_id""          AS ClothSizeId,
+                        pcs.""amount""                 AS Amount,
+                        pcs.""cloth_size""             AS ClothesSizes,
+                        pcs.""product_cloth_id""       AS ProductClothId,
                         -- price history
-                        ph.""price_history_id"" AS PriceHistoryId,
-                        ph.""price"" AS Price,
-                        ph.""old_price"" AS OldPrice,
-                        ph.""discount_price"" AS DiscountPrice,
-                        ph.""discount_percent"" AS DiscountPercent,
-                        ph.""start_date"" AS StartDate,
-                        ph.""end_date"" AS EndDate,
-                        ph.""changed_by"" AS ChangedBy,
+                        ph.""price_history_id""        AS PriceHistoryId,
+                        ph.""price""                   AS Price,
+                        ph.""old_price""               AS OldPrice,
+                        ph.""discount_price""          AS DiscountPrice,
+                        ph.""discount_percent""        AS DiscountPercent,
+                        ph.""start_date""              AS StartDate,
+                        ph.""end_date""                AS EndDate,
+                        ph.""changed_by""              AS ChangedBy,
                         -- variant
-                        pv.""product_variant_id"" AS VariantId,
-                        pv.""variant_name"" AS Name,
+                        pv.""product_variant_id""      AS VariantId,
+                        pv.""variant_name""            AS Name,
                         pv.""normalized_variant_name"" AS NormalizedName,
-                        pv.""rating"" AS Rating,
-                        pv.""article"" AS Article,
-                        pv.""in_stock"" AS InStock,
-                        pv.""is_available"" AS IsAvailable,
-                        pv.""created_date"" AS CreatedDate,
-                        pv.""url"" AS Url,
-                        pv.""product_id"" AS ProductId,
-                        pv.""color_id"" AS ColorId,
+                        pv.""rating""                  AS Rating,
+                        pv.""article""                 AS Article,
+                        pv.""in_stock""                AS InStock,
+                        pv.""is_available""            AS IsAvailable,
+                        pv.""created_date""            AS CreatedDate,
+                        pv.""url""                     AS Url,
+                        pv.""product_id""              AS ProductId,
+                        pv.""color_id""                AS ColorId,
                         -- detail
-                        pd.""product_detail_id"" AS DetailId,
-                        pd.""description"" AS Description,
-                        pd.""model_features"" AS ModelFeatures,
-                        pd.""decorative_elements"" AS DecorativeElements,
-                        pd.""equipment"" AS Equipment,
-                        pd.""composition"" AS Composition,
-                        pd.""caring_of_things"" AS CaringOfThings,
-                        pd.""type_of_packing"" AS TypeOfPacking,
-                        pd.""country_id"" AS CountryOfManufactureId,
-                        pd.""product_variant_id"" AS ProductVariantId,
+                        pd.""product_detail_id""       AS DetailId,
+                        pd.""description""             AS Description,
+                        pd.""model_features""          AS ModelFeatures,
+                        pd.""decorative_elements""     AS DecorativeElements,
+                        pd.""equipment""               AS Equipment,
+                        pd.""composition""             AS Composition,
+                        pd.""caring_of_things""        AS CaringOfThings,
+                        pd.""type_of_packing""         AS TypeOfPacking,
+                        pd.""country_id""              AS CountryOfManufactureId,
+                        pd.""product_variant_id""      AS ProductVariantId,
                         -- country
-                        ct.""country_name"",
+                        ct.""country_name""            AS Name,
                         -- attribute
-                        pa.""attribute_id"" AS AttributeId,
-                        pa.""attribute_name"" AS Name,
-                        pa.""attribute_value"" AS Value,
-                        pa.""product_variant_id"" AS ProductVariantId,
+                        pa.""attribute_id""            AS AttributeId,
+                        pa.""attribute_name""          AS Name,
+                        pa.""attribute_value""         AS Value,
+                        pa.""product_variant_id""      AS ProductVariantId,
                         -- seller
-                        s.""seller_id"" AS SellerId,
-                        s.""seller_name"" AS Name,
-                        s.""url"" AS Url
-                        -- seller image
-                        -- ""storage_path"" AS StoragePath,
-                        -- product image
-                        -- ""storage_path"" AS StoragePath,
-                        -- ""is_main"" AS IsMain,
-                        -- ""sort_order"" AS SortOrder
+                        s.""seller_id""                AS SellerId,
+                        s.""seller_name""              AS Name,
+                        s.""url""                      AS Url
                     FROM 
                         ""products"" p
-                    INNER JOIN ""product_variants"" pv ON pv.""product_id"" = p.""product_id""
-                    LEFT JOIN ""product_clothes"" pc ON pc.""product_id"" = p.""product_id""
-                    LEFT JOIN ""product_cloth_sizes"" pcs ON pcs.""product_cloth_id"" = pc.""product_cloth_id""
+                    INNER JOIN ""product_variants"" pv       ON pv.""product_id"" = p.""product_id""
+                    LEFT JOIN ""product_clothes"" pc         ON pc.""product_id"" = p.""product_id""
+                    LEFT JOIN ""product_cloth_sizes"" pcs    ON pcs.""product_cloth_id"" = pc.""product_cloth_id""
                     LEFT JOIN ""product_price_histories"" ph ON ph.""product_variant_id"" = pv.""product_variant_id""
-                    LEFT JOIN ""product_details"" pd ON pd.""product_variant_id"" = pv.""product_variant_id""
-                    LEFT JOIN ""product_attributes"" pa ON pa.""product_variant_id"" = pv.""product_variant_id""
-                    LEFT JOIN ""sellers"" s ON s.""seller_id"" = p.""seller_id""
-                    -- LEFT JOIN ""seller_images"" si ON si.""seller_id"" = s.""seller_id""
-                    -- LEFT JOIN ""product_images"" pi ON pi.""product_id"" = p.""product_id""
-                    LEFT JOIN ""countries"" ct ON ct.""country_id"" = pd.""country_id"" 
+                    LEFT JOIN ""product_details"" pd         ON pd.""product_variant_id"" = pv.""product_variant_id""
+                    LEFT JOIN ""product_attributes"" pa      ON pa.""product_variant_id"" = pv.""product_variant_id""
+                    LEFT JOIN ""sellers"" s                  ON s.""seller_id"" = p.""seller_id""
+                    LEFT JOIN ""countries"" ct               ON ct.""country_id"" = pd.""country_id"" 
                     WHERE 
                         p.""product_id"" = @Id
                     ORDER BY 
-                        -- product images
-                        -- pi.""is_main"" DESC,
-                        -- pi.""sort_order"" ASC,
-                        -- product cloth sizes
+                        -- cloth size
                         pcs.""amount"" ASC,
                         -- price history
                         ph.""start_date"" ASC;
@@ -257,12 +248,11 @@ public class ProductRepository : IProductRepository
             var lookupClothSize  = new Dictionary<Guid, ProductClothSizeDto>(); 
             var lookupAttributes = new Dictionary<Guid, ProductAttributeDto>();
             var productVariants  = new Dictionary<Guid, ProductVariantDto>();
-            // var lookupProductImages = new Dictionary<Guid, ProductImageDto>();
             
             ProductFullDto? fullProduct = null;
             
             return await connection.QueryAsync<ProductFullDto>(
-                sql: sql, 
+                sql: sql,
                 param: new  { Id = id },
                 map: (
                     ProductDto product, 
@@ -283,9 +273,6 @@ public class ProductRepository : IProductRepository
                     
                     if (!lookupAttributes.ContainsKey(attribute.AttributeId))
                         lookupAttributes[attribute.AttributeId] = attribute;
-                    
-                    /*if (!lookupProductImages.ContainsKey(productImage.Id))
-                        lookupProductImages[productImage.Id] = productImage;#1#
                     
                     if(!productVariants.ContainsKey(variant.VariantId))
                         productVariants[variant.VariantId] = variant;

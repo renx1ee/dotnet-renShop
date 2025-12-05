@@ -4,21 +4,21 @@ using Npgsql;
 using RenStore.Application.Common.Exceptions;
 using RenStore.Domain.Entities;
 using RenStore.Domain.Enums.Sorting;
-using RenStore.Domain.Repository;
 
 namespace RenStore.Persistence.Repository.Postgresql;
 
-public class ProductClothRepository : IProductClothRepository
+public class UserImageRepository
 {
     private readonly ApplicationDbContext _context;
     private readonly string _connectionString;
 
-    private readonly Dictionary<ProductClothSortBy, string> _sortColumnMapping = new()
+    private readonly Dictionary<UserImageSortBy, string> _sortColumnMapping = new()
     {
-        { ProductClothSortBy.Id, "product_cloth_id" }
+        { UserImageSortBy.Id, "user_image_id" },
+        { UserImageSortBy.UploadedAt, "user_image_upload_date" },
     };
 
-    public ProductClothRepository(
+    public UserImageRepository(
         ApplicationDbContext context,
         string connectionString)
     {
@@ -27,50 +27,49 @@ public class ProductClothRepository : IProductClothRepository
                                  ?? throw new ArgumentNullException(nameof(connectionString));
     }
 
-    public ProductClothRepository(
+    public UserImageRepository(
         ApplicationDbContext context,
         IConfiguration configuration)
     {
         this._context = context;
-        this._connectionString = configuration .GetConnectionString("DefaultConnection")
+        this._connectionString = configuration.GetConnectionString("DefaultConnection") 
                                  ?? throw new ArgumentNullException($"DefaultConnection is null");
     }
     
     public async Task<Guid> CreateAsync(
-        ProductClothEntity cloth, 
+        UserImageEntity image, 
         CancellationToken cancellationToken)
     {
-        var result = await _context.ProductClothes.AddAsync(cloth, cancellationToken);
+        var result = await _context.UserImages.AddAsync(image, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
         return result.Entity.Id;
     }
 
     public async Task UpdateAsync(
-        ProductClothEntity cloth,
+        UserImageEntity image,
         CancellationToken cancellationToken)
     {
-        var existingCloth = await this.GetByIdAsync(cloth.Id, cancellationToken);
+        var existingAttribute = await this.GetByIdAsync(image.Id, cancellationToken);
 
-        _context.ProductClothes.Update(cloth);
+        _context.UserImages.Update(image);
         await _context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var cloth = await this.GetByIdAsync(id, cancellationToken);
+        var image = await this.GetByIdAsync(id, cancellationToken);
         
-        _context.ProductClothes.Remove(cloth);
+        _context.UserImages.Remove(image);
         await _context.SaveChangesAsync(cancellationToken);
     }
-    
-    public async Task<IEnumerable<ProductClothEntity>> FindAllAsync(
-        CancellationToken cancellationToken,
-        ProductClothSortBy sortBy = ProductClothSortBy.Id,
-        uint pageCount = 25,
-        uint page = 1,
-        bool descending = false)
-    
+
+    public async Task<IEnumerable<UserImageEntity>> FindAllAsync(
+        CancellationToken cancellationToken, 
+        uint pageCount = 25, 
+        uint page = 1, 
+        bool descending = false,
+        UserImageSortBy sortBy = UserImageSortBy.Id)
     {
         try
         {
@@ -80,26 +79,30 @@ public class ProductClothRepository : IProductClothRepository
             pageCount = Math.Min(pageCount, 1000);
             uint offset = (page - 1) * pageCount;
             string direction = descending ? "DESC" : "ASC";
-            var columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "product_cloth_id");
+            var columnName = _sortColumnMapping.GetValueOrDefault(sortBy, "user_image_id");
 
             string sql =
                 $@"
                     SELECT 
-                        ""product_cloth_id"" AS Id,
-                        ""gender""           AS Gender,
-                        ""season""           AS Season,
-                        ""neckline""         AS Neckline,
-                        ""the_cut""          AS TheCut,
-                        ""product_id""       AS ProductId
+                        ""user_image_id""      AS Id,
+                        ""original_file_name"" AS OriginalFileName,
+                        ""storage_path""       AS StoragePath,
+                        ""file_size_bites""    AS FileSizeBytes,
+                        ""is_main""            AS IsMain,
+                        ""sort_order""         AS SortOrder,
+                        ""uploaded_date""      AS UploadedAt,
+                        ""weight""             AS Weight,
+                        ""height""             AS Height,
+                        ""user_id""            AS UserId
                     FROM
-                        ""product_clothes""
+                        ""user_images""
                     ORDER BY {columnName} {direction} 
                     LIMIT @Count 
                     OFFSET @Offset;
                 ";
 
             return await connection
-                .QueryAsync<ProductClothEntity>(
+                .QueryAsync<UserImageEntity>(
                     sql, new
                     {
                         Count = (int)pageCount,
@@ -112,7 +115,7 @@ public class ProductClothRepository : IProductClothRepository
         }
     }
 
-    public async Task<ProductClothEntity?> FindByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<UserImageEntity?> FindByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         try
         {
@@ -122,20 +125,24 @@ public class ProductClothRepository : IProductClothRepository
             const string sql = 
                 @"
                     SELECT 
-                        ""product_cloth_id"" AS Id,
-                        ""gender""           AS Gender,
-                        ""season""           AS Season,
-                        ""neckline""         AS Neckline,
-                        ""the_cut""          AS TheCut,
-                        ""product_id""       AS ProductId
+                        ""user_image_id""        AS Id,
+                        ""original_file_name"" AS OriginalFileName,
+                        ""storage_path""       AS StoragePath,
+                        ""file_size_bites""    AS FileSizeBytes,
+                        ""is_main""            AS IsMain,
+                        ""sort_order""         AS SortOrder,
+                        ""uploaded_date""      AS UploadedAt,
+                        ""weight""             AS Weight,
+                        ""height""             AS Height,
+                        ""user_id""            AS UserId
                     FROM
-                        ""product_clothes""
+                        ""user_images""
                     WHERE 
-                        ""product_cloth_id"" = @Id;
+                        ""user_image_id"" = @Id;
                 ";
 
             return await connection
-                .QueryFirstOrDefaultAsync<ProductClothEntity>(
+                .QueryFirstOrDefaultAsync<UserImageEntity>(
                     sql, new
                     {
                         Id = id
@@ -147,9 +154,9 @@ public class ProductClothRepository : IProductClothRepository
         }
     }
 
-    public async Task<ProductClothEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<UserImageEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return await this.FindByIdAsync(id, cancellationToken)
-            ?? throw new NotFoundException(typeof(ProductClothEntity), id);
+            ?? throw new NotFoundException(typeof(UserImageEntity), id);
     }
 }

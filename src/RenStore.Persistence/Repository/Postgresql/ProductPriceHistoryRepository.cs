@@ -85,14 +85,14 @@ public class ProductPriceHistoryRepository : IProductPriceHistoryRepository
             string sql =
                 $@"
                     SELECT 
-                        ""price_history_id"" AS Id,
-                        ""price"" AS Price,
-                        ""old_price"" AS OldPrice,
-                        ""discount_price"" AS DiscountPrice,
-                        ""discount_percent"" AS DiscountPercent,
-                        ""start_date"" AS StartDate,
-                        ""end_date"" AS EndDate,
-                        ""changed_by"" AS ChangedBy,
+                        ""price_history_id""   AS Id,
+                        ""price""              AS Price,
+                        ""old_price""          AS OldPrice,
+                        ""discount_price""     AS DiscountPrice,
+                        ""discount_percent""   AS DiscountPercent,
+                        ""start_date""         AS StartDate,
+                        ""end_date""           AS EndDate,
+                        ""changed_by""         AS ChangedBy,
                         ""product_variant_id"" AS ProductVariantId
                     FROM
                         ""product_price_histories""
@@ -125,14 +125,14 @@ public class ProductPriceHistoryRepository : IProductPriceHistoryRepository
             const string sql = 
                 @"
                     SELECT 
-                        ""price_history_id"" AS Id,
-                        ""price"" AS Price,
-                        ""old_price"" AS OldPrice,
-                        ""discount_price"" AS DiscountPrice,
-                        ""discount_percent"" AS DiscountPercent,
-                        ""start_date"" AS StartDate,
-                        ""end_date"" AS EndDate,
-                        ""changed_by"" AS ChangedBy,
+                        ""price_history_id""   AS Id,
+                        ""price""              AS Price,
+                        ""old_price""          AS OldPrice,
+                        ""discount_price""     AS DiscountPrice,
+                        ""discount_percent""   AS DiscountPercent,
+                        ""start_date""         AS StartDate,
+                        ""end_date""           AS EndDate,
+                        ""changed_by""         AS ChangedBy,
                         ""product_variant_id"" AS ProductVariantId
                     FROM
                         ""product_price_histories""
